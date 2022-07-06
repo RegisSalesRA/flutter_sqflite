@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: use_build_context_synchronously
 
-import '../data/sql_helper.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_sqlite/data/sql_helper.dart';
+import 'package:flutter_sqlite/model/musica.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,40 +12,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // All journals
-  List<Map<String, dynamic>> _journals = [];
+  var _isLoading = false;
+  var _db = DataBaseFlutterSqlite();
+  List<Musica> _musicas = [];
 
-  bool _isLoading = true;
-  // This function is used to fetch all data from the database
-  void _refreshJournals() async {
-    final data = await SQLHelper.getItems();
-    setState(() {
-      _journals = data;
-      _isLoading = false;
-    });
-  }
+  String _titleController = "";
+  String _descriptionController = "";
 
-  @override
-  void initState() {
-    super.initState();
-    _refreshJournals(); // Loading the diary when the app starts
-  }
-
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-
-  // This function will be triggered when the floating button is pressed
-  // It will also be triggered when you want to update an item
-  void _showForm(int? id) async {
-    if (id != null) {
-      // id == null -> create new item
-      // id != null -> update an existing item
-      final existingJournal =
-          _journals.firstWhere((element) => element['id'] == id);
-      _titleController.text = existingJournal['title'];
-      _descriptionController.text = existingJournal['description'];
-    }
-
+  void _showForm() async {
     showModalBottomSheet(
         context: context,
         elevation: 5,
@@ -53,22 +29,29 @@ class _HomePageState extends State<HomePage> {
                 top: 15,
                 left: 15,
                 right: 15,
-                // this will prevent the soft keyboard from covering the text fields
                 bottom: MediaQuery.of(context).viewInsets.bottom + 120,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  TextField(
-                    controller: _titleController,
+                  TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        _titleController = value;
+                      });
+                    },
                     decoration: const InputDecoration(hintText: 'Title'),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  TextField(
-                    controller: _descriptionController,
+                  TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        _descriptionController = value;
+                      });
+                    },
                     decoration: const InputDecoration(hintText: 'Description'),
                   ),
                   const SizedBox(
@@ -76,50 +59,46 @@ class _HomePageState extends State<HomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      // Save new journal
-                      if (id == null) {
-                        await _addItem();
+                      try {
+                        Musica anotacao = Musica(_titleController,
+                            _descriptionController, DateTime.now().toString());
+                        int resultado = await _db.salvarAnotacao(anotacao);
+
+                        Navigator.push<void>(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => const HomePage(),
+                          ),
+                        );
+                      } catch (e) {
+                        print(e);
                       }
-
-                      if (id != null) {
-                        await _updateItem(id);
-                      }
-
-                      // Clear the text fields
-                      _titleController.text = '';
-                      _descriptionController.text = '';
-
-                      // Close the bottom sheet
-                      Navigator.of(context).pop();
                     },
-                    child: Text(id == null ? 'Create New' : 'Update'),
+                    child: Text('submit'),
                   )
                 ],
               ),
             ));
   }
 
-// Insert a new journal to the database
-  Future<void> _addItem() async {
-    await SQLHelper.createItem(
-        _titleController.text, _descriptionController.text);
-    _refreshJournals();
+  _recuperarMusicas() async {
+    List musicasRecuperadas = await _db.recuperarMusicas();
+
+    List<Musica> listaTemporaria = [];
+    for (var item in musicasRecuperadas) {
+      Musica musica = Musica.fromMap(item);
+      listaTemporaria.add(musica);
+    }
+
+    setState(() {
+      _musicas = listaTemporaria;
+    });
   }
 
-  // Update an existing journal
-  Future<void> _updateItem(int id) async {
-    await SQLHelper.updateItem(
-        id, _titleController.text, _descriptionController.text);
-    _refreshJournals();
-  }
-
-  // Delete an item
-  void _deleteItem(int id) async {
-    await SQLHelper.deleteItem(id);
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Successfully deleted a journal!'),
-    ));
-    _refreshJournals();
+  @override
+  void initState() {
+    super.initState();
+    _recuperarMusicas();
   }
 
   @override
@@ -133,26 +112,25 @@ class _HomePageState extends State<HomePage> {
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
-              itemCount: _journals.length,
+              itemCount: _musicas.length,
               itemBuilder: (context, index) => Card(
                 color: Colors.greenAccent,
                 margin: const EdgeInsets.all(15),
                 child: ListTile(
-                    title: Text(_journals[index]['title']),
-                    subtitle: Text(_journals[index]['description']),
+                    title: Text(_musicas[index].titulo.toString()),
+                    subtitle: Text(_musicas[index].descricao.toString()),
                     trailing: SizedBox(
                       width: 100,
                       child: Row(
                         children: [
                           IconButton(
                             icon: const Icon(Icons.edit),
-                            onPressed: () => _showForm(_journals[index]['id']),
+                            onPressed: () => _showForm(),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () =>
-                                _deleteItem(_journals[index]['id']),
-                          ),
+                              icon: const Icon(Icons.delete), onPressed: () {}
+                              //     _deleteItem(_journals[index]['id']),
+                              ),
                         ],
                       ),
                     )),
@@ -160,7 +138,7 @@ class _HomePageState extends State<HomePage> {
             ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => _showForm(null),
+        onPressed: () => _showForm(),
       ),
     );
   }
