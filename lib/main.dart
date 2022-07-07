@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/screens/home.dart';
-
-import 'data/sql_helper.dart';
+ 
 
 void main() {
   runApp(const MyApp());

@@ -60,9 +60,72 @@ class _HomePageState extends State<HomePage> {
                   ElevatedButton(
                     onPressed: () async {
                       try {
-                        Musica anotacao = Musica(_titleController,
+                        Musica musica = Musica(_titleController,
                             _descriptionController, DateTime.now().toString());
-                        int resultado = await _db.salvarAnotacao(anotacao);
+                        int resultado = await _db.salvarMusica(musica);
+
+                        Navigator.push<void>(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => const HomePage(),
+                          ),
+                        );
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
+                    child: Text('submit'),
+                  )
+                ],
+              ),
+            ));
+  }
+
+  void _showFormUpdate(Musica musica_id) async {
+    showModalBottomSheet(
+        context: context,
+        elevation: 5,
+        isScrollControlled: true,
+        builder: (_) => Container(
+              padding: EdgeInsets.only(
+                top: 15,
+                left: 15,
+                right: 15,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 120,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        _titleController = value;
+                      });
+                    },
+                    decoration: const InputDecoration(hintText: 'Title'),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    onChanged: (value) {
+                      setState(() {
+                        _descriptionController = value;
+                      });
+                    },
+                    decoration: const InputDecoration(hintText: 'Description'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        musica_id.titulo = _titleController;
+                        musica_id.descricao = _descriptionController;
+                        musica_id.data = DateTime.now().toString();
+                        int resultado = await _db.atualizarMusica(musica_id);
 
                         Navigator.push<void>(
                           context,
@@ -95,6 +158,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  _removerMusicas(int id) async {
+    await _db.removerMusica(id);
+    _recuperarMusicas();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -113,29 +181,31 @@ class _HomePageState extends State<HomePage> {
             )
           : ListView.builder(
               itemCount: _musicas.length,
-              itemBuilder: (context, index) => Card(
-                color: Colors.greenAccent,
-                margin: const EdgeInsets.all(15),
-                child: ListTile(
-                    title: Text(_musicas[index].titulo.toString()),
-                    subtitle: Text(_musicas[index].descricao.toString()),
-                    trailing: SizedBox(
-                      width: 100,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () => _showForm(),
-                          ),
-                          IconButton(
-                              icon: const Icon(Icons.delete), onPressed: () {}
-                              //     _deleteItem(_journals[index]['id']),
+              itemBuilder: (context, index) {
+                final musica = _musicas[index];
+                return Card(
+                    color: Colors.greenAccent,
+                    margin: const EdgeInsets.all(15),
+                    child: ListTile(
+                        title: Text(_musicas[index].titulo.toString()),
+                        subtitle: Text(_musicas[index].descricao.toString()),
+                        trailing: SizedBox(
+                          width: 100,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () => _showFormUpdate(musica),
                               ),
-                        ],
-                      ),
-                    )),
-              ),
-            ),
+                              IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    _removerMusicas(_musicas[index].id!);
+                                  }),
+                            ],
+                          ),
+                        )));
+              }),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () => _showForm(),

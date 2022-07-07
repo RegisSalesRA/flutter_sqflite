@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import '../model/musica.dart';
 
 class DataBaseFlutterSqlite {
-  static final String nameTable = "musicas";
+  static const String nameTable = "musicas";
   static final DataBaseFlutterSqlite _databasefluttersqlite =
       DataBaseFlutterSqlite._internal();
 
@@ -26,12 +26,6 @@ class DataBaseFlutterSqlite {
   }
 
   _onCreate(Database db, int version) async {
-    /*
-
-    id titulo descricao data
-    01 teste  teste     02/10/2020
-
-    * */
 
     String sql = "CREATE TABLE $nameTable ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -43,24 +37,34 @@ class DataBaseFlutterSqlite {
 
   inicializarDB() async {
     final caminhoBancoDados = await getDatabasesPath();
-    final localBancoDados =
-        join(caminhoBancoDados, "banco_minhas_anotacoes.db");
+    final localBancoDados = join(caminhoBancoDados, "banco_minhas_musicas.db");
 
     var db =
         await openDatabase(localBancoDados, version: 1, onCreate: _onCreate);
     return db;
   }
 
-  Future<int> salvarAnotacao(Musica anotacao) async {
+  Future<int> salvarMusica(Musica musica) async {
     var bancoDados = await db;
-    int resultado = await bancoDados.insert(nameTable, anotacao.toMap());
+    int resultado = await bancoDados.insert(nameTable, musica.toMap());
     return resultado;
   }
 
   recuperarMusicas() async {
     var bancoDados = await db;
     String sql = "SELECT * FROM $nameTable ORDER BY data DESC ";
-    List anotacoes = await bancoDados.rawQuery(sql);
-    return anotacoes;
+    List musicas = await bancoDados.rawQuery(sql);
+    return musicas;
+  }
+
+  Future<int> atualizarMusica(Musica musica) async {
+    var bancoDados = await db;
+    return await bancoDados.update(nameTable, musica.toMap(),
+        where: "id = ?", whereArgs: [musica.id]);
+  }
+
+  Future<int> removerMusica(int id) async {
+    var bancoDados = await db;
+    return await bancoDados.delete(nameTable, where: "id = ?", whereArgs: [id]);
   }
 }
