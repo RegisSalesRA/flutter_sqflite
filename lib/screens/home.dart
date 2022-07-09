@@ -1,25 +1,24 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
-import 'package:flutter_sqlite/data/sql_helper.dart';
+import 'package:flutter_sqlite/data/music_operation.dart';
+
 import 'package:flutter_sqlite/model/musica.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  var _isLoading = false;
-  var _db = DataBaseFlutterSqlite();
+class HomePageState extends State<HomePage> {
+  var isLoading = false;
+  var db = MusicOperation();
   List<Musica> _musicas = [];
 
   String _titleController = "";
   String _descriptionController = "";
 
-  void _showForm(var musica_id) async {
+  void _showForm(var musicaId) async {
     showModalBottomSheet(
         context: context,
         elevation: 5,
@@ -59,20 +58,17 @@ class _HomePageState extends State<HomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      if (musica_id != null) {
+                      if (musicaId != null) {
                         try {
-                          musica_id.titulo = _titleController;
-                          musica_id.descricao = _descriptionController;
-                          musica_id.data = DateTime.now().toString();
-                          int resultado = await _db.atualizarMusica(musica_id);
+                          musicaId.titulo = _titleController;
+                          musicaId.descricao = _descriptionController;
+                          musicaId.data = DateTime.now().toString();
+                          await db.atualizarMusica(musicaId);
 
-                          Navigator.push<void>(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  const HomePage(),
-                            ),
-                          );
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()),
+                              (Route<dynamic> route) => false);
                         } catch (e) {
                           print(e);
                         }
@@ -82,21 +78,18 @@ class _HomePageState extends State<HomePage> {
                               _titleController,
                               _descriptionController,
                               DateTime.now().toString());
-                          int resultado = await _db.salvarMusica(musica);
 
-                          Navigator.push<void>(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  const HomePage(),
-                            ),
-                          );
+                          await db.salvarMusica(musica);
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage()),
+                              (Route<dynamic> route) => false);
                         } catch (e) {
                           print(e);
                         }
                       }
                     },
-                    child: Text('submit'),
+                    child: const Text('submit'),
                   )
                 ],
               ),
@@ -104,7 +97,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _recuperarMusicas() async {
-    List musicasRecuperadas = await _db.recuperarMusicas();
+    List musicasRecuperadas = await db.recuperarMusicas();
 
     List<Musica> listaTemporaria = [];
     for (var item in musicasRecuperadas) {
@@ -118,7 +111,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _removerMusicas(int id) async {
-    await _db.removerMusica(id);
+    await db.removerMusica(id);
     _recuperarMusicas();
   }
 
@@ -134,7 +127,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Flutter Sqlite'),
       ),
-      body: _isLoading
+      body: isLoading
           ? const Center(
               child: CircularProgressIndicator(),
             )
