@@ -4,7 +4,6 @@ import 'package:path/path.dart';
 import '../model/musica.dart';
 
 class DataBaseFlutterSqlite {
-  static const String nameTable = "musicas";
   static final DataBaseFlutterSqlite _databasefluttersqlite =
       DataBaseFlutterSqlite._internal();
 
@@ -26,13 +25,14 @@ class DataBaseFlutterSqlite {
   }
 
   _onCreate(Database db, int version) async {
-
-    String sql = "CREATE TABLE $nameTable ("
-        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "titulo VARCHAR, "
-        "descricao TEXT, "
-        "data DATETIME)";
-    await db.execute(sql);
+    await db.execute('''
+          CREATE TABLE musicas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+           titulo VARCHAR, 
+         descricao TEXT,
+        data DATETIME
+          )
+          ''');
   }
 
   inicializarDB() async {
@@ -46,25 +46,25 @@ class DataBaseFlutterSqlite {
 
   Future<int> salvarMusica(Musica musica) async {
     var bancoDados = await db;
-    int resultado = await bancoDados.insert(nameTable, musica.toMap());
+    int resultado = await bancoDados.insert("musicas", musica.toMap());
     return resultado;
   }
 
   recuperarMusicas() async {
     var bancoDados = await db;
-    String sql = "SELECT * FROM $nameTable ORDER BY data DESC ";
+    String sql = "SELECT * FROM musicas ORDER BY data DESC ";
     List musicas = await bancoDados.rawQuery(sql);
     return musicas;
   }
 
   Future<int> atualizarMusica(Musica musica) async {
     var bancoDados = await db;
-    return await bancoDados.update(nameTable, musica.toMap(),
+    return await bancoDados.update("musicas", musica.toMap(),
         where: "id = ?", whereArgs: [musica.id]);
   }
 
   Future<int> removerMusica(int id) async {
     var bancoDados = await db;
-    return await bancoDados.delete(nameTable, where: "id = ?", whereArgs: [id]);
+    return await bancoDados.delete("musicas", where: "id = ?", whereArgs: [id]);
   }
 }
