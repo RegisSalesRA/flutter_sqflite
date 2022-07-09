@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   String _titleController = "";
   String _descriptionController = "";
 
-  void _showForm() async {
+  void _showForm(var musica_id) async {
     showModalBottomSheet(
         context: context,
         elevation: 5,
@@ -59,82 +59,41 @@ class _HomePageState extends State<HomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      try {
-                        Musica musica = Musica(_titleController,
-                            _descriptionController, DateTime.now().toString());
-                        int resultado = await _db.salvarMusica(musica);
+                      if (musica_id != null) {
+                        try {
+                          musica_id.titulo = _titleController;
+                          musica_id.descricao = _descriptionController;
+                          musica_id.data = DateTime.now().toString();
+                          int resultado = await _db.atualizarMusica(musica_id);
 
-                        Navigator.push<void>(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => const HomePage(),
-                          ),
-                        );
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: Text('submit'),
-                  )
-                ],
-              ),
-            ));
-  }
+                          Navigator.push<void>(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const HomePage(),
+                            ),
+                          );
+                        } catch (e) {
+                          print(e);
+                        }
+                      } else {
+                        try {
+                          Musica musica = Musica(
+                              _titleController,
+                              _descriptionController,
+                              DateTime.now().toString());
+                          int resultado = await _db.salvarMusica(musica);
 
-  void _showFormUpdate(Musica musica_id) async {
-    showModalBottomSheet(
-        context: context,
-        elevation: 5,
-        isScrollControlled: true,
-        builder: (_) => Container(
-              padding: EdgeInsets.only(
-                top: 15,
-                left: 15,
-                right: 15,
-                bottom: MediaQuery.of(context).viewInsets.bottom + 120,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        _titleController = value;
-                      });
-                    },
-                    decoration: const InputDecoration(hintText: 'Title'),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    onChanged: (value) {
-                      setState(() {
-                        _descriptionController = value;
-                      });
-                    },
-                    decoration: const InputDecoration(hintText: 'Description'),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        musica_id.titulo = _titleController;
-                        musica_id.descricao = _descriptionController;
-                        musica_id.data = DateTime.now().toString();
-                        int resultado = await _db.atualizarMusica(musica_id);
-
-                        Navigator.push<void>(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => const HomePage(),
-                          ),
-                        );
-                      } catch (e) {
-                        print(e);
+                          Navigator.push<void>(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (BuildContext context) =>
+                                  const HomePage(),
+                            ),
+                          );
+                        } catch (e) {
+                          print(e);
+                        }
                       }
                     },
                     child: Text('submit'),
@@ -173,7 +132,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter sqlite'),
+        title: const Text('Flutter Sqlite'),
       ),
       body: _isLoading
           ? const Center(
@@ -195,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               IconButton(
                                 icon: const Icon(Icons.edit),
-                                onPressed: () => _showFormUpdate(musica),
+                                onPressed: () => _showForm(musica),
                               ),
                               IconButton(
                                   icon: const Icon(Icons.delete),
@@ -208,7 +167,7 @@ class _HomePageState extends State<HomePage> {
               }),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => _showForm(),
+        onPressed: () => _showForm(null),
       ),
     );
   }
