@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/screens/home.dart';
- 
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +11,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        // Remove the debug banner
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
-        home: const HomePage());
+        debugShowCheckedModeBanner: false, home: const HomePage());
   }
 }

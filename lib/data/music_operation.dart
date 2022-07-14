@@ -6,7 +6,7 @@ class MusicOperation {
 
   salvarMusica(Musica musica) async {
     var bancoDados = await dbMusicas.inicializarDB();
-    int resultado = await bancoDados.insert("musicas", musica.toMap());
+    int resultado = await bancoDados.insert("musicas", musica.toJson());
     return resultado;
   }
 
@@ -19,7 +19,7 @@ class MusicOperation {
 
   Future<int> atualizarMusica(Musica musica) async {
     var bancoDados = await dbMusicas.inicializarDB();
-    return await bancoDados.update("musicas", musica.toMap(),
+    return await bancoDados.update("musicas", musica.toJson(),
         where: "id = ?", whereArgs: [musica.id]);
   }
 

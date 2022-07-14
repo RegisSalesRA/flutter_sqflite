@@ -75,9 +75,10 @@ class HomePageState extends State<HomePage> {
                       } else {
                         try {
                           Musica musica = Musica(
-                              _titleController,
-                              _descriptionController,
-                              DateTime.now().toString());
+                            _titleController,
+                            _descriptionController,
+                            DateTime.now().toString(),
+                          );
 
                           await db.salvarMusica(musica);
                           Navigator.of(context).pushAndRemoveUntil(
@@ -101,7 +102,7 @@ class HomePageState extends State<HomePage> {
 
     List<Musica> listaTemporaria = [];
     for (var item in musicasRecuperadas) {
-      Musica musica = Musica.fromMap(item);
+      Musica musica = Musica.fromJson(item);
       listaTemporaria.add(musica);
     }
 
@@ -136,7 +137,7 @@ class HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 final musica = _musicas[index];
                 return Card(
-                    color: Colors.greenAccent,
+                    color: Color.fromRGBO(105, 240, 174, 1),
                     margin: const EdgeInsets.all(15),
                     child: ListTile(
                         title: Text(_musicas[index].titulo.toString()),
