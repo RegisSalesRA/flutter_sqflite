@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sqlite/css/colors.dart';
 import 'package:flutter_sqlite/data/music_operation.dart';
 
 import 'package:flutter_sqlite/model/musica.dart';
+import 'package:flutter_sqlite/screens/album.dart';
+import 'package:flutter_sqlite/screens/categorys.dart';
+import 'package:flutter_sqlite/widgets/appbar_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,7 +17,22 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   var isLoading = false;
   var db = MusicOperation();
+  List<String> Menu = ["Categorias", "Albuns"];
   List<Musica> _musicas = [];
+
+  _menuOptions(String options) {
+    switch (options) {
+      case "Categorias":
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Category()));
+        break;
+
+      case "Albuns":
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Album()));
+        break;
+    }
+  }
 
   String _titleController = "";
   String _descriptionController = "";
@@ -125,9 +144,29 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Sqlite'),
-      ),
+      appBar: MyAppBar(
+          title: 'Flutter Sqlite',
+          actionsAppBar: Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  print("None");
+                },
+                child: Icon(Icons.refresh),
+              ),
+              PopupMenuButton<String>(
+                onSelected: _menuOptions,
+                itemBuilder: (context) {
+                  return Menu.map((String item) {
+                    return PopupMenuItem<String>(
+                      value: item,
+                      child: Text(item),
+                    );
+                  }).toList();
+                },
+              ),
+            ],
+          )),
       body: isLoading
           ? const Center(
               child: CircularProgressIndicator(),
@@ -160,6 +199,7 @@ class HomePageState extends State<HomePage> {
                         )));
               }),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: CustomColors.theme,
         child: const Icon(Icons.add),
         onPressed: () => _showForm(null),
       ),
