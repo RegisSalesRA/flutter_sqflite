@@ -20,11 +20,11 @@ class DataBaseFlutterSqlite {
     final localBancoDados = join(caminhoBancoDados, "banco_minhas_musicas.db");
 
     var db =
-        await openDatabase(localBancoDados, version: 1, onCreate: _onCreate);
+        await openDatabase(localBancoDados, version: 1, onCreate: onCreate);
     return db;
   }
 
-  _onCreate(Database db, int version) async {
+  Future onCreate(Database db, int version) async {
     await db.execute('''
           CREATE TABLE musicas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,16 +32,16 @@ class DataBaseFlutterSqlite {
             descricao TEXT,
             data DATETIME,
             FK_musicas_category INT,
-            FOREIGN KEY (FK_musicas_category) REFERENCES category (categoryId) 
+            FOREIGN KEY (FK_musicas_category) REFERENCES category (id) 
           )
           ''');
 
     await db.execute('''
           CREATE TABLE category (
-            categoryId INTEGER PRIMARY KEY AUTOINCREMENT,
-            categoryName STRING NOT NULL
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name STRING NOT NULL,
+            data DATETIME
           )
           ''');
   }
 }
-

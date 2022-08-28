@@ -3,8 +3,8 @@ import 'package:flutter_sqlite/css/colors.dart';
 import 'package:flutter_sqlite/data/music_operation.dart';
 
 import 'package:flutter_sqlite/model/musica.dart';
-import 'package:flutter_sqlite/screens/album.dart';
-import 'package:flutter_sqlite/screens/categorys.dart';
+import 'package:flutter_sqlite/screens/album_screen.dart';
+import 'package:flutter_sqlite/screens/categorys_screen.dart';
 import 'package:flutter_sqlite/widgets/appbar_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,7 +24,7 @@ class HomePageState extends State<HomePage> {
     switch (options) {
       case "Categorias":
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Category()));
+            context, MaterialPageRoute(builder: (context) => CategoryScreen()));
         break;
 
       case "Albuns":
@@ -176,11 +176,14 @@ class HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 final musica = _musicas[index];
                 return Card(
-                    color: Color.fromRGBO(105, 240, 174, 1),
+                    color: CustomColors.theme,
                     margin: const EdgeInsets.all(15),
                     child: ListTile(
-                        title: Text(_musicas[index].titulo.toString()),
-                        subtitle: Text(_musicas[index].descricao.toString()),
+                        title: Text('${_musicas[index].titulo}'),
+                        subtitle: Text(
+                          "${_musicas[index].descricao} - ${_musicas[index].id}",
+                          style: TextStyle(color: Colors.white),
+                        ),
                         trailing: SizedBox(
                           width: 100,
                           child: Row(

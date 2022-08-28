@@ -10,11 +10,17 @@ class CategoryOperation {
     return resultado;
   }
 
-  recuperarCategory() async {
+  Future<dynamic> recuperarCategory() async {
     var bancoDados = await dbCategory.inicializarDB();
     String sql = "SELECT * FROM category ORDER BY data DESC ";
     List category = await bancoDados.rawQuery(sql);
     return category;
+  }
+
+  Future<int> atualizarCategoria(Category category) async {
+    var bancoDados = await dbCategory.inicializarDB();
+    return await bancoDados.update("category", category.toJson(),
+        where: "id = ?", whereArgs: [category.id]);
   }
 
   Future<int> removerCategory(int id) async {
