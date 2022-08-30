@@ -1,30 +1,30 @@
 import 'package:flutter_sqlite/data/database.dart';
-import 'package:flutter_sqlite/model/musica.dart';
+import 'package:flutter_sqlite/model/music.dart';
 
 class MusicOperation {
-  final dbMusicas = DataBaseFlutterSqlite();
+  final dbMusic = DataBaseFlutterSqlite();
 
-  salvarMusica(Musica musica) async {
-    var bancoDados = await dbMusicas.inicializarDB();
-    int resultado = await bancoDados.insert("musicas", musica.toJson());
-    return resultado;
+  fetchMusics() async {
+    var bancoDados = await dbMusic.inicializarDB();
+    String sql = "SELECT * FROM music ORDER BY data DESC ";
+    List music = await bancoDados.rawQuery(sql);
+    return music;
   }
 
-  recuperarMusicas() async {
-    var bancoDados = await dbMusicas.inicializarDB();
-    String sql = "SELECT * FROM musicas ORDER BY data DESC ";
-    List musicas = await bancoDados.rawQuery(sql);
-    return musicas;
+  saveMusic(Music music) async {
+    var bancoDados = await dbMusic.inicializarDB();
+    int result = await bancoDados.insert("music", music.toJson());
+    return result;
   }
 
-  Future<int> atualizarMusica(Musica musica) async {
-    var bancoDados = await dbMusicas.inicializarDB();
-    return await bancoDados.update("musicas", musica.toJson(),
-        where: "id = ?", whereArgs: [musica.id]);
+  Future<int> updateMusic(Music music) async {
+    var dataBase = await dbMusic.inicializarDB();
+    return await dataBase.update("music", music.toJson(),
+        where: "id = ?", whereArgs: [music.id]);
   }
 
   Future<int> removerMusica(int id) async {
-    var bancoDados = await dbMusicas.inicializarDB();
-    return await bancoDados.delete("musicas", where: "id = ?", whereArgs: [id]);
+    var bancoDados = await dbMusic.inicializarDB();
+    return await bancoDados.delete("music", where: "id = ?", whereArgs: [id]);
   }
 }

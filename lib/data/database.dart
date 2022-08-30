@@ -17,7 +17,7 @@ class DataBaseFlutterSqlite {
 
   inicializarDB() async {
     final caminhoBancoDados = await getDatabasesPath();
-    final localBancoDados = join(caminhoBancoDados, "banco_minhas_musicas.db");
+    final localBancoDados = join(caminhoBancoDados, "database_flutter_sqflite.db");
 
     var db =
         await openDatabase(localBancoDados, version: 1, onCreate: onCreate);
@@ -26,13 +26,13 @@ class DataBaseFlutterSqlite {
 
   Future onCreate(Database db, int version) async {
     await db.execute('''
-          CREATE TABLE musicas (
+          CREATE TABLE music (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            titulo VARCHAR, 
-            descricao TEXT,
+            title VARCHAR, 
+            description TEXT,
             data DATETIME,
-            FK_musicas_category INT,
-            FOREIGN KEY (FK_musicas_category) REFERENCES category (id) 
+            FK_music_category INT,
+            FOREIGN KEY (FK_music_category) REFERENCES category (id) 
           )
           ''');
 

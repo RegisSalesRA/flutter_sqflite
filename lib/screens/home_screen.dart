@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/css/colors.dart';
 import 'package:flutter_sqlite/data/music_operation.dart';
 
-import 'package:flutter_sqlite/model/musica.dart';
+import 'package:flutter_sqlite/model/music.dart';
 import 'package:flutter_sqlite/screens/album_screen.dart';
 import 'package:flutter_sqlite/screens/categorys_screen.dart';
 import 'package:flutter_sqlite/widgets/appbar_widget.dart';
+import 'package:flutter_sqlite/widgets/show_modal_bottom.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,8 +18,8 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   var isLoading = false;
   var db = MusicOperation();
-  List<String> Menu = ["Categorias", "Albuns"];
-  List<Musica> _musicas = [];
+  List<String> Menu = ["Categorys", "Musics", "Albuns"];
+  List<Music> _musics = [];
 
   _menuOptions(String options) {
     switch (options) {
@@ -79,31 +80,27 @@ class HomePageState extends State<HomePage> {
                     onPressed: () async {
                       if (musicaId != null) {
                         try {
-                          musicaId.titulo = _titleController;
-                          musicaId.descricao = _descriptionController;
+                          musicaId.title = _titleController;
+                          musicaId.description = _descriptionController;
                           musicaId.data = DateTime.now().toString();
-                          await db.atualizarMusica(musicaId);
+                          await db.updateMusic(musicaId);
 
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
-                              (Route<dynamic> route) => false);
+                          _retrieveMusics();
+                          Navigator.of(context).pop();
                         } catch (e) {
                           print(e);
                         }
                       } else {
                         try {
-                          Musica musica = Musica(
+                          Music musica = Music(
                             _titleController,
                             _descriptionController,
                             DateTime.now().toString(),
                           );
 
-                          await db.salvarMusica(musica);
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
-                              (Route<dynamic> route) => false);
+                          await db.saveMusic(musica);
+                          _retrieveMusics();
+                          Navigator.of(context).pop();
                         } catch (e) {
                           print(e);
                         }
@@ -116,29 +113,31 @@ class HomePageState extends State<HomePage> {
             ));
   }
 
-  _recuperarMusicas() async {
-    List musicasRecuperadas = await db.recuperarMusicas();
+  _retrieveMusics() async {
+    List musicasRecuperadas = await db.fetchMusics();
 
-    List<Musica> listaTemporaria = [];
+    List<Music> listaTemporaria = [];
     for (var item in musicasRecuperadas) {
-      Musica musica = Musica.fromJson(item);
+      Music musica = Music.fromJson(item);
       listaTemporaria.add(musica);
     }
 
     setState(() {
-      _musicas = listaTemporaria;
+      _musics = listaTemporaria;
     });
   }
 
-  _removerMusicas(int id) async {
+  _removeMusic(int id) async {
     await db.removerMusica(id);
-    _recuperarMusicas();
+    _retrieveMusics();
   }
+
+  FunctionUtils functionUtils = FunctionUtils();
 
   @override
   void initState() {
     super.initState();
-    _recuperarMusicas();
+    _retrieveMusics();
   }
 
   @override
@@ -148,12 +147,6 @@ class HomePageState extends State<HomePage> {
           title: 'Flutter Sqlite',
           actionsAppBar: Row(
             children: [
-              InkWell(
-                onTap: () {
-                  print("None");
-                },
-                child: Icon(Icons.refresh),
-              ),
               PopupMenuButton<String>(
                 onSelected: _menuOptions,
                 itemBuilder: (context) {
@@ -172,16 +165,17 @@ class HomePageState extends State<HomePage> {
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
-              itemCount: _musicas.length,
+              physics: BouncingScrollPhysics(),
+              itemCount: _musics.length,
               itemBuilder: (context, index) {
-                final musica = _musicas[index];
+                final musica = _musics[index];
                 return Card(
                     color: CustomColors.theme,
                     margin: const EdgeInsets.all(15),
                     child: ListTile(
-                        title: Text('${_musicas[index].titulo}'),
+                        title: Text('${_musics[index].title}'),
                         subtitle: Text(
-                          "${_musicas[index].descricao} - ${_musicas[index].id}",
+                          "${_musics[index].description} - ${_musics[index].id}",
                           style: TextStyle(color: Colors.white),
                         ),
                         trailing: SizedBox(
@@ -195,7 +189,7 @@ class HomePageState extends State<HomePage> {
                               IconButton(
                                   icon: const Icon(Icons.delete),
                                   onPressed: () {
-                                    _removerMusicas(_musicas[index].id!);
+                                    _removeMusic(_musics[index].id!);
                                   }),
                             ],
                           ),
