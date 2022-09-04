@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../css/colors.dart';
-import '../model/music.dart';
 
 class CustomCardWidget extends StatefulWidget {
   final String title;
   final String description;
-  VoidCallback showModal;
-  CustomCardWidget({
-    Key? key,
-    required this.title,
-    required this.description,
-    required this.showModal,
-  }) : super(key: key);
+  final VoidCallback showModal;
+  final VoidCallback deletarMusica;
+  CustomCardWidget(
+      {Key? key,
+      required this.title,
+      required this.description,
+      required this.showModal,
+      required this.deletarMusica})
+      : super(key: key);
 
   @override
   State<CustomCardWidget> createState() => _CustomCardWidgetState();
@@ -77,9 +78,7 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                     ),
                     IconButton(
                         icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          print("");
-                        }),
+                        onPressed: () => widget.deletarMusica()),
                   ],
                 ),
               ),
