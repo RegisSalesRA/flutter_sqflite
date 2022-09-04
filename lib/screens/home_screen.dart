@@ -6,6 +6,7 @@ import 'package:flutter_sqlite/model/music.dart';
 import 'package:flutter_sqlite/screens/album_screen.dart';
 import 'package:flutter_sqlite/screens/categorys_screen.dart';
 import 'package:flutter_sqlite/widgets/appbar_widget.dart';
+import 'package:flutter_sqlite/widgets/card_widget.dart';
 import 'package:flutter_sqlite/widgets/show_modal_bottom.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,7 +39,7 @@ class HomePageState extends State<HomePage> {
   String _titleController = "";
   String _descriptionController = "";
 
-  void _showForm(var musicaId) async {
+  void showForm(var musicaId) async {
     showModalBottomSheet(
         context: context,
         elevation: 5,
@@ -169,12 +170,18 @@ class HomePageState extends State<HomePage> {
               itemCount: _musics.length,
               itemBuilder: (context, index) {
                 final musica = _musics[index];
-                return CardWidget(index, musica);
+                return CustomCardWidget(
+                  title: _musics[index].title!,
+                  description: _musics[index].description!,
+                  showModal: () {
+                    showForm(musica);
+                  },
+                );
               }),
       floatingActionButton: FloatingActionButton(
         backgroundColor: CustomColors.theme,
         child: const Icon(Icons.add),
-        onPressed: () => _showForm(null),
+        onPressed: () => showForm(null),
       ),
     );
   }
@@ -232,7 +239,7 @@ class HomePageState extends State<HomePage> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.edit),
-                      onPressed: () => _showForm(musica),
+                      onPressed: () => showForm(musica),
                     ),
                     IconButton(
                         icon: const Icon(Icons.delete),
