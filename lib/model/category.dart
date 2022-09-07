@@ -3,7 +3,7 @@ class Category {
   String? name;
   String? data;
 
-  Category(this.name, this.data);
+  Category(this.id, this.name, this.data);
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
