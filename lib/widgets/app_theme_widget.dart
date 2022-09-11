@@ -27,13 +27,13 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
-    const Color textColor = Color(0xFFFFFFFF);
     const Color primaryColor = Color.fromRGBO(0, 37, 77, 1);
     const Color primaryColorLight = Color.fromRGBO(0, 73, 153, 1);
     const Color primaryColorDark = Color(0xFF000000);
+    const Color textColor = (Color(0xFFFFFFFF));
 
     return MaterialApp(
-      title: '4Dev',
+      title: 'Sqflite',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Palette.kToDark,
@@ -50,17 +50,18 @@ class App extends StatelessWidget {
           textTheme: TextTheme(
             subtitle1: TextStyle(color: primaryColorDark),
             headline1: TextStyle(
-              fontSize: 30,
+              overflow: TextOverflow.ellipsis,
+              fontSize: 25,
               fontWeight: FontWeight.bold,
-              color: primaryColorDark,
+              color: textColor,
             ),
             headline2: TextStyle(
-              fontSize: 20,
+              overflow: TextOverflow.ellipsis,
+              fontSize: 13,
               fontWeight: FontWeight.bold,
-              color: primaryColorDark,
+              color: textColor,
             ),
           ),
-
           // Input Css
           inputDecorationTheme: InputDecorationTheme(
               labelStyle: TextStyle(color: primaryColorDark),
@@ -70,15 +71,17 @@ class App extends StatelessWidget {
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(vertical: 15.0),
               focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: primaryColor)),
+                  borderRadius: BorderRadius.circular(60),
+                  borderSide: BorderSide(
+                      color: primaryColor, width: 0, style: BorderStyle.none)),
               hintStyle: TextStyle(color: primaryColor, fontSize: 14),
               enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: primaryColor)),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(0.0),
-                  borderSide: BorderSide(color: primaryColor)),
+                  borderRadius: BorderRadius.circular(60),
+                  borderSide: const BorderSide(
+                    width: 0,
+                    style: BorderStyle.none,
+                  )),
               alignLabelWithHint: true),
-
           // Button css
           buttonTheme: ButtonThemeData(
             colorScheme: ColorScheme.light(primary: primaryColor),
@@ -89,8 +92,9 @@ class App extends StatelessWidget {
               horizontal: 20,
             ),
             textTheme: ButtonTextTheme.primary,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
           )),
       home: HomePage(),
     );

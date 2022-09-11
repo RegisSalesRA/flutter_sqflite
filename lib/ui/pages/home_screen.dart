@@ -3,7 +3,6 @@ import 'package:flutter_sqlite/data/database_service.dart';
 import 'package:flutter_sqlite/model/music.dart';
 import 'package:flutter_sqlite/widgets/appbar_widget.dart';
 
-
 import 'music_screen.dart';
 
 class HomePage extends StatefulWidget {

@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sqlite/model/music.dart';
 
 import '../css/colors.dart';
 
-class CustomCardWidget extends StatefulWidget {
-  final String title;
-  final String description;
-  final VoidCallback showModal;
-  final VoidCallback deletarMusica;
-  CustomCardWidget(
-      {Key? key,
-      required this.title,
-      required this.description,
-      required this.showModal,
-      required this.deletarMusica})
-      : super(key: key);
+class CustomCardWidget extends StatelessWidget {
+  Music music;
+  final Function(Music) onEdit;
+  final Function(Music) onDelete;
+  CustomCardWidget({
+    Key? key,
+    required this.music,
+    required this.onEdit,
+    required this.onDelete,
+  }) : super(key: key);
 
-  @override
-  State<CustomCardWidget> createState() => _CustomCardWidgetState();
-}
-
-class _CustomCardWidgetState extends State<CustomCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,13 +49,16 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Musica - ${widget.title}'),
+                      Text(
+                        'Musica - ${music.title}',
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
                       SizedBox(
                         height: 15,
                       ),
                       Text(
-                        "descrição - ${widget.description}",
-                        style: TextStyle(color: Colors.white),
+                        "descrição - ${music.description}",
+                        style: Theme.of(context).textTheme.headline2,
                       ),
                     ]),
               ),
@@ -74,11 +71,11 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.edit),
-                      onPressed: () => widget.showModal(),
+                      onPressed: () => onEdit(music),
                     ),
                     IconButton(
                         icon: const Icon(Icons.delete),
-                        onPressed: () => widget.deletarMusica()),
+                        onPressed: () => onDelete(music)),
                   ],
                 ),
               ),

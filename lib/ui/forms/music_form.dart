@@ -54,9 +54,9 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextFormField(
                   onChanged: (value) {
@@ -64,7 +64,13 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                       _titleController = value;
                     });
                   },
-                  decoration: const InputDecoration(hintText: 'Title'),
+                  decoration: InputDecoration(
+                    hintText: "Title",
+                    prefixIcon: Icon(
+                      Icons.app_registration_sharp,
+                      size: 21,
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -75,12 +81,23 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                       _descriptionController = value;
                     });
                   },
-                  decoration: const InputDecoration(hintText: 'Description'),
+                  decoration: const InputDecoration(
+                    hintText: 'Description',
+                    prefixIcon: Icon(
+                      Icons.app_registration_sharp,
+                      size: 21,
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
                   onPressed: _onSave,
                   child: const Text('submit'),
                 )

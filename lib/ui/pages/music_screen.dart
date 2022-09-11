@@ -5,6 +5,8 @@ import 'package:flutter_sqlite/model/music.dart';
 import 'package:flutter_sqlite/ui/forms/music_form.dart';
 import 'package:flutter_sqlite/widgets/appbar_widget.dart';
 
+import '../../widgets/card_widget.dart';
+
 class MusicScreen extends StatefulWidget {
   const MusicScreen({Key? key}) : super(key: key);
 
@@ -67,11 +69,12 @@ class _MusicScreenState extends State<MusicScreen> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               final music = snapshot.data![index];
-                              return CardWdiget(
+                              return CustomCardWidget(
                                 music: music,
                                 onDelete: onMusicDelete,
                                 onEdit: (value) {
@@ -96,104 +99,5 @@ class _MusicScreenState extends State<MusicScreen> {
                     );
                   }
                 })));
-  }
-}
-
-class CardWdiget extends StatelessWidget {
-  Music music;
-  final Function(Music) onEdit;
-  final Function(Music) onDelete;
-
-  CardWdiget({
-    Key? key,
-    required this.music,
-    required this.onEdit,
-    required this.onDelete,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            children: [
-              Container(
-                height: 40.0,
-                width: 40.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                alignment: Alignment.center,
-                child: Container(),
-              ),
-              SizedBox(width: 20.0),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      music.title.toString(),
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(height: 4.0),
-                    SizedBox(height: 4.0),
-                    Row(
-                      children: [
-                        Text('Age: ${music.description.toString()}'),
-                        Container(
-                          height: 15.0,
-                          width: 15.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4.0),
-                            border: Border.all(
-                              width: 1.5,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 20.0),
-              GestureDetector(
-                onTap: () => onEdit(music),
-                child: Container(
-                  height: 40.0,
-                  width: 40.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(
-                    Icons.edit,
-                  ),
-                ),
-              ),
-              SizedBox(width: 20.0),
-              GestureDetector(
-                onTap: () => onDelete(music),
-                child: Container(
-                  height: 40.0,
-                  width: 40.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(
-                    Icons.delete,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
