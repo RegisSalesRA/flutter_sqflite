@@ -1,20 +1,18 @@
-
 // ignore_for_file: non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/data/database_service.dart';
-import 'package:flutter_sqlite/model/music.dart';
+import 'package:flutter_sqlite/model/model.dart';
+import 'package:flutter_sqlite/ui/pages/pages.dart';
 import 'package:flutter_sqlite/widgets/widgets.dart';
 
-import 'music_screen.dart';
-
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  HomePageState createState() => HomePageState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class HomePageState extends State<HomePage> {
+class HomeScreenState extends State<HomeScreen> {
   var isLoading = false;
   List<String> Menu = ["Categorys", "Musics", "Albuns"];
   final DatabaseService _databaseService = DatabaseService();
@@ -22,15 +20,17 @@ class HomePageState extends State<HomePage> {
   _menuOptions(String options) {
     switch (options) {
       case "Musics":
-       
+        Navigator.of(context)
+            .push(MaterialPageRoute(
+              builder: (_) => const MusicScreen(),
+            ))
+            .then((_) => setState(() {}));
         break;
 
       case "Categorias":
-        
         break;
 
       case "Albuns":
-        
         break;
     }
   }
@@ -42,7 +42,7 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: AppBarWidget(
           title: 'Flutter Sqflite',
           actionsAppBar: Row(
             children: [
@@ -92,6 +92,18 @@ class HomePageState extends State<HomePage> {
                           final music = snapshot.data![index];
                           return CustomCardWidget(
                             music: music,
+                            onDetails: (value) {
+                              {
+                                Navigator.of(context)
+                                    .push(
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            DetailScreen(music: value),
+                                      ),
+                                    )
+                                    .then((_) => setState(() {}));
+                              }
+                            },
                             onDelete: null,
                             onEdit: null,
                             details: true,
@@ -106,15 +118,6 @@ class HomePageState extends State<HomePage> {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(
-                  builder: (_) => const MusicScreen(),
-                ))
-                .then((_) => setState(() {}));
-          }),
     );
   }
 }

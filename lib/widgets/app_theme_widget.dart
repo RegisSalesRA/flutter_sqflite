@@ -82,7 +82,7 @@ class App extends StatelessWidget {
             ),
           ),
           iconTheme: const IconThemeData(size: 25, color: Palette.primaryColor,)),
-      home: const HomePage(),
+      home: const HomeScreen(),
     );
   }
 }

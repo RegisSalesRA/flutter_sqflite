@@ -5,12 +5,14 @@ import '../model/model.dart';
 
 class CustomCardWidget extends StatelessWidget {
   final Music music;
+  final Function(Music)? onDetails;
   final Function(Music)? onEdit;
   final Function(Music)? onDelete;
   final bool details;
   const CustomCardWidget({
     Key? key,
     required this.music,
+    required this.onDetails,
     required this.onEdit,
     required this.onDelete,
     required this.details,
@@ -75,7 +77,7 @@ class CustomCardWidget extends StatelessWidget {
                         ? Center(
                             child: IconButton(
                               icon: const Icon(Icons.assignment),
-                              onPressed: () => print('Detalhes'),
+                              onPressed: () => onDetails!(music),
                             ),
                           )
                         : SizedBox(

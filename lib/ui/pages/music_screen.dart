@@ -50,7 +50,7 @@ class _MusicScreenState extends State<MusicScreen> {
             style: TextStyle(fontSize: 20),
           ),
         ),
-        appBar: MyAppBar(
+        appBar: AppBarWidget(
           title: "Musica Widget",
           actionsAppBar: Container(),
         ),
@@ -74,6 +74,7 @@ class _MusicScreenState extends State<MusicScreen> {
                           return CustomCardWidget(
                             details: false,
                             music: music,
+                            onDetails: null,
                             onDelete: onMusicDelete,
                             onEdit: (value) {
                               {
