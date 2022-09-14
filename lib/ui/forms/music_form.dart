@@ -1,7 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/data/database_service.dart';
 
-import '../../model/music.dart';
+import '../../model/model.dart';
 
 class MusicScreenForm extends StatefulWidget {
   final Music? music;
@@ -49,7 +51,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("music form")),
+      appBar: AppBar(title: const Text("music form")),
       body: SafeArea(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -64,7 +66,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                       _titleController = value;
                     });
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "Title",
                     prefixIcon: Icon(
                       Icons.app_registration_sharp,

@@ -40,12 +40,12 @@ class _MusicScreenState extends State<MusicScreen> {
             Navigator.of(context)
                 .push(
                   MaterialPageRoute(
-                    builder: (_) => MusicScreenForm(),
+                    builder: (_) => const MusicScreenForm(),
                   ),
                 )
                 .then((_) => setState(() {}));
           },
-          child: Text(
+          child: const Text(
             "+",
             style: TextStyle(fontSize: 20),
           ),
@@ -59,44 +59,40 @@ class _MusicScreenState extends State<MusicScreen> {
                 future: _getMusics(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   } else if (snapshot.hasData && !snapshot.hasError) {
-                    return SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              final music = snapshot.data![index];
-                              return CustomCardWidget(
-                                music: music,
-                                onDelete: onMusicDelete,
-                                onEdit: (value) {
-                                  {
-                                    Navigator.of(context)
-                                        .push(
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                MusicScreenForm(music: value),
-                                          ),
-                                        )
-                                        .then((_) => setState(() {}));
-                                  }
-                                },
-                              );
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          final music = snapshot.data![index];
+                          return CustomCardWidget(
+                            details: false,
+                            music: music,
+                            onDelete: onMusicDelete,
+                            onEdit: (value) {
+                              {
+                                Navigator.of(context)
+                                    .push(
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            MusicScreenForm(music: value),
+                                      ),
+                                    )
+                                    .then((_) => setState(() {}));
+                              }
                             },
-                          ),
-                        ));
-                  } else {
-                    return Container(
-                      child: Center(child: Text("Nenhum dado cadastrado")),
+                          );
+                        },
+                      ),
                     );
+                  } else {
+                    return const Center(child: Text("Nenhum dado cadastrado"));
                   }
                 })));
   }

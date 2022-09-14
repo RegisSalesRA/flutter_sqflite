@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sqlite/model/music.dart';
 
-import '../css/colors.dart';
+import '../helpers/helpers.dart';
+import '../model/model.dart';
 
 class CustomCardWidget extends StatelessWidget {
-  Music music;
-  final Function(Music) onEdit;
-  final Function(Music) onDelete;
-  CustomCardWidget({
+  final Music music;
+  final Function(Music)? onEdit;
+  final Function(Music)? onDelete;
+  final bool details;
+  const CustomCardWidget({
     Key? key,
     required this.music,
     required this.onEdit,
     required this.onDelete,
+    required this.details,
   }) : super(key: key);
 
   @override
@@ -23,11 +25,11 @@ class CustomCardWidget extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             ),
           ],
           color: Colors.grey.shade300,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         height: 100,
         margin: const EdgeInsets.all(15),
@@ -37,15 +39,15 @@ class CustomCardWidget extends StatelessWidget {
               flex: 2,
               child: Container(
                 height: double.infinity,
-                decoration: BoxDecoration(
-                  color: CustomColors.card,
+                decoration: const BoxDecoration(
+                  color: Palette.primaryColorLight,
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(8),
                       topLeft: Radius.circular(8),
                       topRight: Radius.circular(32),
                       bottomRight: Radius.circular(32)),
                 ),
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -53,7 +55,7 @@ class CustomCardWidget extends StatelessWidget {
                         'Musica - ${music.title}',
                         style: Theme.of(context).textTheme.headline2,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Text(
@@ -64,18 +66,30 @@ class CustomCardWidget extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: double.infinity,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () => onEdit(music),
-                    ),
-                    IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () => onDelete(music)),
+                    details == true
+                        ? Center(
+                            child: IconButton(
+                              icon: const Icon(Icons.assignment),
+                              onPressed: () => print('Detalhes'),
+                            ),
+                          )
+                        : SizedBox(
+                            child: Row(children: [
+                              IconButton(
+                                icon: const Icon(Icons.edit),
+                                onPressed: () => onEdit!(music),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () => onDelete!(music),
+                              ),
+                            ]),
+                          )
                   ],
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter_sqlite/model/category.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -81,8 +82,7 @@ class DatabaseService {
       'music',
       music.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    print("Adicionado com Sucesso");
+    ); 
   }
 
   // A method that retrieves all the category from the categorys table.
