@@ -61,7 +61,7 @@ class CustomCardWidget extends StatelessWidget {
                         height: 15,
                       ),
                       Text(
-                        "descrição - ${music.description}",
+                        "Album - ${music.description}",
                         style: Theme.of(context).textTheme.headline2,
                       ),
                     ]),

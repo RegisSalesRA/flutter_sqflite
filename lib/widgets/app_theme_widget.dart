@@ -39,9 +39,20 @@ class App extends StatelessWidget {
             ),
             headline2: TextStyle(
               overflow: TextOverflow.ellipsis,
-              fontSize: 13,
+              fontSize: 17,
               fontWeight: FontWeight.bold,
               color: Palette.textColor,
+            ),
+            headline3: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: Palette.textColor,
+            ),
+            headline4: TextStyle(
+//overflow: TextOverflow.ellipsis,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Palette.textCard,
             ),
           ),
           // Input Css
@@ -81,7 +92,10 @@ class App extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
           ),
-          iconTheme: const IconThemeData(size: 25, color: Palette.primaryColor,)),
+          iconTheme: const IconThemeData(
+            size: 25,
+            color: Palette.primaryColor,
+          )),
       home: const HomeScreen(),
     );
   }

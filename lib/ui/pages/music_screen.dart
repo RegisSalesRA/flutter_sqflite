@@ -27,32 +27,26 @@ class _MusicScreenState extends State<MusicScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _getMusics();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context)
-                .push(
-                  MaterialPageRoute(
-                    builder: (_) => const MusicScreenForm(),
-                  ),
-                )
-                .then((_) => setState(() {}));
-          },
-          child: const Text(
-            "+",
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
         appBar: AppBarWidget(
           title: "Musica Widget",
-          actionsAppBar: Container(),
+          actionsAppBar: Padding(
+              padding: const EdgeInsets.only(right: 15, top: 12),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .push(
+                          MaterialPageRoute(
+                            builder: (_) => const MusicScreenForm(),
+                          ),
+                        )
+                        .then((_) => setState(() {}));
+                  },
+                  child: const Text(
+                    "+",
+                    style: TextStyle(fontSize: 25),
+                  ))),
         ),
         body: SafeArea(
             child: FutureBuilder<List<Music>>(

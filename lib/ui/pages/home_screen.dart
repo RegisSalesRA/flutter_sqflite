@@ -1,9 +1,9 @@
-// ignore_for_file: non_constant_identifier_names
 import 'package:flutter/material.dart';
-import 'package:flutter_sqlite/data/database_service.dart';
-import 'package:flutter_sqlite/model/model.dart';
-import 'package:flutter_sqlite/ui/pages/pages.dart';
-import 'package:flutter_sqlite/widgets/widgets.dart';
+import '../../data/database_service.dart';
+import '../../model/model.dart';
+import '../../ui/pages/pages.dart';
+import '../../widgets/widgets.dart';
+import '../../helpers/helpers.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,8 +13,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  var isLoading = false;
-  List<String> Menu = ["Categorys", "Musics", "Albuns"];
+  
+  List<String> menu = ["Categorys", "Musics", "Albuns"];
   final DatabaseService _databaseService = DatabaseService();
 
   _menuOptions(String options) {
@@ -49,7 +49,7 @@ class HomeScreenState extends State<HomeScreen> {
               PopupMenuButton<String>(
                 onSelected: _menuOptions,
                 itemBuilder: (context) {
-                  return Menu.map((String item) {
+                  return menu.map((String item) {
                     return PopupMenuItem<String>(
                       value: item,
                       child: Text(item),
@@ -94,6 +94,7 @@ class HomeScreenState extends State<HomeScreen> {
                             music: music,
                             onDetails: (value) {
                               {
+                                closeKeyboard(context);
                                 Navigator.of(context)
                                     .push(
                                       MaterialPageRoute(
