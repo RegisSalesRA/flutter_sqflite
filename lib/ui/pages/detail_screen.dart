@@ -30,15 +30,21 @@ class DetailScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: 180,
+                      height: 300,
                       width: double.infinity,
                       padding: const EdgeInsets.all(10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
+                          const Center(
+                            child: Icon(
+                              Icons.assignment,
+                              size: 100,
+                            ),
+                          ),
                           Text(
-                            "Musica: ${music.id}",
+                            "Musica - Dream Theater - ${music.id}",
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           const Divider(
@@ -46,7 +52,7 @@ class DetailScreen extends StatelessWidget {
                             color: Palette.primaryColorDark,
                           ),
                           Text(
-                            "Categoria: ",
+                            "Categoria - Heavy Metal",
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           const Divider(
@@ -54,7 +60,7 @@ class DetailScreen extends StatelessWidget {
                             color: Palette.primaryColorDark,
                           ),
                           Text(
-                            "Album: ",
+                            "Album - The black Clouds And Silver ",
                             style: Theme.of(context).textTheme.headline4,
                           ),
                           const Divider(

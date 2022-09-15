@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../animations/animations.dart';
 import '../../data/database_service.dart';
 import '../../model/model.dart';
 import '../../ui/pages/pages.dart';
@@ -13,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  
   List<String> menu = ["Categorys", "Musics", "Albuns"];
   final DatabaseService _databaseService = DatabaseService();
 
@@ -90,25 +90,33 @@ class HomeScreenState extends State<HomeScreen> {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           final music = snapshot.data![index];
-                          return CustomCardWidget(
-                            music: music,
-                            onDetails: (value) {
-                              {
-                                closeKeyboard(context);
-                                Navigator.of(context)
-                                    .push(
-                                      MaterialPageRoute(
-                                        builder: (_) =>
-                                            DetailScreen(music: value),
-                                      ),
+                          return AnimatedFadedText(
+                              direction: 1,
+                              child: CustomCardWidget(
+                                  music: music,
+                                  onDetails: (value) {
+                                    {
+                                      closeKeyboard(context);
+                                      Navigator.of(context)
+                                          .push(
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  DetailScreen(music: value),
+                                            ),
+                                          )
+                                          .then((_) => setState(() {}));
+                                    }
+                                  },
+                                  onDelete: null,
+                                  onEdit: null,
+                                  details: true,
+                                  children: [
+                                    Text(
+                                      music.title.toString(),
+                                      style:
+                                          Theme.of(context).textTheme.headline2,
                                     )
-                                    .then((_) => setState(() {}));
-                              }
-                            },
-                            onDelete: null,
-                            onEdit: null,
-                            details: true,
-                          );
+                                  ]));
                         },
                       ),
                     );

@@ -9,14 +9,16 @@ class CustomCardWidget extends StatelessWidget {
   final Function(Music)? onEdit;
   final Function(Music)? onDelete;
   final bool details;
-  const CustomCardWidget({
-    Key? key,
-    required this.music,
-    required this.onDetails,
-    required this.onEdit,
-    required this.onDelete,
-    required this.details,
-  }) : super(key: key);
+  final List<Widget>? children;
+  const CustomCardWidget(
+      {Key? key,
+      required this.music,
+      required this.onDetails,
+      required this.onEdit,
+      required this.onDelete,
+      required this.details,
+      required this.children})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class CustomCardWidget extends StatelessWidget {
               child: Container(
                 height: double.infinity,
                 decoration: const BoxDecoration(
-                  color: Palette.primaryColorLight,
+                  color: Palette.primaryColor,
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(8),
                       topLeft: Radius.circular(8),
@@ -52,19 +54,8 @@ class CustomCardWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(15),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Musica - ${music.title}',
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Album - ${music.description}",
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                    ]),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: children!),
               ),
             ),
             Expanded(

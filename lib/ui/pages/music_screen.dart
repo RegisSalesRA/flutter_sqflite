@@ -5,6 +5,7 @@ import 'package:flutter_sqlite/model/music.dart';
 import 'package:flutter_sqlite/ui/forms/music_form.dart';
 import 'package:flutter_sqlite/widgets/appbar_widget.dart';
 
+import '../../animations/animations.dart';
 import '../../widgets/card_widget.dart';
 
 class MusicScreen extends StatefulWidget {
@@ -65,23 +66,37 @@ class _MusicScreenState extends State<MusicScreen> {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           final music = snapshot.data![index];
-                          return CustomCardWidget(
-                            details: false,
-                            music: music,
-                            onDetails: null,
-                            onDelete: onMusicDelete,
-                            onEdit: (value) {
-                              {
-                                Navigator.of(context)
-                                    .push(
-                                      MaterialPageRoute(
-                                        builder: (_) =>
-                                            MusicScreenForm(music: value),
-                                      ),
-                                    )
-                                    .then((_) => setState(() {}));
-                              }
-                            },
+                          return AnimatedFadedText(
+                            direction: 1,
+                            child: CustomCardWidget(
+                              details: false,
+                              music: music,
+                              onDetails: null,
+                              onDelete: onMusicDelete,
+                              children: [Text(
+                        'Musica - ${music.title}',
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "Album - ${music.description}",
+                        style: Theme.of(context).textTheme.headline2,
+                      ),],
+                              onEdit: (value) {
+                                {
+                                  Navigator.of(context)
+                                      .push(
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              MusicScreenForm(music: value),
+                                        ),
+                                      )
+                                      .then((_) => setState(() {}));
+                                }
+                              },
+                            ),
                           );
                         },
                       ),
