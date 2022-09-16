@@ -43,6 +43,10 @@ class DetailScreen extends StatelessWidget {
                               size: 100,
                             ),
                           ),
+                          const Divider(
+                            thickness: 2,
+                            color: Palette.primaryColorDark,
+                          ),
                           Text(
                             "Musica - Dream Theater - ${music.id}",
                             style: Theme.of(context).textTheme.headline4,

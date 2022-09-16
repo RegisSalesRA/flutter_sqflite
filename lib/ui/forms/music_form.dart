@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/data/database_service.dart';
+import 'package:flutter_sqlite/helpers/helpers.dart';
 
 import '../../model/model.dart';
+import '../../widgets/widgets.dart';
 
 class MusicScreenForm extends StatefulWidget {
   final Music? music;
@@ -16,36 +18,50 @@ class MusicScreenForm extends StatefulWidget {
 class _MusicScreenFormState extends State<MusicScreenForm> {
   final DatabaseService _databaseService = DatabaseService();
 
-  String _titleController = "";
-  String _descriptionController = "";
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final choice = TextEditingController();
 
   Future<void> _onSave() async {
     widget.music == null
         ? // Add save code here
         await _databaseService.insertMusic(
             Music(
-              title: _titleController,
-              description: _descriptionController,
+              title: titleController.text,
+              description: choice.text,
               data: DateTime.now().toString(),
             ),
           )
         : await _databaseService.updateMusic(Music(
             id: widget.music!.id!,
-            title: _titleController,
-            description: _descriptionController,
+            title: titleController.text,
+            description: choice.text,
             data: DateTime.now().toString(),
           ));
 
     Navigator.pop(context);
   }
 
+  List<Map<String, dynamic>> devLevel = [
+    {"name": "Junior"},
+    {"name": "Pleno"},
+    {"name": "Senior"},
+  ];
+
   @override
   void initState() {
     super.initState();
     if (widget.music != null) {
-      _titleController = widget.music!.title!;
-      _descriptionController = widget.music!.description!;
+      titleController.text = widget.music!.title!;
+      descriptionController.text = widget.music!.description!;
     }
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
   }
 
   @override
@@ -60,37 +76,60 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TextFormField(
-                  onChanged: (value) {
-                    setState(() {
-                      _titleController = value;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    hintText: "Title",
-                    prefixIcon: Icon(
-                      Icons.app_registration_sharp,
-                      size: 21,
-                    ),
-                  ),
+                const SizedBox(
+                  height: 10,
+                ),
+                CustomTextFormWidget(
+                  hintText: 'Title',
+                  controller: titleController,
+                  icon: Icons.app_registration_sharp,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  onChanged: (value) {
-                    setState(() {
-                      _descriptionController = value;
-                    });
-                  },
-                  decoration: const InputDecoration(
-                    hintText: 'Description',
-                    prefixIcon: Icon(
-                      Icons.app_registration_sharp,
-                      size: 21,
-                    ),
-                  ),
+                CustomTextFormWidget(
+                  hintText: 'Description',
+                  controller: descriptionController,
+                  icon: Icons.app_registration_sharp,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
+                // DropDown
+                DropDownWidget(
+                  dropdownItens: devLevel.map(
+                    (val) {
+                      return DropdownMenuItem<String>(
+                        value: val["name"],
+                        child: Text(val["name"]),
+                      );
+                    },
+                  ).toList(),
+                  hint: choice.text == ''
+                      ? const Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Text(
+                            'Select option',
+                            style: TextStyle(
+                                fontSize: 15, color: Palette.primaryColor),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Text(
+                            choice.text,
+                            style: const TextStyle(color: Palette.primaryColor),
+                          ),
+                        ),
+                  getValue: (val) {
+                    setState(
+                      () {
+                        choice.text = val!;
+                      },
+                    );
+                  },
+                ),
+                // DropDown
                 const SizedBox(
                   height: 20,
                 ),
