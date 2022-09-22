@@ -49,7 +49,7 @@ class App extends StatelessWidget {
               color: Palette.textColor,
             ),
             headline4: TextStyle(
-//overflow: TextOverflow.ellipsis,
+              //overflow: TextOverflow.ellipsis,
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Palette.textCard,
@@ -92,9 +92,9 @@ class App extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
             ),
           ),
-          iconTheme: const IconThemeData(
-            size: 25,
-            color: Palette.primaryColor,
+          iconTheme: IconThemeData(
+            size: 28,
+            color: Colors.grey.shade600,
           )),
       home: const HomeScreen(),
     );

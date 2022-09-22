@@ -19,7 +19,8 @@ abstract class Palette {
 
   static const Color primaryColor = Color.fromRGBO(0, 37, 77, 1);
   static const Color primaryColorLight = Color.fromRGBO(0, 73, 153, 1);
-  static const Color primaryColorDark = Color(0xFF000000);
+  static const Color primaryColorDark = Color(0xFF021338);
   static const Color textColor = (Color(0xFFFFFFFF));
   static const Color textCard = (Color.fromARGB(255, 0, 0, 0));
+  static const Color primaryTest = Color.fromRGBO(168, 149, 50, 1);
 }

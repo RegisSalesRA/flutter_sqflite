@@ -5,7 +5,8 @@ class AnimatedFadedText extends StatefulWidget {
   final Widget? child;
   final double? direction;
 
-  const AnimatedFadedText({Key? key, this.child, this.direction}) : super(key: key);
+  const AnimatedFadedText({Key? key, this.child, this.direction})
+      : super(key: key);
 
   @override
   State<AnimatedFadedText> createState() => _AnimatedFadedTextState();
@@ -18,8 +19,9 @@ class _AnimatedFadedTextState extends State<AnimatedFadedText>
   @override
   void initState() {
     _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
-    Timer(const Duration(milliseconds: 200), () => _animationController.forward());
+        vsync: this, duration: const Duration(milliseconds: 300));
+    Timer(const Duration(milliseconds: 200),
+        () => _animationController.forward());
     super.initState();
   }
 
