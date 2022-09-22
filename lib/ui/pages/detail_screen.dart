@@ -112,7 +112,21 @@ class DetailScreen extends StatelessWidget {
                                 style: const TextStyle(
                                     color: Palette.primaryColorDark),
                               ),
-                            ))
+                            )),
+                            Container(
+                                height: 50,
+                                decoration: const BoxDecoration(
+                                    color: Palette.primaryColorDark,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                                child: const Center(
+                                  child: IconButton(
+                                      onPressed: null,
+                                      icon: Icon(
+                                        Icons.assignment,
+                                        color: Colors.white,
+                                      )),
+                                ))
                           ]),
                         )
                       ],
