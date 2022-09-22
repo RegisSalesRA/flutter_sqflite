@@ -20,7 +20,7 @@ class DetailScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: Palette.primaryColorDark),
         title: Text(
           music.title!,
-          style: TextStyle(color: Palette.primaryColorDark),
+          style: const TextStyle(color: Palette.primaryColorDark),
         ),
         centerTitle: true,
         elevation: 0,

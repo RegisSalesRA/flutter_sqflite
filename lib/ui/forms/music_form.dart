@@ -5,7 +5,7 @@ import 'package:flutter_sqlite/data/database_service.dart';
 import 'package:flutter_sqlite/helpers/helpers.dart';
 
 import '../../model/model.dart';
-import '../../widgets/widgets.dart';
+import '../pages/widgets/widgets.dart';
 
 class MusicScreenForm extends StatefulWidget {
   final Music? music;

@@ -3,7 +3,7 @@ import '../../animations/animations.dart';
 import '../../data/database_service.dart';
 import '../../model/model.dart';
 import '../../ui/pages/pages.dart';
-import '../../widgets/widgets.dart';
+import 'widgets/widgets.dart';
 import '../../helpers/helpers.dart';
 
 class HomeScreen extends StatefulWidget {
