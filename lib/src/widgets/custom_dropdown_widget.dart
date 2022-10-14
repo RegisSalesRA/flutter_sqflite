@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../config/config.dart';
+import '../../config/config.dart';
 
 class DropDownWidget extends StatefulWidget {
   final Function(String?) getValue;

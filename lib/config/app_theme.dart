@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../ui/pages/pages.dart';
+import '../src/modules/home/home_screen.dart';
 import 'config.dart';
 
 class App extends StatelessWidget {

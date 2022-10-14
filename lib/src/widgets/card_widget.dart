@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/config/config.dart';
 
-import '../../../model/model.dart';
+import '../../model/model.dart';
 
 class CustomCardWidget extends StatelessWidget {
   final Music music;

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/config/config.dart';
-import '../../animations/animations.dart';
-import '../../data/database_service.dart';
-import '../../model/model.dart';
-import '../../ui/pages/pages.dart';
-import 'widgets/widgets.dart';
-import '../../helpers/helpers.dart';
+import '../../../animations/animations.dart';
+import '../../../data/database_service.dart';
+import '../../../model/model.dart';
+
+import '../../widgets/widgets.dart';
+import '../../../helpers/helpers.dart';
+import '../music/music_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
