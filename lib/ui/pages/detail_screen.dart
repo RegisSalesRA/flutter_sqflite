@@ -13,14 +13,21 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.assignment,
+          color: Colors.white,
+          size: 26,
+        ),
+        onPressed: () {},
+      ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: Palette.primaryColorDark),
-        title: Text(
-          music.title!,
-          style: const TextStyle(color: Palette.primaryColorDark),
+        title: const Text(
+          'Details',
+          style: TextStyle(color: Palette.primaryColorDark),
         ),
         centerTitle: true,
         elevation: 0,
@@ -37,21 +44,8 @@ class DetailScreen extends StatelessWidget {
           child: Stack(
         children: [
           Positioned(
-            top: size.height * 0.15,
-            bottom: size.height * 0.30,
-            right: 0,
-            left: 0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                'assets/images/backDetailPageImage.jpg',
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          Positioned(
-            top: size.height * 0.05,
-            bottom: size.height * 0.25,
+            top: 25,
+            bottom: 100,
             right: 0,
             left: 0,
             child: Container(
@@ -70,7 +64,7 @@ class DetailScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: size.height * 0.40,
+            top: 220,
             right: 30,
             bottom: 0,
             left: 30,
@@ -79,60 +73,50 @@ class DetailScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                   child: Container(
-                    color: Palette.greyShadeLight,
+                    color: Colors.grey.shade400,
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       children: [
                         Container(
-                          width: double.infinity,
+                          alignment: Alignment.center,
+                          width: size.width,
                           height: size.height * 0.40,
                           decoration: BoxDecoration(
-                            color: Palette.greyShadeLight,
+                            color: Colors.grey.shade400,
                           ),
                           child: Column(children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Palette.greyShadeLight,
-                              ),
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: Center(
-                                  child: Text(
-                                " '${music.title}' ",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    color: Palette.primaryColorDark),
-                              )),
-                            ),
-                            Expanded(
-                                child: SingleChildScrollView(
-                              physics: const BouncingScrollPhysics(),
-                              child: Text(
-                                music.description!,
-                                style: const TextStyle(
-                                    color: Palette.primaryColorDark),
-                              ),
+                            Center(
+                                child: Text(
+                              " '${music.title}' ",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Palette.primaryColorDark),
                             )),
-                            Container(
-                                height: 50,
-                                decoration: const BoxDecoration(
-                                    color: Palette.primaryColorDark,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                child: const Center(
-                                  child: IconButton(
-                                      onPressed: null,
-                                      icon: Icon(
-                                        Icons.assignment,
-                                        color: Colors.white,
-                                      )),
-                                ))
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Expanded(
+                              child: SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: Text(
+                                  """
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Iporem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+""",
+                                  style: TextStyle(
+                                      color: Palette.primaryColorDark),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                           ]),
-                        )
+                        ),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           )
