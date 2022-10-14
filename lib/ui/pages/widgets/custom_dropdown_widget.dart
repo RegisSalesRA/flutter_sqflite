@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../../helpers/helpers.dart';
+import '../../../config/config.dart';
 
-// ignore: must_be_immutable
 class DropDownWidget extends StatefulWidget {
   final Function(String?) getValue;
-  List<DropdownMenuItem<String>> dropdownItens = [];
+  final List<DropdownMenuItem<String>> dropdownItens;
   final Widget? hint;
 
-  DropDownWidget(
+  const DropDownWidget(
       {Key? key,
       required this.getValue,
       required this.dropdownItens,

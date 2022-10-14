@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sqlite/config/config.dart';
 
-import '../../../helpers/helpers.dart';
 import '../../../model/model.dart';
 
 class CustomCardWidget extends StatelessWidget {
@@ -23,70 +23,95 @@ class CustomCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3),
-            ),
-          ],
-          color: Colors.grey.shade300,
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
         ),
-        height: 100,
-        margin: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+        ),
+        height: 60,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                height: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Palette.primaryColor,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(8),
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(32),
-                      bottomRight: Radius.circular(32)),
-                ),
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: children!),
+            Row(children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20)),
+                        border: Border.all(color: Colors.grey.shade400)),
+                    child: Icon(
+                      Icons.music_note,
+                      color: Colors.grey.shade400,
+                      size: 26,
+                    )),
               ),
-            ),
-            Expanded(
-              child: SizedBox(
-                height: double.infinity,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    details == true
-                        ? Center(
-                            child: IconButton(
-                              icon: const Icon(Icons.assignment),
-                              onPressed: () => onDetails!(music),
-                            ),
-                          )
-                        : SizedBox(
-                            child: Row(children: [
-                              IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () => onEdit!(music),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () => onDelete!(music),
-                              ),
-                            ]),
-                          )
-                  ],
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    music.title!,
+                    style: const TextStyle(
+                        fontSize: 15,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.bold,
+                        color: Palette.primaryColor),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Album',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
+                        color: Colors.grey.shade400),
+                  )
+                ],
+              )
+            ]),
+            if (details == true)
+              Row(mainAxisSize: MainAxisSize.min, children: [
+                InkWell(
+                  onTap: () => onDetails!(music),
+                  child: Icon(
+                    Icons.assignment,
+                    color: Colors.grey.shade400,
+                  ),
                 ),
-              ),
-            )
+                const SizedBox(
+                  width: 10,
+                ),
+                Icon(
+                  Icons.favorite_border,
+                  color: Colors.grey.shade400,
+                ),
+              ])
+            else
+              Row(mainAxisSize: MainAxisSize.min, children: [
+                InkWell(
+                  onTap: () => onEdit!(music),
+                  child: Icon(
+                    Icons.edit,
+                    color: Colors.grey.shade400,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                InkWell(
+                  onTap: () => onDelete!(music),
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.grey.shade400,
+                  ),
+                ),
+              ])
           ],
         ));
   }

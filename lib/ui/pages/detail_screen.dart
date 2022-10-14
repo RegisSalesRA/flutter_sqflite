@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sqlite/helpers/helpers.dart';
+import '../../config/config.dart';
 import '../../model/model.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -14,7 +14,7 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Material(
+    return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           child: const Icon(
@@ -26,8 +26,8 @@ class DetailScreen extends StatelessWidget {
             showDialog<String>(
               context: context,
               builder: (BuildContext context) => CupertinoAlertDialog(
-                  title: Text("Album Name"),
-                  content: Text(
+                  title:const Text("Album Name"),
+                  content:const Text(
                       "Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966"),
                   actions: <CupertinoDialogAction>[
                     CupertinoDialogAction(
@@ -59,8 +59,7 @@ class DetailScreen extends StatelessWidget {
                 ))
           ],
         ),
-        body: SafeArea(
-            child: Stack(
+        body: Stack(
           children: [
             Positioned(
               top: size.height * 0.05,
@@ -120,8 +119,8 @@ class DetailScreen extends StatelessWidget {
                                   physics: BouncingScrollPhysics(),
                                   child: Text(
                                     """
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Iporem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-    """,
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Iporem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+      """,
                                     style: TextStyle(
                                         color: Palette.primaryColorDark),
                                   ),
@@ -140,7 +139,7 @@ class DetailScreen extends StatelessWidget {
               ),
             )
           ],
-        )),
+        ),
       ),
     );
   }
