@@ -29,24 +29,26 @@ class _MusicScreenState extends State<MusicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarWidget(
-          title: "Musica Widget",
-          actionsAppBar: Padding(
-              padding: const EdgeInsets.only(right: 15, top: 12),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(
-                          MaterialPageRoute(
-                            builder: (_) => const MusicScreenForm(),
-                          ),
-                        )
-                        .then((_) => setState(() {}));
-                  },
-                  child: const Text(
-                    "+",
-                    style: TextStyle(fontSize: 25),
-                  ))),
+        appBar: AppBar(
+          title: const Text("Musica Widget"),
+          actions: [
+            Padding(
+                padding: const EdgeInsets.only(right: 15, top: 12),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(
+                            MaterialPageRoute(
+                              builder: (_) => const MusicScreenForm(),
+                            ),
+                          )
+                          .then((_) => setState(() {}));
+                    },
+                    child: const Text(
+                      "+",
+                      style: TextStyle(fontSize: 25),
+                    )))
+          ],
         ),
         body: SafeArea(
             child: FutureBuilder<List<Music>>(
@@ -72,17 +74,19 @@ class _MusicScreenState extends State<MusicScreen> {
                               music: music,
                               onDetails: null,
                               onDelete: onMusicDelete,
-                              children: [Text(
-                        'Musica - ${music.title}',
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Album - ${music.description}",
-                        style: Theme.of(context).textTheme.headline2,
-                      ),],
+                              children: [
+                                Text(
+                                  'Musica - ${music.title}',
+                                  style: Theme.of(context).textTheme.headline2,
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "Album - ${music.description}",
+                                  style: Theme.of(context).textTheme.headline2,
+                                ),
+                              ],
                               onEdit: (value) {
                                 {
                                   Navigator.of(context)
