@@ -68,7 +68,7 @@ class HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 50,
+                    height: 25,
                   ),
 
                   // Search Widget
@@ -108,7 +108,7 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                   // Category Scroll Items
                   SizedBox(
-                    height: size.height * 0.20,
+                    height: size.height * 0.25,
                     width: double.infinity,
                     child: ListView.builder(
                       shrinkWrap: true,
@@ -122,7 +122,7 @@ class HomeScreenState extends State<HomeScreen> {
                             decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15))),
-                            height: 150,
+                            height: size.height * 0.20,
                             width: 150,
                             child: ClipRRect(
                               borderRadius:
@@ -143,9 +143,6 @@ class HomeScreenState extends State<HomeScreen> {
                         ]);
                       },
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
                   ),
                   // List Musics Items
                   Expanded(
