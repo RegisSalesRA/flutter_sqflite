@@ -33,139 +33,149 @@ class HomeScreenState extends State<HomeScreen> {
             ),
             body: Container(
               width: size.width,
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    // Search Widget
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: "Pesquise musica aqui...",
-                        suffixIcon: Icon(
-                          Icons.search,
-                          size: 25,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // Category Title
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Categories",
-                          style: TextStyle(
-                              color: Palette.primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "more",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey.shade400),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    // Category Scroll Items
-                    SizedBox(
-                      height: size.height * 0.25,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 9,
-                        itemBuilder: (context, index) {
-                          return Column(children: [
-                            Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15))),
-                              height: size.height * 0.20,
-                              width: 150,
-                              child: ClipRRect(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(15)),
-                                child: Image.asset(
-                                  'assets/images/detailPageImage.png',
-                                  fit: BoxFit.cover,
-                                ),
+                    Column(children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          // Search Widget
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: "Pesquise musica aqui...",
+                              suffixIcon: Icon(
+                                Icons.search,
+                                size: 25,
                               ),
                             ),
-                            const Text(
-                              "Categoria Album",
-                              style: TextStyle(
-                                  color: Palette.primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis),
-                            )
-                          ]);
-                        },
-                      ),
-                    ),
-                    // List Musics Items
-                    FutureBuilder<List<Music>>(
-                        future: _getMusics(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else if (snapshot.hasData && !snapshot.hasError) {
-                            return ListView.builder(
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          // Category Title
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Categories",
+                                style: TextStyle(
+                                    color: Palette.primaryColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "more",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey.shade400),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          // Category Scroll Items
+                          SizedBox(
+                            height: size.height * 0.25,
+                            width: double.infinity,
+                            child: ListView.builder(
                               shrinkWrap: true,
                               physics: const BouncingScrollPhysics(),
-                              itemCount: snapshot.data!.length,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 9,
                               itemBuilder: (context, index) {
-                                final music = snapshot.data![index];
-                                return AnimatedFadedText(
-                                    direction: 1,
-                                    child: CustomCardWidget(
-                                        music: music,
-                                        onDetails: (value) {
-                                          {
-                                            closeKeyboard(context);
-                                            Navigator.of(context)
-                                                .push(
-                                                  MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        DetailScreen(
-                                                            music: value),
-                                                  ),
-                                                )
-                                                .then((_) => setState(() {}));
-                                          }
-                                        },
-                                        onDelete: null,
-                                        onEdit: null,
-                                        details: true,
-                                        children: [
-                                          Text(
-                                            music.title.toString(),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2,
-                                          )
-                                        ]));
+                                return Column(children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15))),
+                                    height: size.height * 0.20,
+                                    width: 150,
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(15)),
+                                      child: Image.asset(
+                                        'assets/images/detailPageImage.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  const Text(
+                                    "Categoria Album",
+                                    style: TextStyle(
+                                        color: Palette.primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.ellipsis),
+                                  )
+                                ]);
                               },
-                            );
-                          } else {
-                            return const Center(
-                                child: Text("Nenhum dado cadastrado"));
-                          }
-                        }),
+                            ),
+                          ),
+                          // List Musics Items
+                          FutureBuilder<List<Music>>(
+                              future: _getMusics(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else if (snapshot.hasData &&
+                                    !snapshot.hasError) {
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, index) {
+                                      final music = snapshot.data![index];
+                                      return AnimatedFadedText(
+                                          direction: 1,
+                                          child: CustomCardWidget(
+                                              music: music,
+                                              onDetails: (value) {
+                                                {
+                                                  closeKeyboard(context);
+                                                  Navigator.of(context)
+                                                      .push(
+                                                        MaterialPageRoute(
+                                                          builder: (_) =>
+                                                              DetailScreen(
+                                                                  music: value),
+                                                        ),
+                                                      )
+                                                      .then((_) =>
+                                                          setState(() {}));
+                                                }
+                                              },
+                                              onDelete: null,
+                                              onEdit: null,
+                                              details: true,
+                                              children: [
+                                                Text(
+                                                  music.title.toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline2,
+                                                )
+                                              ]));
+                                    },
+                                  );
+                                } else {
+                                  return const Center(
+                                      child: Text("Nenhum dado cadastrado"));
+                                }
+                              }),
+                        ],
+                      ),
+                    ]),
                     // Actions Pages Buttons
                     Container(
                       height: 75,
@@ -212,9 +222,6 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 15,
                     ),
                   ],
                 ),
