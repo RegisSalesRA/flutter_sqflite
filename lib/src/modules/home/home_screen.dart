@@ -6,6 +6,7 @@ import '../../../model/model.dart';
 
 import '../../widgets/widgets.dart';
 import '../../../helpers/helpers.dart';
+import '../category/category_screen.dart';
 import '../music/music_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -185,10 +186,17 @@ class HomeScreenState extends State<HomeScreen> {
                             color: Colors.grey.shade400,
                             size: 25,
                           ),
-                          Icon(
-                            Icons.category_outlined,
-                            color: Colors.grey.shade400,
-                            size: 25,
+                          InkWell(
+                            onTap: () => Navigator.of(context)
+                                .push(MaterialPageRoute(
+                                  builder: (_) => const CategoryScreen(),
+                                ))
+                                .then((_) => setState(() {})),
+                            child: Icon(
+                              Icons.category_outlined,
+                              color: Colors.grey.shade400,
+                              size: 25,
+                            ),
                           ),
                           InkWell(
                             onTap: () => Navigator.of(context)

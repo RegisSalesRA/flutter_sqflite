@@ -82,7 +82,7 @@ class DatabaseService {
       'music',
       music.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
-    ); 
+    );
   }
 
   // A method that retrieves all the category from the categorys table.

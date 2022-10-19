@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/data/database_service.dart';
 
-import '../../config/config.dart';
-import '../../model/model.dart';
-import '../widgets/widgets.dart';
+import '../../../config/config.dart';
+import '../../../model/model.dart';
+import '../../widgets/widgets.dart';
 
 class MusicScreenForm extends StatefulWidget {
   final Music? music;
