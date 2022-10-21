@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/config/config.dart';
-import 'package:sqflite/utils/utils.dart';
+
 import '../../../animations/animations.dart';
 import '../../../data/database_service.dart';
 import '../../../model/model.dart';

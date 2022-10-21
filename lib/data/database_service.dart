@@ -1,9 +1,9 @@
-import 'package:flutter_sqlite/model/category.dart';
-// ignore: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../model/music.dart';
+import '../model/model.dart';
 
 class DatabaseService {
   // Singleton pattern
@@ -39,7 +39,7 @@ class DatabaseService {
   // When the database is first created, create a table to store category
   // and a table to store musics.
   Future<void> _onCreate(Database db, int version) async {
-    // Run the CREATE {category} TABLE statement on the database.
+    // Run the CREATE {music} TABLE statement on the database.
     await db.execute('''
       CREATE TABLE music (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -50,7 +50,7 @@ class DatabaseService {
             FOREIGN KEY (categoryId) REFERENCES category(id) ON DELETE SET NULL 
           )
           ''');
-    // Run the CREATE {musics} TABLE statement on the database.
+    // Run the CREATE {category} TABLE statement on the database.
     await db.execute('''
           CREATE TABLE category (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -58,7 +58,18 @@ class DatabaseService {
             data DATETIME
           )
           ''');
+
+    // Run the CREATE {album} TABLE statement on the database.
+    await db.execute('''
+          CREATE TABLE album (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name STRING NOT NULL,
+            data DATETIME
+          )
+          ''');
   }
+
+// '''''''''''''''''''''''''''' CATEGORY SERVICE ''''''''''''''''''''''''''''
 
   // Define a function that inserts category into the database
   Future<void> insertCategory(Category category) async {
@@ -76,15 +87,6 @@ class DatabaseService {
     );
   }
 
-  Future<void> insertMusic(Music music) async {
-    final db = await _databaseService.database;
-    await db.insert(
-      'music',
-      music.toJson(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
   // A method that retrieves all the category from the categorys table.
   Future<List<Category>> categorys() async {
     // Get a reference to the database.
@@ -96,19 +98,6 @@ class DatabaseService {
     // Convert the List<Map<String, dynamic> into a List<Category>.
     return List.generate(
         maps.length, (index) => Category.fromJson(maps[index]));
-  }
-
-  Future<Category> category(int id) async {
-    final db = await _databaseService.database;
-    final List<Map<String, dynamic>> maps =
-        await db.query('category', where: 'id = ?', whereArgs: [id]);
-    return Category.fromJson(maps[0]);
-  }
-
-  Future<List<Music>> musics() async {
-    final db = await _databaseService.database;
-    final List<Map<String, dynamic>> maps = await db.query('music');
-    return List.generate(maps.length, (index) => Music.fromJson(maps[index]));
   }
 
   // A method that updates a category data from the categorys table.
@@ -127,10 +116,11 @@ class DatabaseService {
     );
   }
 
-  Future<void> updateMusic(Music music) async {
+  Future<Category> category(int id) async {
     final db = await _databaseService.database;
-    await db.update('music', music.toJson(),
-        where: 'id = ?', whereArgs: [music.id]);
+    final List<Map<String, dynamic>> maps =
+        await db.query('category', where: 'id = ?', whereArgs: [id]);
+    return Category.fromJson(maps[0]);
   }
 
   // A method that deletes a category data from the categorys table.
@@ -148,8 +138,65 @@ class DatabaseService {
     );
   }
 
+// '''''''''''''''''''''''''''' CATEGORY SERVICE END ''''''''''''''''''''''''''''
+
+// '''''''''''''''''''''''''''' MUSIC SERVICE ''''''''''''''''''''''''''''
+
+  Future<void> insertMusic(Music music) async {
+    final db = await _databaseService.database;
+    await db.insert(
+      'music',
+      music.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<List<Music>> musics() async {
+    final db = await _databaseService.database;
+    final List<Map<String, dynamic>> maps = await db.query('music');
+    return List.generate(maps.length, (index) => Music.fromJson(maps[index]));
+  }
+
+  Future<void> updateMusic(Music music) async {
+    final db = await _databaseService.database;
+    await db.update('music', music.toJson(),
+        where: 'id = ?', whereArgs: [music.id]);
+  }
+
   Future<void> deleteMusic(int id) async {
     final db = await _databaseService.database;
     await db.delete('music', where: 'id = ?', whereArgs: [id]);
   }
+
+// '''''''''''''''''''''''''''' MUSIC SERVICE END ''''''''''''''''''''''''''''
+
+// '''''''''''''''''''''''''''' ALBUM SERVICE ''''''''''''''''''''''''''''
+
+  Future<void> insertAlbum(Album album) async {
+    final db = await _databaseService.database;
+    await db.insert(
+      'album',
+      album.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<List<Album>> albums() async {
+    final db = await _databaseService.database;
+    final List<Map<String, dynamic>> maps = await db.query('album');
+    return List.generate(maps.length, (index) => Album.fromJson(maps[index]));
+  }
+
+  Future<void> updateAlbum(Album album) async {
+    final db = await _databaseService.database;
+    await db.update('album', album.toJson(),
+        where: 'id = ?', whereArgs: [album.id]);
+  }
+
+  Future<void> deleteAlbum(int id) async {
+    final db = await _databaseService.database;
+    await db.delete('album', where: 'id = ?', whereArgs: [id]);
+  }
 }
+
+// '''''''''''''''''''''''''''' ALBUM SERVICE END ''''''''''''''''''''''''''''
