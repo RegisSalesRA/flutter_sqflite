@@ -88,13 +88,11 @@ class DatabaseService {
   }
 
   // A method that retrieves all the category from the categorys table.
-  Future<List<Category>> categorys() async {
+  Future<List<Category>> categories() async {
     // Get a reference to the database.
     final db = await _databaseService.database;
-
     // Query the table for all the Categorys.
     final List<Map<String, dynamic>> maps = await db.query('category');
-
     // Convert the List<Map<String, dynamic> into a List<Category>.
     return List.generate(
         maps.length, (index) => Category.fromJson(maps[index]));

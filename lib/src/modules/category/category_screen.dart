@@ -17,7 +17,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   final DatabaseService _databaseService = DatabaseService();
 
   Future<List<Category>> _getCategory() async {
-    return await _databaseService.categorys();
+    return await _databaseService.categories();
   }
 
   Future<void> oncategoryDelete(Category category) async {
