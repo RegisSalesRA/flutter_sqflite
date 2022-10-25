@@ -60,7 +60,8 @@ class _MusicScreenState extends State<MusicScreen> {
                     );
                   } else if (snapshot.hasData && !snapshot.hasError) {
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 5.0),
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
