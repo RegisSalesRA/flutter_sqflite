@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/config/config.dart';
+import 'package:sqflite/utils/utils.dart';
 
 import '../../../animations/animations.dart';
 import '../../../data/database_service.dart';
@@ -30,15 +31,25 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              title: const Text('Flutter Sqflite'),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              centerTitle: true,
+              title: const Text(
+                'Flutter Sqflite',
+                style: TextStyle(color: Palette.primaryColor),
+              ),
             ),
-            body: Container(
-              width: size.width,
+            body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,32 +75,9 @@ class HomeScreenState extends State<HomeScreen> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              // Category Title
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    "Categories",
-                                    style: TextStyle(
-                                        color: Palette.primaryColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    "more",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey.shade400),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
                               // Category Scroll Items
                               SizedBox(
-                                height: size.height * 0.25,
+                                height: size.height * 0.27,
                                 width: double.infinity,
                                 child: FutureBuilder<List<Category>>(
                                   future: _getCategorys(),
@@ -98,62 +86,105 @@ class HomeScreenState extends State<HomeScreen> {
                                       case ConnectionState.none:
                                         break;
                                       case ConnectionState.waiting:
-                                        return CircularProgressIndicator();
+                                        return Center(
+                                          child: CircularProgressIndicator(),
+                                        );
                                       case ConnectionState.active:
                                         break;
                                       case ConnectionState.done:
                                         if (snapshot.hasData &&
                                             !snapshot.hasError) {
                                           if (snapshot.data!.length != 0) {
-                                            return ListView.builder(
-                                              shrinkWrap: true,
-                                              physics:
-                                                  const BouncingScrollPhysics(),
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount: snapshot.data!.length,
-                                              itemBuilder: (context, index) {
-                                                final category =
-                                                    snapshot.data![index];
-                                                return Column(children: [
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration: const BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    15))),
-                                                    height: size.height * 0.20,
-                                                    width: 150,
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                                  .all(
-                                                              Radius.circular(
-                                                                  15)),
-                                                      child: Image.asset(
-                                                        'assets/images/detailPageImage.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    category.name!,
+                                            return Column(children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  const Text(
+                                                    "Categories",
                                                     style: TextStyle(
                                                         color: Palette
                                                             .primaryColor,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  Text(
+                                                    "more",
+                                                    style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        overflow: TextOverflow
-                                                            .ellipsis),
+                                                        color: Colors
+                                                            .grey.shade400),
                                                   )
-                                                ]);
-                                              },
-                                            );
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Container(
+                                                height: 200,
+                                                width: size.width,
+                                                child: ListView.builder(
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      const BouncingScrollPhysics(),
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount:
+                                                      snapshot.data!.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    final category =
+                                                        snapshot.data![index];
+                                                    return Column(children: [
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(5),
+                                                        decoration: const BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            15))),
+                                                        height:
+                                                            size.height * 0.20,
+                                                        width: 150,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                      .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          15)),
+                                                          child: Image.asset(
+                                                            'assets/images/detailPageImage.png',
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        category.name!,
+                                                        style: TextStyle(
+                                                            color: Palette
+                                                                .primaryColor,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis),
+                                                      )
+                                                    ]);
+                                                  },
+                                                ),
+                                              )
+                                            ]);
                                           } else {
                                             return Center(
                                               child: Text(
-                                                  "Nenhuma musica cadastrada!"),
+                                                  "Nenhuma categoria cadastrada!"),
                                             );
                                           }
                                         }
@@ -190,7 +221,7 @@ class HomeScreenState extends State<HomeScreen> {
                                                         0) {
                                                       return SizedBox(
                                                           height: size.height *
-                                                              0.35,
+                                                              0.45,
                                                           child: Column(
                                                             children: [
                                                               Expanded(
