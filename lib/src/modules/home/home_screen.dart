@@ -77,7 +77,7 @@ class HomeScreenState extends State<HomeScreen> {
                               ),
                               // Category Scroll Items
                               SizedBox(
-                                height: size.height * 0.27,
+                                height: size.height * 0.30,
                                 width: double.infinity,
                                 child: FutureBuilder<List<Category>>(
                                   future: _getCategorys(),
@@ -124,7 +124,7 @@ class HomeScreenState extends State<HomeScreen> {
                                                 height: 10,
                                               ),
                                               Container(
-                                                height: 200,
+                                                height: size.height * 0.25,
                                                 width: size.width,
                                                 child: ListView.builder(
                                                   shrinkWrap: true,
@@ -150,7 +150,7 @@ class HomeScreenState extends State<HomeScreen> {
                                                                         .circular(
                                                                             15))),
                                                         height:
-                                                            size.height * 0.20,
+                                                            size.height * 0.22,
                                                         width: 150,
                                                         child: ClipRRect(
                                                           borderRadius:
@@ -195,118 +195,124 @@ class HomeScreenState extends State<HomeScreen> {
                               ),
                               // List Musics Items
                               SizedBox(
-                                  height: size.height * 0.40,
+                                  height: size.height * 0.35,
                                   child: Column(
                                     children: [
                                       Expanded(
-                                        child: SingleChildScrollView(
-                                          physics:
-                                              const BouncingScrollPhysics(),
-                                          child: FutureBuilder<List<Music>>(
-                                            future: _getMusics(),
-                                            builder: (context, snapshot) {
-                                              switch (
-                                                  snapshot.connectionState) {
-                                                case ConnectionState.none:
-                                                  break;
-                                                case ConnectionState.active:
-                                                  break;
-                                                case ConnectionState.waiting:
-                                                  return CircularProgressIndicator();
+                                        child: FutureBuilder<List<Music>>(
+                                          future: _getMusics(),
+                                          builder: (context, snapshot) {
+                                            switch (snapshot.connectionState) {
+                                              case ConnectionState.none:
+                                                break;
+                                              case ConnectionState.active:
+                                                break;
+                                              case ConnectionState.waiting:
+                                                return CircularProgressIndicator();
 
-                                                case ConnectionState.done:
-                                                  if (snapshot.hasData &&
-                                                      !snapshot.hasError) {
-                                                    if (snapshot.data!.length !=
-                                                        0) {
-                                                      return SizedBox(
-                                                          height: size.height *
-                                                              0.45,
-                                                          child: Column(
-                                                            children: [
-                                                              Expanded(
-                                                                child:
-                                                                    SingleChildScrollView(
-                                                                  child: FutureBuilder<
-                                                                          List<
-                                                                              Music>>(
-                                                                      future:
-                                                                          _getMusics(),
-                                                                      builder:
-                                                                          (context,
-                                                                              snapshot) {
-                                                                        if (snapshot.connectionState ==
-                                                                            ConnectionState.waiting) {
-                                                                          return const Center(
+                                              case ConnectionState.done:
+                                                if (snapshot.hasData &&
+                                                    !snapshot.hasError) {
+                                                  if (snapshot.data!.length !=
+                                                      0) {
+                                                    return SizedBox(
+                                                        height:
+                                                            size.height * 0.45,
+                                                        child: Column(
+                                                          children: [
+                                                            Expanded(
+                                                              child:
+                                                                  SingleChildScrollView(
+                                                                physics:
+                                                                    const BouncingScrollPhysics(),
+                                                                child: FutureBuilder<
+                                                                        List<
+                                                                            Music>>(
+                                                                    future:
+                                                                        _getMusics(),
+                                                                    builder:
+                                                                        (context,
+                                                                            snapshot) {
+                                                                      if (snapshot
+                                                                              .connectionState ==
+                                                                          ConnectionState
+                                                                              .waiting) {
+                                                                        return const Center(
+                                                                          child:
+                                                                              CircularProgressIndicator(),
+                                                                        );
+                                                                      } else if (snapshot
+                                                                              .hasData &&
+                                                                          !snapshot
+                                                                              .hasError) {
+                                                                        return ListView
+                                                                            .builder(
+                                                                          shrinkWrap:
+                                                                              true,
+                                                                          physics:
+                                                                              const NeverScrollableScrollPhysics(),
+                                                                          itemCount: snapshot
+                                                                              .data!
+                                                                              .length,
+                                                                          itemBuilder:
+                                                                              (context, index) {
+                                                                            final music =
+                                                                                snapshot.data![index];
+                                                                            return AnimatedFadedText(
+                                                                                direction: 1,
+                                                                                child: CustomCardWidget(
+                                                                                    music: music,
+                                                                                    onDetails: (value) {
+                                                                                      {
+                                                                                        closeKeyboard(context);
+                                                                                        Navigator.of(context)
+                                                                                            .push(
+                                                                                              MaterialPageRoute(
+                                                                                                builder: (_) => DetailScreen(music: value),
+                                                                                              ),
+                                                                                            )
+                                                                                            .then((_) => setState(() {}));
+                                                                                      }
+                                                                                    },
+                                                                                    onDelete: null,
+                                                                                    onEdit: null,
+                                                                                    details: true,
+                                                                                    children: [
+                                                                                      Text(
+                                                                                        music.title.toString(),
+                                                                                        style: Theme.of(context).textTheme.headline2,
+                                                                                      )
+                                                                                    ]));
+                                                                          },
+                                                                        );
+                                                                      } else {
+                                                                        return Container(
+                                                                            color: Colors
+                                                                                .red,
+                                                                            height: size.height *
+                                                                                0.35,
                                                                             child:
-                                                                                CircularProgressIndicator(),
-                                                                          );
-                                                                        } else if (snapshot.hasData &&
-                                                                            !snapshot.hasError) {
-                                                                          return ListView
-                                                                              .builder(
-                                                                            shrinkWrap:
-                                                                                true,
-                                                                            physics:
-                                                                                const BouncingScrollPhysics(),
-                                                                            itemCount:
-                                                                                snapshot.data!.length,
-                                                                            itemBuilder:
-                                                                                (context, index) {
-                                                                              final music = snapshot.data![index];
-                                                                              return AnimatedFadedText(
-                                                                                  direction: 1,
-                                                                                  child: CustomCardWidget(
-                                                                                      music: music,
-                                                                                      onDetails: (value) {
-                                                                                        {
-                                                                                          closeKeyboard(context);
-                                                                                          Navigator.of(context)
-                                                                                              .push(
-                                                                                                MaterialPageRoute(
-                                                                                                  builder: (_) => DetailScreen(music: value),
-                                                                                                ),
-                                                                                              )
-                                                                                              .then((_) => setState(() {}));
-                                                                                        }
-                                                                                      },
-                                                                                      onDelete: null,
-                                                                                      onEdit: null,
-                                                                                      details: true,
-                                                                                      children: [
-                                                                                        Text(
-                                                                                          music.title.toString(),
-                                                                                          style: Theme.of(context).textTheme.headline2,
-                                                                                        )
-                                                                                      ]));
-                                                                            },
-                                                                          );
-                                                                        } else {
-                                                                          return Container(
-                                                                              color: Colors.red,
-                                                                              height: size.height * 0.35,
-                                                                              child: const Center(child: Text("Nenhuma musica cadastrada")));
-                                                                        }
-                                                                      }),
-                                                                ),
+                                                                                const Center(child: Text("Nenhuma musica cadastrada")));
+                                                                      }
+                                                                    }),
                                                               ),
-                                                            ],
-                                                          ));
-                                                    } else {
-                                                      return SizedBox(
-                                                          height: size.height *
-                                                              0.35,
-                                                          width: size.width,
-                                                          child: Center(
-                                                            child: Text(
-                                                                "Nenhuma musica cadastrada!"),
-                                                          ));
-                                                    }
+                                                            ),
+                                                          ],
+                                                        ));
+                                                  } else {
+                                                    return SizedBox(
+                                                        height:
+                                                            size.height * 0.35,
+                                                        width: size.width,
+                                                        child: Center(
+                                                          child: Text(
+                                                              "Nenhuma musica cadastrada!"),
+                                                        ));
                                                   }
-                                              }
-                                              return Container();
-                                            },
-                                          ),
+                                                }
+                                            }
+                                            return Container();
+                                          },
                                         ),
                                       ),
                                     ],
@@ -316,7 +322,7 @@ class HomeScreenState extends State<HomeScreen> {
 
                           // Actions Pages Buttons
                           Container(
-                            height: 75,
+                            height: size.height * 0.10,
                             width: double.infinity,
                             decoration: const BoxDecoration(
                                 color: Palette.primaryColor,
