@@ -27,8 +27,8 @@ class _AnimatedFadedTextState extends State<AnimatedFadedText>
 
   @override
   void dispose() {
-    _animationController.dispose();
     super.dispose();
+    _animationController.dispose();
   }
 
   @override
