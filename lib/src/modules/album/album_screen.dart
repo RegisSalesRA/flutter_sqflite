@@ -19,8 +19,8 @@ class _AlbumScreenState extends State<AlbumScreen> {
     return await _databaseService.albums();
   }
 
-  Future<void> onAlbumDelete(Album Album) async {
-    await _databaseService.deleteAlbum(Album.id!);
+  Future<void> onAlbumDelete(Album album) async {
+    await _databaseService.deleteAlbum(album.id!);
     setState(() {});
   }
 
@@ -92,7 +92,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
                                               border: Border.all(
                                                   color: Colors.grey.shade400)),
                                           child: Padding(
-                                            padding: EdgeInsets.all(1),
+                                            padding: const EdgeInsets.all(1),
                                             child: Icon(
                                               Icons.album_outlined,
                                               color: Colors.grey.shade400,

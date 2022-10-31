@@ -94,7 +94,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               border: Border.all(
                                                   color: Colors.grey.shade400)),
                                           child: Padding(
-                                            padding: EdgeInsets.all(1),
+                                            padding:const EdgeInsets.all(1),
                                             child: Icon(
                                               Icons.category_outlined,
                                               color: Colors.grey.shade400,

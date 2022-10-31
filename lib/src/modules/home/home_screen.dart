@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/config/config.dart';
-import 'package:sqflite/utils/utils.dart';
 
 import '../../../animations/animations.dart';
 import '../../../data/database_service.dart';
@@ -21,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   final DatabaseService _databaseService = DatabaseService();
+  late Future<List<Music>> futureListMusics;
 
   Future<List<Music>> _getMusics() async {
     return await _databaseService.musics();
@@ -33,6 +33,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    futureListMusics = _getMusics();
   }
 
   @override
@@ -86,7 +87,7 @@ class HomeScreenState extends State<HomeScreen> {
                                       case ConnectionState.none:
                                         break;
                                       case ConnectionState.waiting:
-                                        return Center(
+                                        return const Center(
                                           child: CircularProgressIndicator(),
                                         );
                                       case ConnectionState.active:
@@ -94,7 +95,7 @@ class HomeScreenState extends State<HomeScreen> {
                                       case ConnectionState.done:
                                         if (snapshot.hasData &&
                                             !snapshot.hasError) {
-                                          if (snapshot.data!.length != 0) {
+                                          if (snapshot.data!.isNotEmpty) {
                                             return Column(children: [
                                               Row(
                                                 mainAxisAlignment:
@@ -120,10 +121,10 @@ class HomeScreenState extends State<HomeScreen> {
                                                   )
                                                 ],
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
-                                              Container(
+                                              SizedBox(
                                                 height: size.height * 0.25,
                                                 width: size.width,
                                                 child: ListView.builder(
@@ -167,7 +168,7 @@ class HomeScreenState extends State<HomeScreen> {
                                                       ),
                                                       Text(
                                                         category.name!,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color: Palette
                                                                 .primaryColor,
                                                             fontWeight:
@@ -182,7 +183,7 @@ class HomeScreenState extends State<HomeScreen> {
                                               )
                                             ]);
                                           } else {
-                                            return Center(
+                                            return const Center(
                                               child: Text(
                                                   "Nenhuma categoria cadastrada!"),
                                             );
@@ -200,7 +201,7 @@ class HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Expanded(
                                         child: FutureBuilder<List<Music>>(
-                                          future: _getMusics(),
+                                          future: futureListMusics,
                                           builder: (context, snapshot) {
                                             switch (snapshot.connectionState) {
                                               case ConnectionState.none:
@@ -208,13 +209,13 @@ class HomeScreenState extends State<HomeScreen> {
                                               case ConnectionState.active:
                                                 break;
                                               case ConnectionState.waiting:
-                                                return CircularProgressIndicator();
+                                                return const CircularProgressIndicator();
 
                                               case ConnectionState.done:
                                                 if (snapshot.hasData &&
                                                     !snapshot.hasError) {
-                                                  if (snapshot.data!.length !=
-                                                      0) {
+                                                  if (snapshot
+                                                      .data!.isNotEmpty) {
                                                     return SizedBox(
                                                         height:
                                                             size.height * 0.45,
@@ -304,7 +305,7 @@ class HomeScreenState extends State<HomeScreen> {
                                                         height:
                                                             size.height * 0.35,
                                                         width: size.width,
-                                                        child: Center(
+                                                        child: const Center(
                                                           child: Text(
                                                               "Nenhuma musica cadastrada!"),
                                                         ));
