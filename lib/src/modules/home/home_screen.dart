@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/config/config.dart';
+import 'package:flutter_sqlite/src/modules/home/widget/widget.dart';
 
-import '../../../animations/animations.dart';
 import '../../../data/database_service.dart';
-import '../../../model/model.dart';
 
-import '../../widgets/widgets.dart';
 import '../../../helpers/helpers.dart';
+import '../../../model/model.dart';
+import '../../widgets/widgets.dart';
+
 import '../album/album_screen.dart';
 import '../category/category_screen.dart';
 import '../music/music_screen.dart';
@@ -21,6 +22,8 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   final DatabaseService _databaseService = DatabaseService();
   late Future<List<Music>> futureListMusics;
+  late Future<List<Category>> futureListCategorys;
+  final searchController = TextEditingController();
   String buscarMusicas = "";
 
   Future<List<Music>> _getMusics() async {
@@ -35,6 +38,7 @@ class HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     futureListMusics = _getMusics();
+    futureListCategorys = _getCategorys();
   }
 
   @override
@@ -66,12 +70,12 @@ class HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 // Search Widget
-                                TextFormField(
+                                TextField(
+                                  controller: searchController,
                                   onChanged: (value) {
                                     return setState(() {
                                       buscarMusicas =
                                           value.toLowerCase().toString();
-                                      print(buscarMusicas);
                                     });
                                   },
                                   decoration: const InputDecoration(
@@ -86,242 +90,32 @@ class HomeScreenState extends State<HomeScreen> {
                                   height: 10,
                                 ),
                                 // Category Scroll Items
-                                SizedBox(
-                                  height: size.height * 0.30,
-                                  width: double.infinity,
-                                  child: FutureBuilder<List<Category>>(
-                                    future: _getCategorys(),
-                                    builder: (context, snapshot) {
-                                      switch (snapshot.connectionState) {
-                                        case ConnectionState.none:
-                                          break;
-                                        case ConnectionState.waiting:
-                                          return const Center(
-                                            child: CircularProgressIndicator(),
-                                          );
-                                        case ConnectionState.active:
-                                          break;
-                                        case ConnectionState.done:
-                                          if (snapshot.hasData &&
-                                              !snapshot.hasError) {
-                                            if (snapshot.data!.isNotEmpty) {
-                                              return Column(children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    const Text(
-                                                      "Categories",
-                                                      style: TextStyle(
-                                                          color: Palette
-                                                              .primaryColor,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    Text(
-                                                      "more",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors
-                                                              .grey.shade400),
-                                                    )
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                SizedBox(
-                                                  height: size.height * 0.25,
-                                                  width: size.width,
-                                                  child: ListView.builder(
-                                                    shrinkWrap: true,
-                                                    physics:
-                                                        const BouncingScrollPhysics(),
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    itemCount:
-                                                        snapshot.data!.length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      final category =
-                                                          snapshot.data![index];
-                                                      return Column(children: [
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(5),
-                                                          decoration: const BoxDecoration(
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          15))),
-                                                          height: size.height *
-                                                              0.22,
-                                                          width: 150,
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                        .all(
-                                                                    Radius
-                                                                        .circular(
-                                                                            15)),
-                                                            child: Image.asset(
-                                                              'assets/images/detailPageImage.png',
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          category.name!,
-                                                          style: const TextStyle(
-                                                              color: Palette
-                                                                  .primaryColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis),
-                                                        )
-                                                      ]);
-                                                    },
-                                                  ),
-                                                )
-                                              ]);
-                                            } else {
-                                              return const Center(
-                                                child: Text(
-                                                    "Nenhuma categoria cadastrada!"),
-                                              );
-                                            }
-                                          }
-                                      }
-                                      return Container();
-                                    },
-                                  ),
-                                ),
+                                CategoryWidget(
+                                    size: MediaQuery.of(context).size,
+                                    futureListCategorys: futureListCategorys),
                                 // List Musics Items
-                                SizedBox(
-                                    height: size.height * 0.35,
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: FutureBuilder<List<Music>>(
-                                            future: futureListMusics,
-                                            builder: (context, snapshot) {
-                                              switch (
-                                                  snapshot.connectionState) {
-                                                case ConnectionState.none:
-                                                  break;
-                                                case ConnectionState.active:
-                                                  break;
-                                                case ConnectionState.waiting:
-                                                  return const CircularProgressIndicator();
-
-                                                case ConnectionState.done:
-                                                  if (snapshot.hasData &&
-                                                      !snapshot.hasError) {
-                                                    if (snapshot
-                                                        .data!.isNotEmpty) {
-                                                      return SizedBox(
-                                                          height: size.height *
-                                                              0.45,
-                                                          child: Column(
-                                                            children: [
-                                                              Expanded(
-                                                                child:
-                                                                    SingleChildScrollView(
-                                                                  physics:
-                                                                      const BouncingScrollPhysics(),
-                                                                  child: FutureBuilder<
-                                                                          List<
-                                                                              Music>>(
-                                                                      future:
-                                                                          futureListMusics,
-                                                                      builder:
-                                                                          (context,
-                                                                              snapshot) {
-                                                                        if (snapshot.connectionState ==
-                                                                            ConnectionState.waiting) {
-                                                                          return const Center(
-                                                                            child:
-                                                                                CircularProgressIndicator(),
-                                                                          );
-                                                                        } else if (snapshot.hasData &&
-                                                                            !snapshot.hasError) {
-                                                                          return ListView
-                                                                              .builder(
-                                                                            shrinkWrap:
-                                                                                true,
-                                                                            physics:
-                                                                                const NeverScrollableScrollPhysics(),
-                                                                            itemCount:
-                                                                                snapshot.data!.length,
-                                                                            itemBuilder:
-                                                                                (context, index) {
-                                                                              final music = snapshot.data![index];
-                                                                              return snapshot.data![index].title.toString().toLowerCase().contains(buscarMusicas)
-                                                                                  ? CustomCardWidget(
-                                                                                      music: music,
-                                                                                      onDetails: (value) {
-                                                                                        {
-                                                                                          closeKeyboard(context);
-                                                                                          Navigator.of(context)
-                                                                                              .push(
-                                                                                                MaterialPageRoute(
-                                                                                                  builder: (_) => DetailScreen(music: value),
-                                                                                                ),
-                                                                                              )
-                                                                                              .then((_) => setState(() {}));
-                                                                                        }
-                                                                                      },
-                                                                                      onDelete: null,
-                                                                                      onEdit: null,
-                                                                                      details: true,
-                                                                                      children: [
-                                                                                          Text(
-                                                                                            music.title.toString(),
-                                                                                            style: Theme.of(context).textTheme.headline2,
-                                                                                          )
-                                                                                        ])
-                                                                                  : Container();
-                                                                            },
-                                                                          );
-                                                                        } else {
-                                                                          return Container(
-                                                                              color: Colors.red,
-                                                                              height: size.height * 0.35,
-                                                                              child: const Center(child: Text("Nenhuma musica cadastrada")));
-                                                                        }
-                                                                      }),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ));
-                                                    } else {
-                                                      return SizedBox(
-                                                          height: size.height *
-                                                              0.35,
-                                                          width: size.width,
-                                                          child: const Center(
-                                                            child: Text(
-                                                                "Nenhuma musica cadastrada!"),
-                                                          ));
-                                                    }
-                                                  }
-                                              }
-                                              return Container();
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ))
+                                MusicWidget(
+                                  size: MediaQuery.of(context).size,
+                                  futureListMusics: futureListMusics,
+                                  buscarMusicas: buscarMusicas,
+                                  onDetails: (value) {
+                                    {
+                                      {
+                                        closeKeyboard(context);
+                                        Navigator.of(context)
+                                            .push(
+                                              MaterialPageRoute(
+                                                builder: (_) =>
+                                                    DetailScreen(music: value),
+                                              ),
+                                            )
+                                            .then((_) => setState(() {}));
+                                      }
+                                    }
+                                  },
+                                )
                               ],
                             ),
-
                             // Actions Pages Buttons
                             Container(
                               height: size.height * 0.10,
@@ -340,11 +134,18 @@ class HomeScreenState extends State<HomeScreen> {
                                     size: 25,
                                   ),
                                   InkWell(
-                                    onTap: () => Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                          builder: (_) => const AlbumScreen(),
-                                        ))
-                                        .then((_) => setState(() {})),
+                                    onTap: () {
+                                      closeKeyboard(context);
+                                      searchController.clear();
+                                      setState(() {
+                                        buscarMusicas = "";
+                                      });
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                            builder: (_) => const AlbumScreen(),
+                                          ))
+                                          .then((_) => setState(() {}));
+                                    },
                                     child: Icon(
                                       Icons.album_rounded,
                                       color: Colors.grey.shade400,
@@ -352,12 +153,19 @@ class HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   InkWell(
-                                    onTap: () => Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                          builder: (_) =>
-                                              const CategoryScreen(),
-                                        ))
-                                        .then((_) => setState(() {})),
+                                    onTap: () {
+                                      closeKeyboard(context);
+                                      searchController.clear();
+                                      setState(() {
+                                        buscarMusicas = "";
+                                      });
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                            builder: (_) =>
+                                                const CategoryScreen(),
+                                          ))
+                                          .then((_) => setState(() {}));
+                                    },
                                     child: Icon(
                                       Icons.category_outlined,
                                       color: Colors.grey.shade400,
@@ -365,11 +173,18 @@ class HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   InkWell(
-                                    onTap: () => Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                          builder: (_) => const MusicScreen(),
-                                        ))
-                                        .then((_) => setState(() {})),
+                                    onTap: () {
+                                      closeKeyboard(context);
+                                      searchController.clear();
+                                      setState(() {
+                                        buscarMusicas = "";
+                                      });
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                            builder: (_) => const MusicScreen(),
+                                          ))
+                                          .then((_) => setState(() {}));
+                                    },
                                     child: Icon(
                                       Icons.music_note_outlined,
                                       color: Colors.grey.shade400,
