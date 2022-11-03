@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sqlite/src/widgets/widgets.dart';
 import '../../config/config.dart';
 import '../../model/model.dart';
 
@@ -26,8 +27,8 @@ class DetailScreen extends StatelessWidget {
             showDialog<String>(
               context: context,
               builder: (BuildContext context) => CupertinoAlertDialog(
-                  title:const Text("Album Name"),
-                  content:const Text(
+                  title: const Text("Album Name"),
+                  content: const Text(
                       "Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966"),
                   actions: <CupertinoDialogAction>[
                     CupertinoDialogAction(
@@ -41,23 +42,15 @@ class DetailScreen extends StatelessWidget {
             );
           },
         ),
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          iconTheme: const IconThemeData(color: Palette.primaryColorDark),
-          title: const Text(
-            'Details',
-            style: TextStyle(color: Palette.primaryColorDark),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                ))
-          ],
+        appBar: AppBarWidget(
+          title: 'Details',
+          onTap: () => Navigator.of(context).pop(),
+          actions: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.favorite,
+                color: Colors.red,
+              )),
         ),
         body: Stack(
           children: [

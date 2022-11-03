@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../animations/animations.dart'; 
+ 
 import '../../../../model/model.dart';
 import '../../../widgets/widgets.dart';
 
@@ -14,7 +13,8 @@ class MusicWidget extends StatelessWidget {
       {Key? key,
       required this.size,
       required this.futureListMusics,
-      required this.buscarMusicas,required this.onDetails})
+      required this.buscarMusicas,
+      required this.onDetails})
       : super(key: key);
 
   @override
@@ -56,29 +56,20 @@ class MusicWidget extends StatelessWidget {
                                                   .toString()
                                                   .toLowerCase()
                                                   .contains(buscarMusicas)
-                                              ? AnimatedFadedText(
-                                                  direction: 1,
-                                                  child: CustomCardWidget(
-                                                      music: music,
-                                                      onDetails:
-                                                      
-                                                      onDetails
-                                                      
-                                                      ,
-                                                      onDelete: null,
-                                                      onEdit: null,
-                                                      details: true,
-                                                      children: [
-                                                        Text(
-                                                          music.title
-                                                              .toString(),
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .headline2,
-                                                        )
-                                                      ]),
-                                                )
+                                              ? CustomCardWidget(
+                                                  music: music,
+                                                  onDetails: onDetails,
+                                                  onDelete: null,
+                                                  onEdit: null,
+                                                  details: true,
+                                                  children: [
+                                                      Text(
+                                                        music.title.toString(),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline2,
+                                                      )
+                                                    ])
                                               : Container();
                                         },
                                       ),

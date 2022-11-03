@@ -46,14 +46,10 @@ class HomeScreenState extends State<HomeScreen> {
     final size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              centerTitle: true,
-              title: const Text(
-                'Flutter Sqflite',
-                style: TextStyle(color: Palette.primaryColor),
-              ),
+            appBar: const AppBarWidget(
+              title: "Home Page",
+              onTap: null,
+              actions: SizedBox(),
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -121,7 +117,7 @@ class HomeScreenState extends State<HomeScreen> {
                               height: size.height * 0.10,
                               width: double.infinity,
                               decoration: const BoxDecoration(
-                                  color: Palette.primaryColor,
+                                  color: Palette.primaryColorDark,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
                               child: Row(

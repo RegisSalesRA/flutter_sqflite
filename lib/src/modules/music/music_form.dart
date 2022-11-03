@@ -42,10 +42,10 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
     Navigator.pop(context);
   }
 
-  List<Map<String, dynamic>> devLevel = [
-    {"name": "Junior"},
-    {"name": "Pleno"},
-    {"name": "Senior"},
+  List<Map<String, dynamic>> categoriaMap = [
+    {"name": "Categoria 1"},
+    {"name": "Categoria 2"},
+    {"name": "Categoria 3"},
   ];
 
   @override
@@ -67,7 +67,11 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("music form")),
+      appBar: AppBarWidget(
+        onTap: () => Navigator.of(context).pop(),
+        title: 'Music Form',
+        actions: const SizedBox(),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -97,7 +101,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                 ),
                 // DropDown
                 DropDownWidget(
-                  dropdownItens: devLevel.map(
+                  dropdownItens: categoriaMap.map(
                     (val) {
                       return DropdownMenuItem<String>(
                         value: val["name"],
