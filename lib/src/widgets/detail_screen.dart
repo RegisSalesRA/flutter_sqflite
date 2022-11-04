@@ -26,17 +26,14 @@ class DetailScreen extends StatelessWidget {
           onPressed: () {
             showDialog<String>(
               context: context,
-              builder: (BuildContext context) => CupertinoAlertDialog(
+              builder: (BuildContext context) => AlertDialog(
                   title: const Text("Album Name"),
                   content: const Text(
                       "Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966"),
-                  actions: <CupertinoDialogAction>[
-                    CupertinoDialogAction(
-                      isDefaultAction: true,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Close'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Icon(Icons.cancel),
                     ),
                   ]),
             );
