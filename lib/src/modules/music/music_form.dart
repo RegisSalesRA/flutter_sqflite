@@ -66,14 +66,14 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarWidget(
-        onTap: () => Navigator.of(context).pop(),
-        title: 'Music Form',
-        actions: const SizedBox(),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBarWidget(
+          onTap: () => Navigator.of(context).pop(),
+          title: 'Music Form',
+          actions: const SizedBox(),
+        ),
+        body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

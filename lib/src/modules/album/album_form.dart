@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/data/database_service.dart';
 
-
 import '../../../model/model.dart';
 import '../../widgets/widgets.dart';
 
@@ -54,10 +53,14 @@ class _AlbumFormState extends State<AlbumForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Album form")),
-      body: SafeArea(
-        child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBarWidget(
+          actions: const SizedBox(),
+          title: 'Album Form',
+          onTap: () => Navigator.of(context).pop(),
+        ),
+        body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

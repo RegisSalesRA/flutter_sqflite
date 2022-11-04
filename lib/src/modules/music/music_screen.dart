@@ -29,81 +29,81 @@ class _MusicScreenState extends State<MusicScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context)
-                .push(
-                  MaterialPageRoute(
-                    builder: (_) => const MusicScreenForm(),
-                  ),
-                )
-                .then((_) => setState(() {}));
-          },
-          backgroundColor: Palette.primaryColor,
-          child: const Icon(Icons.add),
-        ),
-        appBar: AppBarWidget(
-                 actions: const SizedBox(),
-
-          title: 'Musica Screen',
-          onTap: () => Navigator.pushNamed(context, '/'),
-        ),
-        body: SafeArea(
-            child: FutureBuilder<List<Music>>(
-                future: _getMusics(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasData && !snapshot.hasError) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0, vertical: 5.0),
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          final music = snapshot.data![index];
-                          return CustomCardWidget(
-                            details: false,
-                            music: music,
-                            onDetails: null,
-                            onDelete: onMusicDelete,
-                            children: [
-                              Text(
-                                'Musica - ${music.title}',
-                                style: Theme.of(context).textTheme.headline2,
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                "Album - ${music.description}",
-                                style: Theme.of(context).textTheme.headline2,
-                              ),
-                            ],
-                            onEdit: (value) {
-                              {
-                                Navigator.of(context)
-                                    .push(
-                                      MaterialPageRoute(
-                                        builder: (_) =>
-                                            MusicScreenForm(music: value),
-                                      ),
-                                    )
-                                    .then((_) => setState(() {}));
-                              }
-                            },
-                          );
-                        },
-                      ),
-                    );
-                  } else {
-                    return const Center(child: Text("Nenhum dado cadastrado"));
-                  }
-                })));
+    return SafeArea(
+      child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .push(
+                    MaterialPageRoute(
+                      builder: (_) => const MusicScreenForm(),
+                    ),
+                  )
+                  .then((_) => setState(() {}));
+            },
+            backgroundColor: Palette.primaryColor,
+            child: const Icon(Icons.add),
+          ),
+          appBar: AppBarWidget(
+            actions: const SizedBox(),
+            title: 'Music Screen',
+            onTap: () => Navigator.pushNamed(context, '/'),
+          ),
+          body: FutureBuilder<List<Music>>(
+              future: _getMusics(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasData && !snapshot.hasError) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 5.0),
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final music = snapshot.data![index];
+                        return CustomCardWidget(
+                          details: false,
+                          music: music,
+                          onDetails: null,
+                          onDelete: onMusicDelete,
+                          children: [
+                            Text(
+                              'Musica - ${music.title}',
+                              style: Theme.of(context).textTheme.headline2,
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              "Album - ${music.description}",
+                              style: Theme.of(context).textTheme.headline2,
+                            ),
+                          ],
+                          onEdit: (value) {
+                            {
+                              Navigator.of(context)
+                                  .push(
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          MusicScreenForm(music: value),
+                                    ),
+                                  )
+                                  .then((_) => setState(() {}));
+                            }
+                          },
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return const Center(child: Text("Nenhum dado cadastrado"));
+                }
+              })),
+    );
   }
 }
