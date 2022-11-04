@@ -4,8 +4,6 @@ import 'package:flutter_sqlite/data/database_service.dart';
 import 'package:flutter_sqlite/model/music.dart';
 
 import 'package:flutter_sqlite/src/modules/music/music_form.dart';
-
-import '../../../animations/animations.dart';
 import '../../widgets/widgets.dart';
 
 class MusicScreen extends StatefulWidget {
@@ -103,7 +101,8 @@ class _MusicScreenState extends State<MusicScreen> {
                 } else {
                   return const Center(child: Text("Nenhum dado cadastrado"));
                 }
-              })),
+              }),
+              ),
     );
   }
 }

@@ -22,6 +22,12 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
   final descriptionController = TextEditingController();
   final choice = TextEditingController();
 
+  late Future<List<Category>> categoriesList;
+
+  Future<List<Category>> _getCategory() async {
+    return await _databaseService.categories();
+  }
+
   Future<void> _onSave() async {
     widget.music == null
         ? // Add save code here
@@ -55,6 +61,9 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
       titleController.text = widget.music!.title!;
       descriptionController.text = widget.music!.description!;
     }
+
+    categoriesList = _getCategory();
+    print(categoriesList);
   }
 
   @override
@@ -99,7 +108,37 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                 const SizedBox(
                   height: 10,
                 ),
-                // DropDown
+
+                // Aqui
+
+                FutureBuilder<List<Category>>(
+                    future: categoriesList,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasData && !snapshot.hasError) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 5.0),
+                          child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              final music = snapshot.data![index];
+                              return Text(
+                                  snapshot.data![index].name.toString());
+                            },
+                          ),
+                        );
+                      } else {
+                        return const Center(child: Text("Nenhuma Categoria"));
+                      }
+                    }),
+
+                // end
                 DropDownWidget(
                   dropdownItens: categoriaMap.map(
                     (val) {
@@ -110,20 +149,14 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                     },
                   ).toList(),
                   hint: choice.text == ''
-                      ? const Padding(
-                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          child: Text(
-                            'Select option',
-                            style: TextStyle(
-                                fontSize: 15, color: Palette.primaryColor),
-                          ),
+                      ? const Text(
+                          'Select category',
+                          style: TextStyle(
+                              fontSize: 15, color: Palette.primaryColor),
                         )
-                      : Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                          child: Text(
-                            choice.text,
-                            style: const TextStyle(color: Palette.primaryColor),
-                          ),
+                      : Text(
+                          choice.text,
+                          style: const TextStyle(color: Palette.primaryColor),
                         ),
                   getValue: (val) {
                     setState(
@@ -133,7 +166,36 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                     );
                   },
                 ),
-                // DropDown
+                const SizedBox(
+                  height: 10,
+                ),
+                DropDownWidget(
+                  dropdownItens: categoriaMap.map(
+                    (val) {
+                      return DropdownMenuItem<String>(
+                        value: val["name"],
+                        child: Text(val["name"]),
+                      );
+                    },
+                  ).toList(),
+                  hint: choice.text == ''
+                      ? const Text(
+                          'Select album',
+                          style: TextStyle(
+                              fontSize: 15, color: Palette.primaryColor),
+                        )
+                      : Text(
+                          choice.text,
+                          style: const TextStyle(color: Palette.primaryColor),
+                        ),
+                  getValue: (val) {
+                    setState(
+                      () {
+                        choice.text = val!;
+                      },
+                    );
+                  },
+                ),
                 const SizedBox(
                   height: 20,
                 ),

@@ -25,7 +25,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         title,
         style: const TextStyle(color: Palette.primaryColor),
       ),
-      leading: onTap == null ? SizedBox() : InkWell(
+      leading: onTap == null ? const SizedBox() : InkWell(
           onTap: onTap,
           child: const Icon(
             Icons.arrow_back,
