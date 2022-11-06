@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import '../../config/config.dart';
 
 class DropDownWidget extends StatefulWidget {
-  final Function(String?) getValue;
-  final List<DropdownMenuItem<String>> dropdownItens;
+  final Function(dynamic) onChanged;
+  final List<DropdownMenuItem<dynamic>>? items;
+//  final dynamic value;
   final Widget? hint;
 
   const DropDownWidget(
       {Key? key,
-      required this.getValue,
-      required this.dropdownItens,
+      required this.onChanged,
+      required this.items,
+  //    required this.value,
       this.hint})
       : super(key: key);
 
@@ -23,7 +25,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
     return DropdownButtonHideUnderline(
         child: ButtonTheme(
       alignedDropdown: true,
-      child: DropdownButtonFormField<String>(
+      child: DropdownButtonFormField<dynamic>(
         //   validator: (value) {
         //     if (value == null || value.isEmpty) {
         ///        return 'Please select item';
@@ -33,6 +35,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
         decoration: const InputDecoration(
           prefixIcon: Icon(Icons.person),
         ),
+      //  value: widget.value,
         hint: widget.hint,
         elevation: 16,
         isExpanded: true,
@@ -43,8 +46,8 @@ class _DropDownWidgetState extends State<DropDownWidget> {
         style: const TextStyle(
           color: Palette.primaryColor,
         ),
-        onChanged: widget.getValue,
-        items: widget.dropdownItens,
+        onChanged: widget.onChanged,
+        items: widget.items,
       ),
     ));
   }
