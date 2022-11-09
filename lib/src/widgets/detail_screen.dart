@@ -1,4 +1,3 @@
- 
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/src/widgets/widgets.dart';
 import '../../config/config.dart';
@@ -95,7 +94,7 @@ class DetailScreen extends StatelessWidget {
                             child: Column(children: [
                               Center(
                                   child: Text(
-                                " '${music.title}' ",
+                                " '${music.name}' ",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,

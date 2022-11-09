@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
- 
+
 import '../../../../model/model.dart';
 import '../../../widgets/widgets.dart';
 
@@ -52,7 +52,7 @@ class MusicWidget extends StatelessWidget {
                                         itemCount: snapshot.data!.length,
                                         itemBuilder: (context, index) {
                                           final music = snapshot.data![index];
-                                          return snapshot.data![index].title
+                                          return snapshot.data![index].name
                                                   .toString()
                                                   .toLowerCase()
                                                   .contains(buscarMusicas)
@@ -64,7 +64,7 @@ class MusicWidget extends StatelessWidget {
                                                   details: true,
                                                   children: [
                                                       Text(
-                                                        music.title.toString(),
+                                                        music.name.toString(),
                                                         style: Theme.of(context)
                                                             .textTheme
                                                             .headline2,

@@ -1,27 +1,34 @@
 class Music {
   int? id;
-  String? title;
+  String? name;
   String? description;
+  int? categoryId;
+  int? albumId;
   String? data;
   Music({
     this.id,
-    this.title,
+    this.name,
     this.description,
+    this.categoryId,
+    this.albumId,
     this.data,
   });
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
         id: json["id"],
-        title: json["title"],
+        name: json["name"],
         description: json["description"],
+        categoryId: json["categoryId"],
+        albumId: json["albumId"],
         data: json["data"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "title": title,
+        "name": name,
         "description": description,
+        "categoryId": categoryId,
+        "albumId": albumId,
         "data": data,
       };
 }
-

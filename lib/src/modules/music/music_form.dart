@@ -17,17 +17,23 @@ class MusicScreenForm extends StatefulWidget {
 
 class _MusicScreenFormState extends State<MusicScreenForm> {
   // Controllers And Variables
-  final titleController = TextEditingController();
+  final nameController = TextEditingController();
   final descriptionController = TextEditingController();
   final categorySelected = TextEditingController();
-  int categoryId = 0;
-  late Category categoryObject;
+  final albumSelected = TextEditingController();
+  int? categoryId = 0;
+  int? albumId = 0;
   // Database
   final DatabaseService _databaseService = DatabaseService();
   late Future<List<Category>> categoriesList;
+  late Future<List<Album>> albumsList;
 
   Future<List<Category>> _getCategory() async {
     return await _databaseService.categories();
+  }
+
+  Future<List<Album>> _getAlbum() async {
+    return await _databaseService.albums();
   }
 
   Future<void> _onSave() async {
@@ -35,18 +41,21 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
         ? // Add save code here
         await _databaseService.insertMusic(
             Music(
-              title: titleController.text,
-              description: categorySelected.text,
+              name: nameController.text,
+              description: descriptionController.text,
+              categoryId: categoryId,
+              albumId: albumId,
               data: DateTime.now().toString(),
             ),
           )
         : await _databaseService.updateMusic(Music(
             id: widget.music!.id!,
-            title: titleController.text,
-            description: categorySelected.text,
+            name: nameController.text,
+            description: descriptionController.text,
+            categoryId: categoryId,
+            albumId: albumId,
             data: DateTime.now().toString(),
           ));
-
     Navigator.pop(context);
   }
 
@@ -54,15 +63,18 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
   void initState() {
     super.initState();
     if (widget.music != null) {
-      titleController.text = widget.music!.title!;
+      nameController.text = widget.music!.name!;
       descriptionController.text = widget.music!.description!;
+      categoryId = widget.music?.categoryId;
+      albumId = widget.music?.albumId;
     }
     categoriesList = _getCategory();
+    albumsList = _getAlbum();
   }
 
   @override
   void dispose() {
-    titleController.dispose();
+    nameController.dispose();
     descriptionController.dispose();
     super.dispose();
   }
@@ -88,7 +100,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                 ),
                 CustomTextFormWidget(
                   hintText: 'Title',
-                  controller: titleController,
+                  controller: nameController,
                   icon: Icons.app_registration_sharp,
                 ),
                 const SizedBox(
@@ -148,37 +160,58 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                 const SizedBox(
                   height: 10,
                 ),
-                /* 
-                DropDownWidget(
-                  dropdownItens: categoriaMap.map(
-                    (val) {
-                      return DropdownMenuItem<String>(
-                        value: val["name"],
-                        child: Text(val["name"]),
-                      );
-                    },
-                  ).toList(),
-                  hint: categorySelected.text == ''
-                      ? const Text(
-                          'Select album',
-                          style: TextStyle(
-                              fontSize: 15, color: Palette.primaryColor),
-                        )
-                      : Text(
-                          categorySelected.text,
-                          style: const TextStyle(color: Palette.primaryColor),
-                        ),
-                  getValue: (val) {
-                    setState(
-                      () {
-                        categorySelected.text = val!;
-                      },
-                    );
-                  },
-                ),
-            */
+                FutureBuilder<List<Album>>(
+                    future: albumsList,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (snapshot.hasData && !snapshot.hasError) {
+                        return DropDownWidget(
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                albumSelected.text = value.name;
+                                albumId = value.id;
+                              },
+                            );
+                            print(albumId);
+                          },
+                          items: snapshot.data!.map(
+                            (Album value) {
+                              return DropdownMenuItem<Album>(
+                                alignment: AlignmentDirectional.centerStart,
+                                value: value,
+                                child: Text(value.name!),
+                              );
+                            },
+                          ).toList(),
+                          hint: albumSelected.text == ''
+                              ? Container(
+                                  height: 10,
+                                  color: Colors.red,
+                                  width: 150,
+                                  child: const Text(
+                                    'Select album',
+                                    textAlign: TextAlign.start,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Palette.primaryColor),
+                                  ),
+                                )
+                              : Text(
+                                  albumSelected.text,
+                                  style: const TextStyle(
+                                      color: Palette.primaryColor),
+                                ),
+                        );
+                      } else {
+                        return const Center(child: Text("Nenhum album"));
+                      }
+                    }),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

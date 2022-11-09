@@ -54,7 +54,7 @@ class CustomCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    music.title!,
+                    music.name!,
                     style: const TextStyle(
                         fontSize: 15,
                         overflow: TextOverflow.ellipsis,

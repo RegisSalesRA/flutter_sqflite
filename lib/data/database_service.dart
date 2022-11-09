@@ -43,11 +43,13 @@ class DatabaseService {
     await db.execute('''
       CREATE TABLE music (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title VARCHAR, 
+            name VARCHAR, 
             description TEXT,
             data DATETIME,
             categoryId INT,
-            FOREIGN KEY (categoryId) REFERENCES category(id) ON DELETE SET NULL 
+            albumId INT,
+            FOREIGN KEY (categoryId) REFERENCES category(id) ON DELETE SET NULL,
+            FOREIGN KEY (albumId) REFERENCES album(id) ON DELETE SET NULL
           )
           ''');
     // Run the CREATE {category} TABLE statement on the database.
