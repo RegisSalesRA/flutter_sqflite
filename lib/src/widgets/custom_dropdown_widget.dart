@@ -30,7 +30,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
       //       }
       //      return null;
       //    },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         prefixIcon: Icon(Icons.person),
       ),
       hint: widget.hint,

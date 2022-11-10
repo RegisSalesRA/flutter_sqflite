@@ -116,11 +116,16 @@ class DatabaseService {
     );
   }
 
-  Future<Category> category(int id) async {
+  Future category(int? id) async {
     final db = await _databaseService.database;
     final List<Map<String, dynamic>> maps =
         await db.query('category', where: 'id = ?', whereArgs: [id]);
-    return Category.fromJson(maps[0]);
+
+    if (id != 0) {
+      return Category.fromJson(maps[0]);
+    } else {
+      return Category;
+    }
   }
 
   // A method that deletes a category data from the categorys table.
@@ -181,6 +186,18 @@ class DatabaseService {
     );
   }
 
+  Future album(int? id) async {
+    final db = await _databaseService.database;
+    final List<Map<String, dynamic>> maps =
+        await db.query('album', where: 'id = ?', whereArgs: [id]);
+
+    if (id != 0) {
+      return Album.fromJson(maps[0]);
+    } else {
+      return Album;
+    }
+  }
+ 
   Future<List<Album>> albums() async {
     final db = await _databaseService.database;
     final List<Map<String, dynamic>> maps = await db.query('album');

@@ -9,7 +9,7 @@ class Music {
     this.id,
     this.name,
     this.description,
-    this.categoryId,
+    required this.categoryId,
     this.albumId,
     this.data,
   });

@@ -1,15 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/src/widgets/widgets.dart';
 import '../../config/config.dart';
+import '../../data/database_service.dart';
 import '../../model/model.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final Music music;
-  final bool isLoading = false;
   const DetailScreen({
     Key? key,
     required this.music,
   }) : super(key: key);
+
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  final bool isLoading = false;
+  final DatabaseService _databaseService = DatabaseService();
+
+  Category categoriaMusica = Category();
+  Album albumMusica = Album();
+
+  Future categoryById() async {
+    if (widget.music.categoryId != 0) {
+      var data = await _databaseService.category(widget.music.categoryId);
+      print(data);
+      setState(() {
+        categoriaMusica = data;
+      });
+    }
+    return null;
+  }
+
+  Future albumById() async {
+    if (widget.music.categoryId != 0) {
+      var data = await _databaseService.album(widget.music.albumId);
+      print(data);
+      setState(() {
+        albumMusica = data;
+      });
+    }
+    return null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    categoryById();
+    albumById();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +66,11 @@ class DetailScreen extends StatelessWidget {
             showDialog<String>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
-                  title: const Text("Album Name"),
+                  title: Text(
+                    widget.music.albumId != 0
+                        ? albumMusica.name.toString()
+                        : "Nenhum album",
+                  ),
                   content: const Text(
                       "Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966"),
                   actions: <Widget>[
@@ -94,7 +138,9 @@ class DetailScreen extends StatelessWidget {
                             child: Column(children: [
                               Center(
                                   child: Text(
-                                " '${music.name}' ",
+                                widget.music.categoryId != 0
+                                    ? " ${categoriaMusica.name.toString()} "
+                                    : "Nenhuma categoria",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
@@ -103,14 +149,12 @@ class DetailScreen extends StatelessWidget {
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Expanded(
+                              Expanded(
                                 child: SingleChildScrollView(
-                                  physics: BouncingScrollPhysics(),
+                                  physics: const BouncingScrollPhysics(),
                                   child: Text(
-                                    """
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Iporem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-      """,
-                                    style: TextStyle(
+                                    widget.music.description!,
+                                    style: const TextStyle(
                                         color: Palette.primaryColorDark),
                                   ),
                                 ),

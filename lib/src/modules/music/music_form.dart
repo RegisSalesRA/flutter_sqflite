@@ -130,7 +130,6 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                                 categoryId = value.id;
                               },
                             );
-                            print(categoryId);
                           },
                           items: snapshot.data!.map(
                             (Category value) {
@@ -176,7 +175,6 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                                 albumId = value.id;
                               },
                             );
-                            print(albumId);
                           },
                           items: snapshot.data!.map(
                             (Album value) {
@@ -188,17 +186,12 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                             },
                           ).toList(),
                           hint: albumSelected.text == ''
-                              ? Container(
-                                  height: 10,
-                                  color: Colors.red,
-                                  width: 150,
-                                  child: const Text(
-                                    'Select album',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Palette.primaryColor),
-                                  ),
+                              ? const Text(
+                                  'Select album',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Palette.primaryColor),
                                 )
                               : Text(
                                   albumSelected.text,
