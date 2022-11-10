@@ -10,6 +10,7 @@ import '../../widgets/widgets.dart';
 
 import '../album/album_screen.dart';
 import '../category/category_screen.dart';
+import '../music/music_screen_category.dart';
 import '../music/music_screen.dart';
 
 class HomeScreen extends StatefulWidget {

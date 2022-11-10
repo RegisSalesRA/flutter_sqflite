@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../../../config/config.dart';
 import '../../../../model/model.dart';
-
- 
+import '../../music/music_screen_category.dart';
 
 class CategoryWidget extends StatelessWidget {
-    final Size size;
+  final Size size;
   final Future<List<Category>> futureListCategorys;
   const CategoryWidget({
     Key? key,
     required this.size,
     required this.futureListCategorys,
   }) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,32 +30,19 @@ class CategoryWidget extends StatelessWidget {
             case ConnectionState.active:
               break;
             case ConnectionState.done:
-              if (snapshot.hasData &&
-                  !snapshot.hasError) {
+              if (snapshot.hasData && !snapshot.hasError) {
                 if (snapshot.data!.isNotEmpty) {
                   return Column(children: [
                     Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment
-                              .spaceBetween,
-                      children: [
-                        const Text(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text(
                           "Categories",
                           style: TextStyle(
-                              color: Palette
-                                  .primaryColor,
+                              color: Palette.primaryColor,
                               fontSize: 16,
-                              fontWeight:
-                                  FontWeight.bold),
+                              fontWeight: FontWeight.bold),
                         ),
-                        Text(
-                          "more",
-                          style: TextStyle(
-                              fontWeight:
-                                  FontWeight.bold,
-                              color: Colors
-                                  .grey.shade400),
-                        )
                       ],
                     ),
                     const SizedBox(
@@ -69,53 +53,43 @@ class CategoryWidget extends StatelessWidget {
                       width: size.width,
                       child: ListView.builder(
                         shrinkWrap: true,
-                        physics:
-                            const BouncingScrollPhysics(),
-                        scrollDirection:
-                            Axis.horizontal,
-                        itemCount:
-                            snapshot.data!.length,
-                        itemBuilder:
-                            (context, index) {
-                          final category =
-                              snapshot.data![index];
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          final category = snapshot.data![index];
                           return Column(children: [
-                            Container(
-                              padding:
-                                  const EdgeInsets
-                                      .all(5),
-                              decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius
-                                      .all(Radius
-                                          .circular(
-                                              15))),
-                              height: size.height *
-                                  0.22,
-                              width: 150,
-                              child: ClipRRect(
-                                borderRadius:
-                                    const BorderRadius
-                                            .all(
-                                        Radius
-                                            .circular(
-                                                15)),
-                                child: Image.asset(
-                                  'assets/images/detailPageImage.png',
-                                  fit: BoxFit.cover,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => MusicScreenCategory(
+                                            categoryId: category.id!,
+                                          )),
+                                );
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 2),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/detailPageImage.png'),
+                                          fit: BoxFit.cover),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15))),
+                                  height: size.height * 0.22,
+                                  width: 150,
                                 ),
                               ),
                             ),
                             Text(
                               category.name!,
                               style: const TextStyle(
-                                  color: Palette
-                                      .primaryColor,
-                                  fontWeight:
-                                      FontWeight
-                                          .bold,
-                                  overflow:
-                                      TextOverflow
-                                          .ellipsis),
+                                  color: Palette.primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.ellipsis),
                             )
                           ]);
                         },
@@ -124,8 +98,7 @@ class CategoryWidget extends StatelessWidget {
                   ]);
                 } else {
                   return const Center(
-                    child: Text(
-                        "Nenhuma categoria cadastrada!"),
+                    child: Text("Nenhuma categoria cadastrada!"),
                   );
                 }
               }
