@@ -38,16 +38,11 @@ class CustomCardWidget extends StatelessWidget {
             Row(children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                        border: Border.all(color: Colors.grey.shade400)),
-                    child: Icon(
-                      Icons.music_note,
-                      color: Colors.grey.shade400,
-                      size: 26,
-                    )),
+                child: Icon(
+                  Icons.music_note,
+                  color: Colors.grey.shade400,
+                  size: 26,
+                ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

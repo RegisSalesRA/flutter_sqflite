@@ -83,21 +83,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(20)),
-                                            border: Border.all(
-                                                color: Colors.grey.shade400)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(1),
-                                          child: Icon(
-                                            Icons.category_outlined,
-                                            color: Colors.grey.shade400,
-                                            size: 26,
-                                          ),
-                                        )),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(1),
+                                      child: Icon(
+                                        Icons.category_outlined,
+                                        color: Colors.grey.shade400,
+                                        size: 26,
+                                      ),
+                                    ),
                                   ),
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
