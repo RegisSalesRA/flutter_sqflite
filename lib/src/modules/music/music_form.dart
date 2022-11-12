@@ -43,6 +43,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
             Music(
               name: nameController.text,
               description: descriptionController.text,
+              isFavorite: "false",
               categoryId: categoryId,
               albumId: albumId,
               data: DateTime.now().toString(),

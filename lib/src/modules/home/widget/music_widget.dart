@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../data/database_service.dart';
 import '../../../../model/model.dart';
 import '../../../widgets/widgets.dart';
 
-class MusicWidget extends StatelessWidget {
+class MusicWidget extends StatefulWidget {
   final dynamic Function(Music)? onDetails;
   final String buscarMusicas;
   final Size size;
@@ -18,14 +19,21 @@ class MusicWidget extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<MusicWidget> createState() => _MusicWidgetState();
+}
+
+class _MusicWidgetState extends State<MusicWidget> {
+  final DatabaseService _databaseService = DatabaseService();
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: size.height * 0.35,
+        height: widget.size.height * 0.35,
         child: Column(
           children: [
             Expanded(
               child: FutureBuilder<List<Music>>(
-                future: futureListMusics,
+                future: widget.futureListMusics,
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.none:
@@ -39,7 +47,7 @@ class MusicWidget extends StatelessWidget {
                       if (snapshot.hasData && !snapshot.hasError) {
                         if (snapshot.data!.isNotEmpty) {
                           return SizedBox(
-                              height: size.height * 0.45,
+                              height: widget.size.height * 0.45,
                               child: Column(
                                 children: [
                                   Expanded(
@@ -55,21 +63,43 @@ class MusicWidget extends StatelessWidget {
                                           return snapshot.data![index].name
                                                   .toString()
                                                   .toLowerCase()
-                                                  .contains(buscarMusicas)
-                                              ? CustomCardWidget(
-                                                  music: music,
-                                                  onDetails: onDetails,
-                                                  onDelete: null,
-                                                  onEdit: null,
-                                                  details: true,
-                                                  children: [
-                                                      Text(
-                                                        music.name.toString(),
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline2,
-                                                      )
-                                                    ])
+                                                  .contains(
+                                                      widget.buscarMusicas)
+                                              ? GestureDetector(
+                                                  onTap: () async {
+                                                    if (music.isFavorite ==
+                                                        "true") {
+                                                      await _databaseService
+                                                          .updateMusicFavorite(
+                                                        "false",
+                                                        music.id!,
+                                                      );
+                                                      print(music.isFavorite);
+                                                    } else {
+                                                      await _databaseService
+                                                          .updateMusicFavorite(
+                                                              "true",
+                                                              music.id!);
+                                                      print(music.isFavorite);
+                                                    }
+                                                  },
+                                                  child: CustomCardWidget(
+                                                      music: music,
+                                                      onDetails:
+                                                          widget.onDetails,
+                                                      onDelete: null,
+                                                      onEdit: null,
+                                                      details: true,
+                                                      children: [
+                                                        Text(
+                                                          music.name.toString(),
+                                                          style:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .headline2,
+                                                        )
+                                                      ]),
+                                                )
                                               : Container();
                                         },
                                       ),
@@ -79,8 +109,8 @@ class MusicWidget extends StatelessWidget {
                               ));
                         } else {
                           return SizedBox(
-                              height: size.height * 0.35,
-                              width: size.width,
+                              height: widget.size.height * 0.35,
+                              width: widget.size.width,
                               child: const Center(
                                 child: Text("Nenhuma musica cadastrada!"),
                               ));

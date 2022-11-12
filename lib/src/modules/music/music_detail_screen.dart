@@ -69,8 +69,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         ? albumMusica.name.toString()
                         : "Nenhum album",
                   ),
-                  content: const Text(
-                      "Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966Criada em 1992 o album foi escrito e feito para ser da banda iron maiden 1966"),
+                  content: Text(widget.music.description!),
                   actions: <Widget>[
                     TextButton(
                       onPressed: () => Navigator.pop(context, 'OK'),

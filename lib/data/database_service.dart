@@ -45,6 +45,7 @@ class DatabaseService {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name VARCHAR, 
             description TEXT,
+            isFavorite TEXT,
             data DATETIME,
             categoryId INT,
             albumId INT,
@@ -92,6 +93,12 @@ class DatabaseService {
     final db = await _databaseService.database;
     await db.update('music', music.toJson(),
         where: 'id = ?', whereArgs: [music.id]);
+  }
+
+  Future<void> updateMusicFavorite(String value, int musicId) async {
+    final db = await _databaseService.database;
+    await db.rawUpdate(
+        'UPDATE music SET isFavorite = ? WHERE id = ?', [value, musicId]);
   }
 
   Future<void> deleteMusic(int id) async {

@@ -82,10 +82,12 @@ class CustomCardWidget extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                Icon(
-                  Icons.favorite_border,
-                  color: Colors.grey.shade400,
-                ),
+                music.isFavorite == "true"
+                    ? const Icon(Icons.favorite, color: Colors.red)
+                    : Icon(
+                        Icons.favorite_border,
+                        color: Colors.grey.shade400,
+                      ),
               ])
             else
               Row(mainAxisSize: MainAxisSize.min, children: [

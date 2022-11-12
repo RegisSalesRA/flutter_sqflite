@@ -2,6 +2,7 @@ class Music {
   int? id;
   String? name;
   String? description;
+  String? isFavorite;
   int? categoryId;
   int? albumId;
   String? data;
@@ -9,7 +10,8 @@ class Music {
     this.id,
     this.name,
     this.description,
-    required this.categoryId,
+    this.isFavorite,
+    this.categoryId,
     this.albumId,
     this.data,
   });
@@ -18,6 +20,7 @@ class Music {
         id: json["id"],
         name: json["name"],
         description: json["description"],
+        isFavorite: json["isFavorite"],
         categoryId: json["categoryId"],
         albumId: json["albumId"],
         data: json["data"],
@@ -27,6 +30,7 @@ class Music {
         "id": id,
         "name": name,
         "description": description,
+        "isFavorite": isFavorite,
         "categoryId": categoryId,
         "albumId": albumId,
         "data": data,
