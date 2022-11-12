@@ -113,6 +113,13 @@ class DatabaseService {
     return List.generate(maps.length, (index) => Music.fromJson(maps[index]));
   }
 
+  Future<List<Music>> musicFavorite(String value) async {
+    final db = await _databaseService.database;
+    List<Map<String, dynamic>> maps =
+        await db.query('music', where: 'isFavorite = ?', whereArgs: [value]);
+    return List.generate(maps.length, (index) => Music.fromJson(maps[index]));
+  }
+
 // '''''''''''''''''''''''''''' MUSIC SERVICE END ''''''''''''''''''''''''''''
 
 // '''''''''''''''''''''''''''' CATEGORY SERVICE ''''''''''''''''''''''''''''

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/config/config.dart';
-import 'package:flutter_sqlite/src/modules/home/widget/widget.dart';
 
 import '../../../data/database_service.dart';
 
@@ -10,7 +9,7 @@ import '../../widgets/widgets.dart';
 
 import '../album/album_screen.dart';
 import '../category/category_screen.dart';
-import '../music/music_screen_category.dart';
+import '../favorite/favorite_screen.dart';
 import '../music/music_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -90,6 +89,7 @@ class HomeScreenState extends State<HomeScreen> {
                                 CategoryWidget(
                                     size: MediaQuery.of(context).size,
                                     futureListCategorys: futureListCategorys),
+                                /*
                                 // List Musics Items
                                 MusicWidget(
                                   size: MediaQuery.of(context).size,
@@ -111,85 +111,160 @@ class HomeScreenState extends State<HomeScreen> {
                                     }
                                   },
                                 )
+                         */
+                                SizedBox(
+                                    height: size.height * 0.35,
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                          child: FutureBuilder<List<Music>>(
+                                            future: _getMusics(),
+                                            builder: (context, snapshot) {
+                                              switch (
+                                                  snapshot.connectionState) {
+                                                case ConnectionState.none:
+                                                  break;
+                                                case ConnectionState.active:
+                                                  break;
+                                                case ConnectionState.waiting:
+                                                  return const SizedBox();
+
+                                                case ConnectionState.done:
+                                                  if (snapshot.hasData &&
+                                                      !snapshot.hasError) {
+                                                    if (snapshot
+                                                        .data!.isNotEmpty) {
+                                                      return SizedBox(
+                                                          height: size.height *
+                                                              0.45,
+                                                          child: Column(
+                                                            children: [
+                                                              Expanded(
+                                                                child:
+                                                                    SingleChildScrollView(
+                                                                  physics:
+                                                                      const BouncingScrollPhysics(),
+                                                                  child: ListView
+                                                                      .builder(
+                                                                    shrinkWrap:
+                                                                        true,
+                                                                    physics:
+                                                                        const NeverScrollableScrollPhysics(),
+                                                                    itemCount:
+                                                                        snapshot
+                                                                            .data!
+                                                                            .length,
+                                                                    itemBuilder:
+                                                                        (context,
+                                                                            index) {
+                                                                      final music =
+                                                                          snapshot
+                                                                              .data![index];
+                                                                      return snapshot
+                                                                              .data![index]
+                                                                              .name
+                                                                              .toString()
+                                                                              .toLowerCase()
+                                                                              .contains(buscarMusicas)
+                                                                          ? GestureDetector(
+                                                                              onTap: () async {
+                                                                                if (music.isFavorite == "true") {
+                                                                                  await _databaseService.updateMusicFavorite(
+                                                                                    "false",
+                                                                                    music.id!,
+                                                                                  );
+                                                                                  setState(() {});
+                                                                                } else {
+                                                                                  await _databaseService.updateMusicFavorite("true", music.id!);
+                                                                                  setState(() {});
+                                                                                }
+                                                                              },
+                                                                              child: CustomCardWidget(music: music, onDetails: null, onDelete: null, onEdit: null, details: true, children: [
+                                                                                Text(
+                                                                                  music.name.toString(),
+                                                                                  style: Theme.of(context).textTheme.headline2,
+                                                                                )
+                                                                              ]),
+                                                                            )
+                                                                          : Container();
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ));
+                                                    } else {
+                                                      return SizedBox(
+                                                          height: size.height *
+                                                              0.35,
+                                                          width: size.width,
+                                                          child: const Center(
+                                                            child: Text(
+                                                                "Nenhuma musica cadastrada!"),
+                                                          ));
+                                                    }
+                                                  }
+                                              }
+                                              return Container();
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    )),
                               ],
                             ),
                             // Actions Pages Buttons
-                            Container(
-                              height: size.height * 0.10,
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                  color: Palette.primaryColorDark,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.grey.shade400,
-                                    size: 25,
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      closeKeyboard(context);
-                                      searchController.clear();
-                                      setState(() {
-                                        buscarMusicas = "";
-                                      });
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                            builder: (_) => const AlbumScreen(),
-                                          ))
-                                          .then((_) => setState(() {}));
-                                    },
-                                    child: Icon(
-                                      Icons.album_rounded,
-                                      color: Colors.grey.shade400,
-                                      size: 25,
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      closeKeyboard(context);
-                                      searchController.clear();
-                                      setState(() {
-                                        buscarMusicas = "";
-                                      });
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                            builder: (_) =>
-                                                const CategoryScreen(),
-                                          ))
-                                          .then((_) => setState(() {}));
-                                    },
-                                    child: Icon(
-                                      Icons.category_outlined,
-                                      color: Colors.grey.shade400,
-                                      size: 25,
-                                    ),
-                                  ),
-                                  InkWell(
-                                    onTap: () {
-                                      closeKeyboard(context);
-                                      searchController.clear();
-                                      setState(() {
-                                        buscarMusicas = "";
-                                      });
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                            builder: (_) => const MusicScreen(),
-                                          ))
-                                          .then((_) => setState(() {}));
-                                    },
-                                    child: Icon(
-                                      Icons.music_note_outlined,
-                                      color: Colors.grey.shade400,
-                                      size: 25,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            NavigatorBottomBarWidget(
+                              context: context,
+                              size: size.height * 0.10,
+                              onTapFavorite: () {
+                                closeKeyboard(context);
+                                searchController.clear();
+                                setState(() {
+                                  buscarMusicas = "";
+                                });
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                      builder: (_) => const FavoriteMusic(),
+                                    ))
+                                    .then((_) => setState(() {}));
+                              },
+                              onTapAlbum: () {
+                                closeKeyboard(context);
+                                searchController.clear();
+                                setState(() {
+                                  buscarMusicas = "";
+                                });
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                      builder: (_) => const AlbumScreen(),
+                                    ))
+                                    .then((_) => setState(() {}));
+                              },
+                              onTapCategory: () {
+                                closeKeyboard(context);
+                                searchController.clear();
+                                setState(() {
+                                  buscarMusicas = "";
+                                });
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                      builder: (_) => const CategoryScreen(),
+                                    ))
+                                    .then((_) => setState(() {}));
+                              },
+                              onTapMusic: () {
+                                closeKeyboard(context);
+                                searchController.clear();
+                                setState(() {
+                                  buscarMusicas = "";
+                                });
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                      builder: (_) => const MusicScreen(),
+                                    ))
+                                    .then((_) => setState(() {}));
+                              },
                             ),
                           ]),
                     ),
