@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/config/config.dart';
 
+import '../../data/database_service.dart';
 import '../../model/model.dart';
 
-class CustomCardWidget extends StatelessWidget {
+class CustomCardWidget extends StatefulWidget {
   final Music music;
   final Function(Music)? onDetails;
   final Function(Music)? onEdit;
@@ -19,6 +20,31 @@ class CustomCardWidget extends StatelessWidget {
       required this.details,
       required this.children})
       : super(key: key);
+
+  @override
+  State<CustomCardWidget> createState() => _CustomCardWidgetState();
+}
+
+class _CustomCardWidgetState extends State<CustomCardWidget> {
+  final DatabaseService _databaseService = DatabaseService();
+
+  Album albumMusica = Album();
+
+  Future albumById() async {
+    if (widget.music.categoryId != 0) {
+      var data = await _databaseService.album(widget.music.albumId);
+      setState(() {
+        albumMusica = data;
+      });
+    }
+    return null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    albumById();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +75,7 @@ class CustomCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    music.name!,
+                    widget.music.name!,
                     style: const TextStyle(
                         fontSize: 15,
                         overflow: TextOverflow.ellipsis,
@@ -60,7 +86,9 @@ class CustomCardWidget extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    'Album',
+                    albumMusica.name == null
+                        ? "No album"
+                        : albumMusica.name.toString(),
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -70,10 +98,10 @@ class CustomCardWidget extends StatelessWidget {
                 ],
               )
             ]),
-            if (details == true)
+            if (widget.details == true)
               Row(mainAxisSize: MainAxisSize.min, children: [
                 InkWell(
-                  onTap: () => onDetails!(music),
+                  onTap: () => widget.onDetails!(widget.music),
                   child: Icon(
                     Icons.assignment,
                     color: Colors.grey.shade400,
@@ -82,7 +110,7 @@ class CustomCardWidget extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                music.isFavorite == "true"
+                widget.music.isFavorite == "true"
                     ? const Icon(Icons.favorite, color: Colors.red)
                     : Icon(
                         Icons.favorite_border,
@@ -92,7 +120,7 @@ class CustomCardWidget extends StatelessWidget {
             else
               Row(mainAxisSize: MainAxisSize.min, children: [
                 InkWell(
-                  onTap: () => onEdit!(music),
+                  onTap: () => widget.onEdit!(widget.music),
                   child: Icon(
                     Icons.edit,
                     color: Colors.grey.shade400,
@@ -102,7 +130,7 @@ class CustomCardWidget extends StatelessWidget {
                   width: 10,
                 ),
                 InkWell(
-                  onTap: () => onDelete!(music),
+                  onTap: () => widget.onDelete!(widget.music),
                   child: Icon(
                     Icons.delete,
                     color: Colors.grey.shade400,

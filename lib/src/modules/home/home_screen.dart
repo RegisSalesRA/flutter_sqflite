@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sqlite/config/config.dart';
 
 import '../../../data/database_service.dart';
 
@@ -179,12 +178,33 @@ class HomeScreenState extends State<HomeScreen> {
                                                                                   setState(() {});
                                                                                 }
                                                                               },
-                                                                              child: CustomCardWidget(music: music, onDetails: null, onDelete: null, onEdit: null, details: true, children: [
-                                                                                Text(
-                                                                                  music.name.toString(),
-                                                                                  style: Theme.of(context).textTheme.headline2,
-                                                                                )
-                                                                              ]),
+                                                                              child: CustomCardWidget(
+                                                                                  music: music,
+                                                                                  onDetails: (value) {
+                                                                                    {
+                                                                                      {
+                                                                                        {
+                                                                                          closeKeyboard(context);
+                                                                                          Navigator.of(context)
+                                                                                              .push(
+                                                                                                MaterialPageRoute(
+                                                                                                  builder: (_) => DetailScreen(music: value),
+                                                                                                ),
+                                                                                              )
+                                                                                              .then((_) => setState(() {}));
+                                                                                        }
+                                                                                      }
+                                                                                    }
+                                                                                  },
+                                                                                  onDelete: null,
+                                                                                  onEdit: null,
+                                                                                  details: true,
+                                                                                  children: [
+                                                                                    Text(
+                                                                                      music.name.toString(),
+                                                                                      style: Theme.of(context).textTheme.headline2,
+                                                                                    )
+                                                                                  ]),
                                                                             )
                                                                           : Container();
                                                                     },

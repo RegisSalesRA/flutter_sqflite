@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/data/database_service.dart';
 
-import 'package:flutter_sqlite/src/widgets/appbar_widget.dart';
-
 import '../../../config/colors.dart';
 import '../../../model/model.dart';
+import '../../widgets/widgets.dart';
 
 class FavoriteMusic extends StatefulWidget {
   const FavoriteMusic({Key? key}) : super(key: key);
@@ -36,7 +35,8 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (snapshot.hasData && !snapshot.hasError) {
+                }
+                if (snapshot.hasData && !snapshot.hasError) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 5.0),
@@ -90,8 +90,27 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
                                         height: 5,
                                       ),
                                     ],
-                                  )
+                                  ),
                                 ]),
+                                InkWell(
+                                  onTap: () {
+                                    {
+                                      {
+                                        {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  DetailScreen(music: music),
+                                            ),
+                                          );
+                                        }
+                                      }
+                                    } 
+                                  },
+                                  child: const Padding(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Icon(Icons.assignment)),
+                                )
                               ],
                             ));
                       },

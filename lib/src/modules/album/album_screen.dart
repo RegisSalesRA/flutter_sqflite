@@ -55,7 +55,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (snapshot.hasData && !snapshot.hasError) {
+                } else if (snapshot.data!.isNotEmpty && !snapshot.hasError) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 5.0),
