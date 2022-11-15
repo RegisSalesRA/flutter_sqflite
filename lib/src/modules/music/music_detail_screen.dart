@@ -82,7 +82,7 @@ class _DetailScreenState extends State<DetailScreen> {
         appBar: AppBarWidget(
           title: 'Details',
           onTap: () => Navigator.of(context).pop(),
-          actions: widget.music.isFavorite == "true"
+          actions: widget.music.isFavorite == 1
               ? const Padding(
                   padding: EdgeInsets.only(right: 15),
                   child: Icon(Icons.favorite, color: Colors.red))

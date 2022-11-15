@@ -67,18 +67,16 @@ class _MusicWidgetState extends State<MusicWidget> {
                                                       widget.buscarMusicas)
                                               ? GestureDetector(
                                                   onTap: () async {
-                                                    if (music.isFavorite ==
-                                                        "true") {
+                                                    if (music.isFavorite == 1) {
                                                       await _databaseService
                                                           .updateMusicFavorite(
-                                                        "false",
+                                                        0,
                                                         music.id!,
                                                       );
                                                     } else {
                                                       await _databaseService
                                                           .updateMusicFavorite(
-                                                              "true",
-                                                              music.id!);
+                                                              1, music.id!);
                                                     }
                                                   },
                                                   child: CustomCardWidget(

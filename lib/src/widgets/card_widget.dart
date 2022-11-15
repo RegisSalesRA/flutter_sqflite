@@ -110,7 +110,7 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                 const SizedBox(
                   width: 10,
                 ),
-                widget.music.isFavorite == "true"
+                widget.music.isFavorite == 1
                     ? const Icon(Icons.favorite, color: Colors.red)
                     : Icon(
                         Icons.favorite_border,

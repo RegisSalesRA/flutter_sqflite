@@ -16,7 +16,7 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
   final DatabaseService _databaseService = DatabaseService();
 
   Future<List<Music>> _getMusics() async {
-    return await _databaseService.musicFavorite("true");
+    return await _databaseService.musicFavorite(1);
   }
 
   @override

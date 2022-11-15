@@ -24,6 +24,9 @@ class HomeScreenState extends State<HomeScreen> {
   late Future<List<Category>> futureListCategorys;
   final searchController = TextEditingController();
   String buscarMusicas = "";
+  List<Music> futureListMusics2 = [];
+  final loading = ValueNotifier(false);
+  ValueNotifier<bool> valueNotifier = ValueNotifier(false);
 
   Future<List<Music>> _getMusics() async {
     return await _databaseService.musics();
@@ -61,6 +64,19 @@ class HomeScreenState extends State<HomeScreen> {
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            //       ElevatedButton(
+                            //         onPressed: () {
+                            //         valueNotifier.value = !valueNotifier.value;
+                            //       print(loading.value);
+                            //    },
+                            //   child: Text("Press me")),
+                            //   ValueListenableBuilder(
+                            //     valueListenable: valueNotifier,
+                            //   builder: (context, bool isLoading, _) {
+                            //   return (isLoading)
+                            //     ? Text("True")
+                            //   : Text("False");
+                            // }),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -88,29 +104,7 @@ class HomeScreenState extends State<HomeScreen> {
                                 CategoryWidget(
                                     size: MediaQuery.of(context).size,
                                     futureListCategorys: futureListCategorys),
-                                /*
-                                // List Musics Items
-                                MusicWidget(
-                                  size: MediaQuery.of(context).size,
-                                  futureListMusics: futureListMusics,
-                                  buscarMusicas: buscarMusicas,
-                                  onDetails: (value) {
-                                    {
-                                      {
-                                        closeKeyboard(context);
-                                        Navigator.of(context)
-                                            .push(
-                                              MaterialPageRoute(
-                                                builder: (_) =>
-                                                    DetailScreen(music: value),
-                                              ),
-                                            )
-                                            .then((_) => setState(() {}));
-                                      }
-                                    }
-                                  },
-                                )
-                         */
+                                // Music Widget Scroll Items
                                 SizedBox(
                                     height: size.height * 0.35,
                                     child: Column(
@@ -167,14 +161,14 @@ class HomeScreenState extends State<HomeScreen> {
                                                                               .contains(buscarMusicas)
                                                                           ? GestureDetector(
                                                                               onTap: () async {
-                                                                                if (music.isFavorite == "true") {
+                                                                                if (music.isFavorite == 1) {
                                                                                   await _databaseService.updateMusicFavorite(
-                                                                                    "false",
+                                                                                    0,
                                                                                     music.id!,
                                                                                   );
                                                                                   setState(() {});
                                                                                 } else {
-                                                                                  await _databaseService.updateMusicFavorite("true", music.id!);
+                                                                                  await _databaseService.updateMusicFavorite(1, music.id!);
                                                                                   setState(() {});
                                                                                 }
                                                                               },

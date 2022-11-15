@@ -45,7 +45,7 @@ class DatabaseService {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name VARCHAR, 
             description TEXT,
-            isFavorite TEXT,
+            isFavorite BOOLEAN DEFAULT 0,
             data DATETIME,
             categoryId INT,
             albumId INT,
@@ -95,7 +95,7 @@ class DatabaseService {
         where: 'id = ?', whereArgs: [music.id]);
   }
 
-  Future<void> updateMusicFavorite(String value, int musicId) async {
+  Future<void> updateMusicFavorite(int value, int musicId) async {
     final db = await _databaseService.database;
     await db.rawUpdate(
         'UPDATE music SET isFavorite = ? WHERE id = ?', [value, musicId]);
@@ -113,7 +113,7 @@ class DatabaseService {
     return List.generate(maps.length, (index) => Music.fromJson(maps[index]));
   }
 
-  Future<List<Music>> musicFavorite(String value) async {
+  Future<List<Music>> musicFavorite(int value) async {
     final db = await _databaseService.database;
     List<Map<String, dynamic>> maps =
         await db.query('music', where: 'isFavorite = ?', whereArgs: [value]);

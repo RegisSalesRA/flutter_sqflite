@@ -2,7 +2,7 @@ class Music {
   int? id;
   String? name;
   String? description;
-  String? isFavorite;
+  int? isFavorite;
   int? categoryId;
   int? albumId;
   String? data;
