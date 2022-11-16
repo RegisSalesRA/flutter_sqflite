@@ -65,6 +65,7 @@ class _MusicScreenState extends State<MusicScreen> {
                     itemBuilder: (context, index) {
                       final music = snapshot.data![index];
                       return CustomCardWidget(
+                        onTap: null,
                         details: false,
                         music: music,
                         onDetails: null,

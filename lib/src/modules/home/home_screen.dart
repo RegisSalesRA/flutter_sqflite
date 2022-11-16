@@ -23,13 +23,19 @@ class HomeScreenState extends State<HomeScreen> {
   late Future<List<Music>> futureListMusics;
   late Future<List<Category>> futureListCategorys;
   final searchController = TextEditingController();
+  final loading = ValueNotifier(false);
+  ValueNotifier<List<Music>> musicFavorite = ValueNotifier<List<Music>>([]);
   String buscarMusicas = "";
   List<Music> futureListMusics2 = [];
-  final loading = ValueNotifier(false);
   ValueNotifier<bool> valueNotifier = ValueNotifier(false);
 
   Future<List<Music>> _getMusics() async {
     return await _databaseService.musics();
+  }
+
+  Future<void> getMusicsFavorite() async {
+    var request = await _databaseService.musics();
+    musicFavorite.value = [...request];
   }
 
   Future<List<Category>> _getCategorys() async {
@@ -41,6 +47,7 @@ class HomeScreenState extends State<HomeScreen> {
     super.initState();
     futureListMusics = _getMusics();
     futureListCategorys = _getCategorys();
+    getMusicsFavorite();
   }
 
   @override
@@ -64,19 +71,6 @@ class HomeScreenState extends State<HomeScreen> {
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            //       ElevatedButton(
-                            //         onPressed: () {
-                            //         valueNotifier.value = !valueNotifier.value;
-                            //       print(loading.value);
-                            //    },
-                            //   child: Text("Press me")),
-                            //   ValueListenableBuilder(
-                            //     valueListenable: valueNotifier,
-                            //   builder: (context, bool isLoading, _) {
-                            //   return (isLoading)
-                            //     ? Text("True")
-                            //   : Text("False");
-                            // }),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -105,126 +99,12 @@ class HomeScreenState extends State<HomeScreen> {
                                     size: MediaQuery.of(context).size,
                                     futureListCategorys: futureListCategorys),
                                 // Music Widget Scroll Items
-                                SizedBox(
-                                    height: size.height * 0.35,
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          child: FutureBuilder<List<Music>>(
-                                            future: _getMusics(),
-                                            builder: (context, snapshot) {
-                                              switch (
-                                                  snapshot.connectionState) {
-                                                case ConnectionState.none:
-                                                  break;
-                                                case ConnectionState.active:
-                                                  break;
-                                                case ConnectionState.waiting:
-                                                  return const SizedBox();
-
-                                                case ConnectionState.done:
-                                                  if (snapshot.hasData &&
-                                                      !snapshot.hasError) {
-                                                    if (snapshot
-                                                        .data!.isNotEmpty) {
-                                                      return SizedBox(
-                                                          height: size.height *
-                                                              0.45,
-                                                          child: Column(
-                                                            children: [
-                                                              Expanded(
-                                                                child:
-                                                                    SingleChildScrollView(
-                                                                  physics:
-                                                                      const BouncingScrollPhysics(),
-                                                                  child: ListView
-                                                                      .builder(
-                                                                    shrinkWrap:
-                                                                        true,
-                                                                    physics:
-                                                                        const NeverScrollableScrollPhysics(),
-                                                                    itemCount:
-                                                                        snapshot
-                                                                            .data!
-                                                                            .length,
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                            index) {
-                                                                      final music =
-                                                                          snapshot
-                                                                              .data![index];
-                                                                      return snapshot
-                                                                              .data![index]
-                                                                              .name
-                                                                              .toString()
-                                                                              .toLowerCase()
-                                                                              .contains(buscarMusicas)
-                                                                          ? GestureDetector(
-                                                                              onTap: () async {
-                                                                                if (music.isFavorite == 1) {
-                                                                                  await _databaseService.updateMusicFavorite(
-                                                                                    0,
-                                                                                    music.id!,
-                                                                                  );
-                                                                                  setState(() {});
-                                                                                } else {
-                                                                                  await _databaseService.updateMusicFavorite(1, music.id!);
-                                                                                  setState(() {});
-                                                                                }
-                                                                              },
-                                                                              child: CustomCardWidget(
-                                                                                  music: music,
-                                                                                  onDetails: (value) {
-                                                                                    {
-                                                                                      {
-                                                                                        {
-                                                                                          closeKeyboard(context);
-                                                                                          Navigator.of(context)
-                                                                                              .push(
-                                                                                                MaterialPageRoute(
-                                                                                                  builder: (_) => DetailScreen(music: value),
-                                                                                                ),
-                                                                                              )
-                                                                                              .then((_) => setState(() {}));
-                                                                                        }
-                                                                                      }
-                                                                                    }
-                                                                                  },
-                                                                                  onDelete: null,
-                                                                                  onEdit: null,
-                                                                                  details: true,
-                                                                                  children: [
-                                                                                    Text(
-                                                                                      music.name.toString(),
-                                                                                      style: Theme.of(context).textTheme.headline2,
-                                                                                    )
-                                                                                  ]),
-                                                                            )
-                                                                          : Container();
-                                                                    },
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ));
-                                                    } else {
-                                                      return SizedBox(
-                                                          height: size.height *
-                                                              0.35,
-                                                          width: size.width,
-                                                          child: const Center(
-                                                            child: Text(
-                                                                "Nenhuma musica cadastrada!"),
-                                                          ));
-                                                    }
-                                                  }
-                                              }
-                                              return Container();
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    )),
+                                MusicWidget(
+                                  buscarMusicas: buscarMusicas,
+                                  size: size.height * 0.35,
+                                  databaseService: _databaseService,
+                                  musicFavorite: musicFavorite,
+                                )
                               ],
                             ),
                             // Actions Pages Buttons

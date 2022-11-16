@@ -11,6 +11,7 @@ class CustomCardWidget extends StatefulWidget {
   final Function(Music)? onDelete;
   final bool details;
   final List<Widget>? children;
+  final Function()? onTap;
   const CustomCardWidget(
       {Key? key,
       required this.music,
@@ -18,6 +19,7 @@ class CustomCardWidget extends StatefulWidget {
       required this.onEdit,
       required this.onDelete,
       required this.details,
+      required this.onTap,
       required this.children})
       : super(key: key);
 
@@ -110,12 +112,17 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                 const SizedBox(
                   width: 10,
                 ),
-                widget.music.isFavorite == 1
-                    ? const Icon(Icons.favorite, color: Colors.red)
-                    : Icon(
-                        Icons.favorite_border,
-                        color: Colors.grey.shade400,
-                      ),
+                InkWell(
+                  onTap: widget.onTap,
+                  child: SizedBox(
+                    child: widget.music.isFavorite == 1
+                        ? const Icon(Icons.favorite, color: Colors.red)
+                        : Icon(
+                            Icons.favorite_border,
+                            color: Colors.grey.shade400,
+                          ),
+                  ),
+                )
               ])
             else
               Row(mainAxisSize: MainAxisSize.min, children: [
