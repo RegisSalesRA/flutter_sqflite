@@ -165,12 +165,12 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                                         'Select category',
                                         style: TextStyle(
                                             fontSize: 15,
-                                            color: Palette.primaryColor),
+                                            color: Palette.primaryColorLight),
                                       )
                                     : Text(
                                         categorySelected.text,
                                         style: const TextStyle(
-                                            color: Palette.primaryColor),
+                                            color: Palette.primaryColorLight),
                                       ),
                               );
                             } else {
@@ -218,12 +218,12 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                         fontSize: 15,
-                                        color: Palette.primaryColor),
+                                        color: Palette.primaryColorLight),
                                   )
                                 : Text(
                                     albumSelected.text,
                                     style: const TextStyle(
-                                        color: Palette.primaryColor),
+                                        color: Palette.primaryColorLight),
                                   ),
                           );
                         } else {

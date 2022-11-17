@@ -90,7 +90,7 @@ class _MusicScreenCategoryState extends State<MusicScreenCategory> {
                                           fontSize: 15,
                                           overflow: TextOverflow.ellipsis,
                                           fontWeight: FontWeight.bold,
-                                          color: Palette.primaryColor),
+                                          color: Palette.primaryColorLight),
                                     ),
                                     const SizedBox(
                                       height: 5,

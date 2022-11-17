@@ -10,18 +10,15 @@ class NavigatorBottomBarWidget extends StatelessWidget {
   final void Function()? onTapCategory;
   final void Function()? onTapMusic;
 
-  const NavigatorBottomBarWidget(
-      {Key? key,
-      required this.context,
-      required this.size,
-      required this.onTapFavorite,
-      required this.onTapAlbum,
-      required this.onTapCategory,
-      required this.onTapMusic,
-      
-      
-      })
-      : super(key: key);
+  const NavigatorBottomBarWidget({
+    Key? key,
+    required this.context,
+    required this.size,
+    required this.onTapFavorite,
+    required this.onTapAlbum,
+    required this.onTapCategory,
+    required this.onTapMusic,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class NavigatorBottomBarWidget extends StatelessWidget {
       height: size,
       width: double.infinity,
       decoration: const BoxDecoration(
-          color: Palette.primaryColorDark,
+          color: Palette.primaryColorLight,
           borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

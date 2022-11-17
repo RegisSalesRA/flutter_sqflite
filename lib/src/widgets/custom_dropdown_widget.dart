@@ -28,7 +28,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
         hint: widget.hint,
         elevation: 16,
         style: const TextStyle(
-          color: Palette.primaryColor,
+          color: Palette.primaryColorLight,
         ),
         onChanged: widget.onChanged,
         items: widget.items,

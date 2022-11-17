@@ -36,7 +36,7 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                if (snapshot.hasData && !snapshot.hasError) {
+                if (snapshot.data!.isNotEmpty && !snapshot.hasError) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 5.0),
@@ -84,7 +84,7 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
                                             fontSize: 15,
                                             overflow: TextOverflow.ellipsis,
                                             fontWeight: FontWeight.bold,
-                                            color: Palette.primaryColor),
+                                            color: Palette.primaryColorLight),
                                       ),
                                       const SizedBox(
                                         height: 5,
@@ -105,11 +105,14 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
                                           );
                                         }
                                       }
-                                    } 
+                                    }
                                   },
-                                  child: const Padding(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Icon(Icons.assignment)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Icon(
+                                        Icons.assignment,
+                                        color: Colors.grey.shade400,
+                                      )),
                                 )
                               ],
                             ));
@@ -117,7 +120,8 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
                     ),
                   );
                 } else {
-                  return const Center(child: Text("Nenhum dado cadastrado"));
+                  return const Center(
+                      child: Text("No registered favorite music"));
                 }
               })),
     );

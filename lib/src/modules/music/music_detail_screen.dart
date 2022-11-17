@@ -33,8 +33,8 @@ class _DetailScreenState extends State<DetailScreen> {
   }
 
   Future albumById() async {
-    if (widget.music.albumId != 0) {
-      var data = await _databaseService.album(widget.music.albumId);
+    var data = await _databaseService.album(widget.music.albumId);
+    if (widget.music.albumId! > 0 && data != null) {
       setState(() {
         albumMusica = data;
       });
@@ -65,7 +65,7 @@ class _DetailScreenState extends State<DetailScreen> {
               context: context,
               builder: (BuildContext context) => AlertDialog(
                   title: Text(
-                    widget.music.albumId != 0
+                    widget.music.albumId != 0 && albumMusica.name != null
                         ? albumMusica.name.toString()
                         : "Nenhum album",
                   ),
@@ -117,7 +117,7 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
             ),
             Positioned(
-              top: size.height * 0.40,
+              top: size.height * 0.35,
               right: 30,
               bottom: 0,
               left: 30,
@@ -142,11 +142,11 @@ class _DetailScreenState extends State<DetailScreen> {
                                   child: Text(
                                 widget.music.categoryId != 0
                                     ? " ${categoriaMusica.name.toString()} "
-                                    : "Nenhuma categoria",
+                                    : "No registered category",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
-                                    color: Palette.primaryColorDark),
+                                    color: Palette.primaryColorLight),
                               )),
                               const SizedBox(
                                 height: 10,
@@ -157,7 +157,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   child: Text(
                                     widget.music.description!,
                                     style: const TextStyle(
-                                        color: Palette.primaryColorDark),
+                                        color: Palette.primaryColorLight),
                                   ),
                                 ),
                               ),

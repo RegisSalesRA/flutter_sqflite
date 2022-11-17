@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class Palette {
   static const MaterialColor kToDark = MaterialColor(
-    0xff00254d, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
+    0xff2595be, // 0% comes in here, this will be color picked if no shade is selected when defining a Color property which doesn’t require a swatch.
     <int, Color>{
       50: Color(0xFF004999), //10%
       100: Color(0xFF004999), //20%
@@ -18,9 +18,9 @@ abstract class Palette {
   );
 
   static const Color primaryColor = Color(0xFF00254d);
-  static const Color primaryColorLight = Color(0xFF004999);
+  static const Color primaryColorLight = Color(0xFF2595be);
   static const Color primaryColorDark = Color(0xFF021338);
   static const Color textColor = Color(0xFFFFFFFF);
-  static const Color textCard = Color(0xFF021338);
+  static const Color textCard = Color(0xFF4e91fc);
   static Color greyShadeLight = Colors.grey.shade100;
 }

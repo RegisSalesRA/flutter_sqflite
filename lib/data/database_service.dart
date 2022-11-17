@@ -212,10 +212,10 @@ class DatabaseService {
     final List<Map<String, dynamic>> maps =
         await db.query('album', where: 'id = ?', whereArgs: [id]);
 
-    if (id != 0) {
+    if (id! > 0 && maps.isNotEmpty) {
       return Album.fromJson(maps[0]);
     } else {
-      return Album;
+      return null;
     }
   }
 

@@ -40,7 +40,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   )
                   .then((_) => setState(() {}));
             },
-            backgroundColor: Palette.primaryColor,
+            backgroundColor: Palette.primaryColorLight,
             child: const Icon(Icons.add),
           ),
           appBar: AppBarWidget(
@@ -103,7 +103,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             fontSize: 15,
                                             overflow: TextOverflow.ellipsis,
                                             fontWeight: FontWeight.bold,
-                                            color: Palette.primaryColor),
+                                            color: Palette.primaryColorLight),
                                       ),
                                       const SizedBox(
                                         height: 5,
@@ -143,7 +143,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ),
                   );
                 } else {
-                  return const Center(child: Text("Nenhum dado cadastrado"));
+                  return const Center(child: Text("No registered category"));
                 }
               })),
     );

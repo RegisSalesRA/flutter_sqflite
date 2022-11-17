@@ -39,7 +39,7 @@ class _MusicScreenState extends State<MusicScreen> {
                 )
                 .then((_) => setState(() {}));
           },
-          backgroundColor: Palette.primaryColor,
+          backgroundColor: Palette.primaryColorLight,
           child: const Icon(Icons.add),
         ),
         appBar: AppBarWidget(
@@ -100,7 +100,7 @@ class _MusicScreenState extends State<MusicScreen> {
                   ),
                 );
               } else {
-                return const Center(child: Text("Nenhum dado cadastrado"));
+                return const Center(child: Text("No registered music"));
               }
             }),
       ),

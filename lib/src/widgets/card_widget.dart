@@ -33,8 +33,8 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
   Album albumMusica = Album();
 
   Future albumById() async {
-    if (widget.music.albumId != 0) {
-      var data = await _databaseService.album(widget.music.albumId);
+    var data = await _databaseService.album(widget.music.albumId);
+    if (widget.music.albumId! > 0 && data != null) {
       setState(() {
         albumMusica = data;
       });
@@ -82,7 +82,7 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                         fontSize: 15,
                         overflow: TextOverflow.ellipsis,
                         fontWeight: FontWeight.bold,
-                        color: Palette.primaryColor),
+                        color: Palette.primaryColorLight),
                   ),
                   const SizedBox(
                     height: 5,

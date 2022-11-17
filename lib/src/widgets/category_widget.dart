@@ -36,7 +36,7 @@ class CategoryWidget extends StatelessWidget {
                     const Text(
                       "Categories",
                       style: TextStyle(
-                          color: Palette.primaryColor,
+                          color: Palette.primaryColorLight,
                           fontSize: 16,
                           fontWeight: FontWeight.bold),
                     ),
@@ -82,7 +82,7 @@ class CategoryWidget extends StatelessWidget {
                                 Text(
                                   category.name!,
                                   style: const TextStyle(
-                                      color: Palette.primaryColor,
+                                      color: Palette.primaryColorLight,
                                       fontWeight: FontWeight.bold,
                                       overflow: TextOverflow.ellipsis),
                                 )
@@ -93,7 +93,7 @@ class CategoryWidget extends StatelessWidget {
                   ]);
                 } else {
                   return const Center(
-                    child: Text("Nenhuma categoria cadastrada!"),
+                    child: Text("No registered category"),
                   );
                 }
               }

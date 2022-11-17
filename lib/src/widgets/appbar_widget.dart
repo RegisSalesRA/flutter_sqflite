@@ -23,14 +23,16 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       title: Text(
         title,
-        style: const TextStyle(color: Palette.primaryColor),
+        style: const TextStyle(color: Palette.primaryColorLight),
       ),
-      leading: onTap == null ? const SizedBox() : InkWell(
-          onTap: onTap,
-          child: const Icon(
-            Icons.arrow_back,
-            color: Palette.primaryColor,
-          )),
+      leading: onTap == null
+          ? const SizedBox()
+          : InkWell(
+              onTap: onTap,
+              child: const Icon(
+                Icons.arrow_back,
+                color: Palette.primaryColorLight,
+              )),
       actions: [actions!],
     );
   }
