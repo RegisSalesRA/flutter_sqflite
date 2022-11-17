@@ -101,7 +101,7 @@ class HomeScreenState extends State<HomeScreen> {
                                 // Music Widget Scroll Items
                                 MusicWidget(
                                   buscarMusicas: buscarMusicas,
-                                  size: size.height * 0.35,
+                                  size: size.height * 0.38,
                                   databaseService: _databaseService,
                                   musicFavorite: musicFavorite,
                                 )

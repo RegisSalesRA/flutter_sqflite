@@ -15,7 +15,7 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: size.height * 0.30,
+      height: size.height * 0.24,
       width: double.infinity,
       child: FutureBuilder<List<Category>>(
         future: futureListCategorys,
@@ -33,24 +33,18 @@ class CategoryWidget extends StatelessWidget {
               if (snapshot.hasData && !snapshot.hasError) {
                 if (snapshot.data!.isNotEmpty) {
                   return Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          "Categories",
-                          style: TextStyle(
-                              color: Palette.primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    const Text(
+                      "Categories",
+                      style: TextStyle(
+                          color: Palette.primaryColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     SizedBox(
-                      height: size.height * 0.25,
-                      width: size.width,
+                      height: size.height * 0.18,
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
@@ -58,40 +52,41 @@ class CategoryWidget extends StatelessWidget {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           final category = snapshot.data![index];
-                          return Column(children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => MusicScreenCategory(
-                                            categoryId: category.id!,
-                                          )),
-                                );
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 2),
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/detailPageImage.png'),
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15))),
-                                  height: size.height * 0.22,
-                                  width: 150,
+                          return Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MusicScreenCategory(
+                                                categoryId: category.id!,
+                                              )),
+                                    );
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 2),
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/detailPageImage.png'),
+                                            fit: BoxFit.cover),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15))),
+                                    height: size.height * 0.15,
+                                    width: 125,
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Text(
-                              category.name!,
-                              style: const TextStyle(
-                                  color: Palette.primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis),
-                            )
-                          ]);
+                                Text(
+                                  category.name!,
+                                  style: const TextStyle(
+                                      color: Palette.primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis),
+                                )
+                              ]);
                         },
                       ),
                     )

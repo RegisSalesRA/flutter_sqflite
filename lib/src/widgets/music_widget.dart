@@ -68,7 +68,7 @@ class _MusicWidgetState extends State<MusicWidget> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(20)),
                                 ),
-                                height: 60,
+                                height: 50,
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
