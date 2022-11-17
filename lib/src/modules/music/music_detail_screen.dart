@@ -19,14 +19,14 @@ class _DetailScreenState extends State<DetailScreen> {
   final bool isLoading = false;
   final DatabaseService _databaseService = DatabaseService();
 
-  Category categoriaMusica = Category();
-  Album albumMusica = Album();
+  Category categoryName = Category();
+  Album albumMusic = Album();
 
   Future categoryById() async {
-    if (widget.music.categoryId != 0) {
-      var data = await _databaseService.category(widget.music.categoryId);
+    var data = await _databaseService.category(widget.music.categoryId);
+    if (widget.music.categoryId! > 0 && data != null) {
       setState(() {
-        categoriaMusica = data;
+        categoryName = data;
       });
     }
     return null;
@@ -36,7 +36,7 @@ class _DetailScreenState extends State<DetailScreen> {
     var data = await _databaseService.album(widget.music.albumId);
     if (widget.music.albumId! > 0 && data != null) {
       setState(() {
-        albumMusica = data;
+        albumMusic = data;
       });
     }
     return null;
@@ -65,9 +65,9 @@ class _DetailScreenState extends State<DetailScreen> {
               context: context,
               builder: (BuildContext context) => AlertDialog(
                   title: Text(
-                    widget.music.albumId != 0 && albumMusica.name != null
-                        ? albumMusica.name.toString()
-                        : "Nenhum album",
+                    widget.music.albumId != 0 && albumMusic.name != null
+                        ? albumMusic.name.toString()
+                        : "No registered album",
                   ),
                   content: Text(widget.music.description!),
                   actions: <Widget>[
@@ -140,8 +140,9 @@ class _DetailScreenState extends State<DetailScreen> {
                             child: Column(children: [
                               Center(
                                   child: Text(
-                                widget.music.categoryId != 0
-                                    ? " ${categoriaMusica.name.toString()} "
+                                widget.music.categoryId != 0 &&
+                                        categoryName.name != null
+                                    ? " ${categoryName.name.toString()} "
                                     : "No registered category",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,

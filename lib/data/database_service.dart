@@ -171,11 +171,10 @@ class DatabaseService {
     final db = await _databaseService.database;
     final List<Map<String, dynamic>> maps =
         await db.query('category', where: 'id = ?', whereArgs: [id]);
-
-    if (id != 0) {
+    if (id! > 0 && maps.isNotEmpty) {
       return Category.fromJson(maps[0]);
     } else {
-      return Category;
+      return null;
     }
   }
 
