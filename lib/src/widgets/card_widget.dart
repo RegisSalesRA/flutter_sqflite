@@ -33,7 +33,7 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
   Album albumMusica = Album();
 
   Future albumById() async {
-    if (widget.music.categoryId != 0) {
+    if (widget.music.albumId != 0) {
       var data = await _databaseService.album(widget.music.albumId);
       setState(() {
         albumMusica = data;

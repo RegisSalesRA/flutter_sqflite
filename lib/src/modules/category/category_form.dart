@@ -99,7 +99,7 @@ class _CategoryFormState extends State<CategoryForm> {
                       ),
                     ),
                     onPressed: onSave,
-                    child: const Text('submit'),
+                    child: const Text('Save category'),
                   )
                 ],
               ),

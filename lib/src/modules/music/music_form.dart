@@ -236,11 +236,12 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
+                        
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
                     onPressed: onSave,
-                    child: const Text('submit'),
+                    child: const Text('Save music'),
                   )
                 ],
               ),

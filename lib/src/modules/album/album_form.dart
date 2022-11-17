@@ -96,7 +96,7 @@ class _AlbumFormState extends State<AlbumForm> {
                       ),
                     ),
                     onPressed: _onSave,
-                    child: const Text('submit'),
+                    child: const Text('Save Album'),
                   )
                 ],
               ),

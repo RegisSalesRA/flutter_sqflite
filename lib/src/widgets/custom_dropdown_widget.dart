@@ -22,28 +22,17 @@ class DropDownWidget extends StatefulWidget {
 class _DropDownWidgetState extends State<DropDownWidget> {
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<dynamic>(
-      isExpanded: false,
-      //   validator: (value) {
-      //     if (value == null || value.isEmpty) {
-      //        return 'Please select item';
-      //       }
-      //      return null;
-      //    },
-      decoration: const InputDecoration(
-        prefixIcon: Icon(Icons.person),
+    return ButtonTheme(
+      alignedDropdown: true,
+      child: DropdownButtonFormField<dynamic>(
+        hint: widget.hint,
+        elevation: 16,
+        style: const TextStyle(
+          color: Palette.primaryColor,
+        ),
+        onChanged: widget.onChanged,
+        items: widget.items,
       ),
-      hint: widget.hint,
-      elevation: 16,
-      icon: const Icon(
-        Icons.arrow_drop_down,
-        color: Palette.primaryColor,
-      ),
-      style: const TextStyle(
-        color: Palette.primaryColor,
-      ),
-      onChanged: widget.onChanged,
-      items: widget.items,
     );
   }
 }
