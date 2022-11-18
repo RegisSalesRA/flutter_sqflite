@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
 
 import '../../config/config.dart';
 import '../../data/database_service.dart';
@@ -28,11 +29,6 @@ class _MusicWidgetState extends State<MusicWidget> {
   Future<void> getMusicsFavorite() async {
     var request = await _databaseService.musics();
     widget.musicFavorite.value = [...request];
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -143,8 +139,8 @@ class _MusicWidgetState extends State<MusicWidget> {
                                                 const SizedBox(
                                                   width: 10,
                                                 ),
-                                                InkWell(
-                                                  onTap: () async {
+                                                LikeButton(
+                                                  onTap: (bool isLiked) async {
                                                     if (music.isFavorite == 1) {
                                                       await widget
                                                           .databaseService
@@ -160,20 +156,26 @@ class _MusicWidgetState extends State<MusicWidget> {
                                                               1, music.id!);
                                                       await getMusicsFavorite();
                                                     }
+                                                    return !isLiked;
                                                   },
-                                                  child: SizedBox(
-                                                    child: music.isFavorite == 1
-                                                        ? const Icon(
-                                                            Icons.favorite,
-                                                            color: Colors.red)
-                                                        : Icon(
-                                                            Icons
-                                                                .favorite_border,
-                                                            color: Colors
-                                                                .grey.shade400,
-                                                          ),
-                                                  ),
-                                                )
+                                                  likeBuilder: (bool isLiked) {
+                                                    print(isLiked);
+                                                    return SizedBox(
+                                                      child: music.isFavorite ==
+                                                              1
+                                                          ? const Icon(
+                                                              Icons.favorite,
+                                                              color: Colors.red)
+                                                          : Icon(
+                                                              Icons
+                                                                  .favorite_border,
+                                                              color: Colors.grey
+                                                                  .shade400,
+                                                            ),
+                                                    );
+                                                  },
+                                                  size: 25,
+                                                ),
                                               ])
                                         ],
                                       ))
