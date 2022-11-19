@@ -24,7 +24,7 @@ class App extends StatelessWidget {
           progressIndicatorTheme: const ProgressIndicatorThemeData(
               color: Palette.primaryColorLight),
           // PrimariColors from App css
-          primaryColor: Palette.primaryColor,
+          primaryColor: Colors.white,
           primaryColorDark: Palette.primaryColorDark,
           primaryColorLight: Palette.primaryColorLight,
           accentColor: Palette.primaryColor,
