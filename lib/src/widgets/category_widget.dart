@@ -41,10 +41,10 @@ class CategoryWidget extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     SizedBox(
-                      height: size.height * 0.18,
+                      height: size.height * 0.20,
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
@@ -66,17 +66,16 @@ class CategoryWidget extends StatelessWidget {
                                     );
                                   },
                                   child: Container(
+                                    height: size.height * 0.16,
+                                    width: 115,
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 2),
                                     decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                            image: AssetImage(
-                                                'assets/images/detailPageImage.png'),
-                                            fit: BoxFit.cover),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15))),
-                                    height: size.height * 0.15,
-                                    width: 125,
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/images/detailPageImage.png'),
+                                          fit: BoxFit.fill),
+                                    ),
                                   ),
                                 ),
                                 Text(

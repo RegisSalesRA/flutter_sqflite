@@ -159,7 +159,6 @@ class _MusicWidgetState extends State<MusicWidget> {
                                                     return !isLiked;
                                                   },
                                                   likeBuilder: (bool isLiked) {
-                                                    print(isLiked);
                                                     return SizedBox(
                                                       child: music.isFavorite ==
                                                               1
