@@ -43,10 +43,10 @@ I avoided using state management packages using only native flutter features for
 ```
 
 - Clone o repositório:
-$ git clone git@github.com:RegisSalesRA/Flutter_Github_Api.git
+$ git clone https://github.com/RegisSalesRA/flutter_sqflite.git
 
 - Entre no diretório:
-$ cd flutter_github_api
+$ cd flutter_sqflite
 
 - Instale as dependências:
 $ flutter pub get / flutter packages get
