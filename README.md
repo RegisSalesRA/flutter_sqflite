@@ -6,15 +6,15 @@ Dados do meu repositorio do github para o flutter
 
    <p>
 
-   - [📖 Sobre o App](#Sobre-o-App)
+   - [📖 About App](#About-App)
    - [📱 Screenshots](#Screenshots)
-   - [👨🏽‍💻 Desenvolvimento](#Sobre-o-desenvolvimento)
-   - [📲 Como Utilizar](#Como-Utilizar)
-   - [🛠 Ferramentas](#Packages-utilizadas)
+   - [👨🏽‍💻 Development](#Development)
+   - [📲 How to use](#How-to-use)
+   - [🛠 Packages](#Packages)
 
    </p>
 
-<h2>Sobre o App</h2>
+<h2>About App</h2>
 
 <p>
 Decidi realizar esse desafio de consumir uma api publica do github para aprender e me desafiar com novas ferramentas e conhecimentos em api publica
@@ -22,12 +22,12 @@ Decidi realizar esse desafio de consumir uma api publica do github para aprender
 
 <h2>Screenshots</h2>
 
-<img src="https://github.com/RegisSalesRA/Flutter_Github_Api/blob/master/assets/readme/logo.png" width="250"> <img src="https://github.com/RegisSalesRA/Flutter_Github_Api/blob/master/assets/readme/repositorios.png" width="250"> <img src="https://github.com/RegisSalesRA/Flutter_Github_Api/blob/master/assets/readme/starred.png" width="250"> 
+<img src="https://github.com/RegisSalesRA/flutter_sqflite/blob/master/assets/readme/home_screen.png" width="250"> <img src="https://github.com/RegisSalesRA/flutter_sqflite/blob/master/assets/readme/music_screen.png" width="250"> <img src="https://github.com/RegisSalesRA/flutter_sqflite/blob/master/assets/readme/gif.gif" width="250"> 
 
 <p>
 </p>
 
-<h2>Sobre o desenvolvimento</h2>
+<h2>Development</h2>
 
 <img src="https://img.shields.io/badge/Flutter Version-3.3.2-blue"> <img src="https://img.shields.io/badge/Dart Version-2.18.1-blueviolet"> <img src="https://img.shields.io/badge/JDK version-11.0.16-yellowgreen">
  
@@ -36,7 +36,7 @@ Desenvolvimento focado em mostrar dados e repositorios que uso no github afim de
 </p>
 
 
-<h2>Como Utilizar</h2>
+<h2>How to use</h2>
 <p>
 
 ```
@@ -58,22 +58,22 @@ $ flutter run
 </p>
  
 <p>
-<h2>Packages utilizadas</h2>
+<h2>Packages</h2>
 <p>
 
--  font_awesome_flutter: ^10.1.0
--  http: ^0.13.4
--  provider: ^6.0.2 
+-  sqflite: ^2.0.2+1
+-  path_provider: ^2.0.11
+-  like_button: ^2.0.5
 
 </br>
 
 <p align="center">
-<h3 align="center">👇 Dúvida, Crítica, Elogio ou Sugestão👇</h3> 
+<h3 align="center">👇 Doubt, Criticism, Compliment or Suggestion👇</h3> 
   </p>
   <p align="center">
   <a href="https://www.linkedin.com/in/regisrommel/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank">
   </a> 
 </p>
 <p align="center">
- Estudar é fundamental para um bom futuro, estudar e praticar é a chave do SUCESSO!
+ Studying is essential for a good future, studying and practicing is the key to SUCCESS!
 </p>
