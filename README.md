@@ -1,8 +1,9 @@
-# Flutter Sqflite
 
-Dados do meu repositorio do github para o flutter
+# [Flutter][] Sqflite
+[Flutter]: https://docs.flutter.dev/
 
-<h2>Índice 📋</h2>
+
+<h2>Index 📋</h2>
 
    <p>
 
@@ -17,7 +18,7 @@ Dados do meu repositorio do github para o flutter
 <h2>About App</h2>
 
 <p>
-Decidi realizar esse desafio de consumir uma api publica do github para aprender e me desafiar com novas ferramentas e conhecimentos em api publica
+The idea of creating an application in <b>Flutter</b> with sqflite came up to share knowledge while I learned how to integrate with flutter with the internal bank of the cell phone
 </p>
 
 <h2>Screenshots</h2>
@@ -32,7 +33,7 @@ Decidi realizar esse desafio de consumir uma api publica do github para aprender
 <img src="https://img.shields.io/badge/Flutter Version-3.3.2-blue"> <img src="https://img.shields.io/badge/Dart Version-2.18.1-blueviolet"> <img src="https://img.shields.io/badge/JDK version-11.0.16-yellowgreen">
  
 <p>
-Desenvolvimento focado em mostrar dados e repositorios que uso no github afim de transmitir também novos conhecimentos para demais pessoas
+I avoided using state management packages using only native flutter features for state management
 </p>
 
 
