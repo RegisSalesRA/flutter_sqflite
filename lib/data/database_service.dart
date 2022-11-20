@@ -45,6 +45,7 @@ class DatabaseService {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name VARCHAR, 
             description TEXT,
+            lyric TEXT,
             isFavorite BOOLEAN DEFAULT 0,
             data DATETIME,
             categoryId INT,

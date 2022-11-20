@@ -20,6 +20,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
   final formMusic = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
+  final lyricController = TextEditingController();
   final categorySelected = TextEditingController();
   final albumSelected = TextEditingController();
   int? categoryId = 0;
@@ -44,6 +45,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
               Music(
                 name: nameController.text,
                 description: descriptionController.text,
+                lyric: lyricController.text,
                 categoryId: categoryId,
                 albumId: albumId,
                 data: DateTime.now().toString(),
@@ -53,6 +55,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
               id: widget.music!.id!,
               name: nameController.text,
               description: descriptionController.text,
+              lyric: lyricController.text,
               categoryId: categoryId,
               albumId: albumId,
               data: DateTime.now().toString(),
@@ -67,6 +70,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
     if (widget.music != null) {
       nameController.text = widget.music!.name!;
       descriptionController.text = widget.music!.description!;
+      lyricController.text = widget.music!.lyric!;
       categoryId = widget.music?.categoryId;
       albumId = widget.music?.albumId;
     }
@@ -78,6 +82,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
   void dispose() {
     nameController.dispose();
     descriptionController.dispose();
+    lyricController.dispose();
     super.dispose();
   }
 
@@ -123,6 +128,20 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                     validator: (value) {
                       if (value == null || value == "") {
                         return "Description can not be null or empty";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFormWidget(
+                    hintText: 'Lyric',
+                    controller: lyricController,
+                    icon: Icons.app_registration_sharp,
+                    validator: (value) {
+                      if (value == null || value == "") {
+                        return "Lyric can not be null or empty";
                       }
                       return null;
                     },
@@ -236,7 +255,6 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),

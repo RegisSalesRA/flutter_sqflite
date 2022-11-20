@@ -156,7 +156,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                 child: SingleChildScrollView(
                                   physics: const BouncingScrollPhysics(),
                                   child: Text(
-                                    widget.music.description!,
+                                    widget.music.lyric!,
                                     style: const TextStyle(
                                         color: Palette.primaryColorLight),
                                   ),
