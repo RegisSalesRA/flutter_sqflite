@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/data/database_service.dart';
 
+import '../../../animations/animations.dart';
 import '../../../config/colors.dart';
 import '../../../model/model.dart';
 import '../../widgets/widgets.dart';
@@ -26,7 +27,7 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
           appBar: AppBarWidget(
             actions: const SizedBox(),
             title: 'Favorite Music',
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () => Navigator.pushNamed(context, '/'),
           ),
           body: FutureBuilder<List<Music>>(
               future: _getMusics(),
@@ -46,76 +47,82 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         final music = snapshot.data![index];
-                        return Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(20)),
-                            ),
-                            height: 60,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(1),
-                                      child: Icon(
-                                        Icons.music_note,
-                                        color: Colors.grey.shade400,
-                                        size: 26,
+                        return AnimatedFadedText(
+                          direction: 1,
+                          child: Container(
+                              margin: const EdgeInsets.symmetric(vertical: 5),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(20)),
+                              ),
+                              height: 60,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(1),
+                                        child: Icon(
+                                          Icons.music_note,
+                                          color: Colors.grey.shade400,
+                                          size: 26,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        music.name!,
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            overflow: TextOverflow.ellipsis,
-                                            fontWeight: FontWeight.bold,
-                                            color: Palette.primaryColorLight),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                    ],
-                                  ),
-                                ]),
-                                InkWell(
-                                  onTap: () {
-                                    {
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          music.name!,
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              overflow: TextOverflow.ellipsis,
+                                              fontWeight: FontWeight.bold,
+                                              color: Palette.primaryColorLight),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                      ],
+                                    ),
+                                  ]),
+                                  InkWell(
+                                    onTap: () {
                                       {
                                         {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (_) =>
-                                                  DetailScreen(music: music),
-                                            ),
-                                          );
+                                          {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (_) =>
+                                                    DetailScreen(music: music),
+                                              ),
+                                            );
+                                          }
                                         }
                                       }
-                                    }
-                                  },
-                                  child: Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: Icon(
-                                        Icons.assignment,
-                                        color: Colors.grey.shade400,
-                                      )),
-                                )
-                              ],
-                            ));
+                                    },
+                                    child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
+                                        child: Icon(
+                                          Icons.assignment,
+                                          color: Colors.grey.shade400,
+                                        )),
+                                  )
+                                ],
+                              )),
+                        );
                       },
                     ),
                   );

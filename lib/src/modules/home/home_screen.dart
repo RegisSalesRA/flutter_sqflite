@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../animations/fade_animation.dart';
 import '../../../data/database_service.dart';
 
 import '../../../helpers/helpers.dart';
@@ -99,11 +100,14 @@ class HomeScreenState extends State<HomeScreen> {
                                     size: MediaQuery.of(context).size,
                                     futureListCategorys: futureListCategorys),
                                 // Music Widget Scroll Items
-                                MusicWidget(
-                                  buscarMusicas: buscarMusicas,
-                                  size: size.height * 0.38,
-                                  databaseService: _databaseService,
-                                  musicFavorite: musicFavorite,
+                                AnimatedFadedText(
+                                  direction: 1,
+                                  child: MusicWidget(
+                                    buscarMusicas: buscarMusicas,
+                                    size: size.height * 0.38,
+                                    databaseService: _databaseService,
+                                    musicFavorite: musicFavorite,
+                                  ),
                                 )
                               ],
                             ),

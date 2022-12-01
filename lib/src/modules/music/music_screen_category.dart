@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/model/model.dart';
 
+import '../../../animations/animations.dart';
 import '../../../config/config.dart';
 import '../../../data/database_service.dart';
 import '../../widgets/widgets.dart';
@@ -56,77 +57,82 @@ class _MusicScreenCategoryState extends State<MusicScreenCategory> {
                     itemCount: listMusics.length,
                     itemBuilder: (context, index) {
                       final music = listMusics[index];
-                      return Container(
-                          margin: const EdgeInsets.symmetric(vertical: 5),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20)),
-                          ),
-                          height: 60,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
-                                  child: Icon(
-                                    Icons.category_outlined,
-                                    color: Colors.grey.shade400,
-                                    size: 25,
+                      return AnimatedFadedText(
+                        direction: 1,
+                        child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 5),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                            ),
+                            height: 60,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Icon(
+                                      Icons.category_outlined,
+                                      color: Colors.grey.shade400,
+                                      size: 25,
+                                    ),
                                   ),
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      music.name!,
-                                      style: const TextStyle(
-                                          fontSize: 15,
-                                          overflow: TextOverflow.ellipsis,
-                                          fontWeight: FontWeight.bold,
-                                          color: Palette.primaryColorLight),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                  ],
-                                )
-                              ]),
-                              Row(mainAxisSize: MainAxisSize.min, children: [
-                                InkWell(
-                                  onTap: () {
-                                    {
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        music.name!,
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            overflow: TextOverflow.ellipsis,
+                                            fontWeight: FontWeight.bold,
+                                            color: Palette.primaryColorLight),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                    ],
+                                  )
+                                ]),
+                                Row(mainAxisSize: MainAxisSize.min, children: [
+                                  InkWell(
+                                    onTap: () {
                                       {
                                         {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (_) =>
-                                                  DetailScreen(music: music),
-                                            ),
-                                          );
+                                          {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (_) =>
+                                                    DetailScreen(music: music),
+                                              ),
+                                            );
+                                          }
                                         }
                                       }
-                                    }
-                                  },
-                                  child: Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: Icon(
-                                        Icons.assignment,
-                                        color: Colors.grey.shade400,
-                                      )),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                              ])
-                            ],
-                          ));
+                                    },
+                                    child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
+                                        child: Icon(
+                                          Icons.assignment,
+                                          color: Colors.grey.shade400,
+                                        )),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                ])
+                              ],
+                            )),
+                      );
                     },
                   )
                 : const Center(

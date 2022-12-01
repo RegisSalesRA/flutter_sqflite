@@ -14,21 +14,21 @@ class AnimatedFadedText extends StatefulWidget {
 
 class _AnimatedFadedTextState extends State<AnimatedFadedText>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
+  late AnimationController animationController;
 
   @override
   void initState() {
-    _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
-    Timer(const Duration(milliseconds: 200),
-        () => _animationController.forward());
     super.initState();
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
+    Timer(
+        const Duration(milliseconds: 200), () => animationController.forward());
   }
 
   @override
   void dispose() {
+    animationController.dispose();
     super.dispose();
-    _animationController.dispose();
   }
 
   @override
@@ -37,9 +37,9 @@ class _AnimatedFadedTextState extends State<AnimatedFadedText>
       position: Tween<Offset>(
         begin: Offset(widget.direction!, 0),
         end: Offset.zero,
-      ).animate(_animationController),
+      ).animate(animationController),
       child: FadeTransition(
-        opacity: _animationController,
+        opacity: animationController,
         child: widget.child,
       ),
     );
