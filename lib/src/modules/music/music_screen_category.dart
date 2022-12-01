@@ -99,9 +99,27 @@ class _MusicScreenCategoryState extends State<MusicScreenCategory> {
                                 )
                               ]),
                               Row(mainAxisSize: MainAxisSize.min, children: [
-                                Icon(
-                                  Icons.edit,
-                                  color: Colors.grey.shade400,
+                                InkWell(
+                                  onTap: () {
+                                    {
+                                      {
+                                        {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  DetailScreen(music: music),
+                                            ),
+                                          );
+                                        }
+                                      }
+                                    }
+                                  },
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Icon(
+                                        Icons.assignment,
+                                        color: Colors.grey.shade400,
+                                      )),
                                 ),
                                 const SizedBox(
                                   width: 10,
