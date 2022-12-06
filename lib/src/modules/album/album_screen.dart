@@ -29,6 +29,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
           floatingActionButton: FloatingActionButton(
@@ -80,7 +81,8 @@ class _AlbumScreenState extends State<AlbumScreen> {
                               ),
                               height: 60,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(children: [
                                     Padding(
@@ -96,17 +98,22 @@ class _AlbumScreenState extends State<AlbumScreen> {
                                       ),
                                     ),
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          album.name!,
-                                          style: const TextStyle(
-                                              fontSize: 15,
-                                              overflow: TextOverflow.ellipsis,
-                                              fontWeight: FontWeight.bold,
-                                              color: Palette.primaryColorLight),
+                                        SizedBox(
+                                          width: size.width * 0.60,
+                                          child: Text(
+                                            album.name!,
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                overflow: TextOverflow.ellipsis,
+                                                fontWeight: FontWeight.bold,
+                                                color:
+                                                    Palette.primaryColorLight),
+                                          ),
                                         ),
                                         const SizedBox(
                                           height: 5,
@@ -114,32 +121,34 @@ class _AlbumScreenState extends State<AlbumScreen> {
                                       ],
                                     )
                                   ]),
-                                  Row(mainAxisSize: MainAxisSize.min, children: [
-                                    InkWell(
-                                      onTap: () => Navigator.of(context)
-                                          .push(
-                                            MaterialPageRoute(
-                                              builder: (_) =>
-                                                  AlbumForm(album: album),
-                                            ),
-                                          )
-                                          .then((_) => setState(() {})),
-                                      child: Icon(
-                                        Icons.edit,
-                                        color: Colors.grey.shade400,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    InkWell(
-                                      onTap: () => {onAlbumDelete(album)},
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: Colors.grey.shade400,
-                                      ),
-                                    ),
-                                  ])
+                                  Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        InkWell(
+                                          onTap: () => Navigator.of(context)
+                                              .push(
+                                                MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      AlbumForm(album: album),
+                                                ),
+                                              )
+                                              .then((_) => setState(() {})),
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: Colors.grey.shade400,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        InkWell(
+                                          onTap: () => {onAlbumDelete(album)},
+                                          child: Icon(
+                                            Icons.delete,
+                                            color: Colors.grey.shade400,
+                                          ),
+                                        ),
+                                      ])
                                 ],
                               )),
                         );

@@ -66,7 +66,7 @@ class CategoryWidget extends StatelessWidget {
                                     );
                                   },
                                   child: Container(
-                                    height: size.height * 0.16,
+                                    height: size.height * 0.17,
                                     width: 115,
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 2),
@@ -78,12 +78,15 @@ class CategoryWidget extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  category.name!,
-                                  style: const TextStyle(
-                                      color: Palette.primaryColorLight,
-                                      fontWeight: FontWeight.bold,
-                                      overflow: TextOverflow.ellipsis),
+                                SizedBox(
+                                  width: size.width * 0.15,
+                                  child: Text(
+                                    category.name!,
+                                    style: const TextStyle(
+                                        color: Palette.primaryColorLight,
+                                        fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.ellipsis),
+                                  ),
                                 )
                               ]);
                         },

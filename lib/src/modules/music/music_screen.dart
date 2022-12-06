@@ -28,6 +28,7 @@ class _MusicScreenState extends State<MusicScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -73,19 +74,6 @@ class _MusicScreenState extends State<MusicScreen> {
                           music: music,
                           onDetails: null,
                           onDelete: onMusicDelete,
-                          children: [
-                            Text(
-                              'Musica - ${music.name}',
-                              style: Theme.of(context).textTheme.headline2,
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "Album - ${music.description}",
-                              style: Theme.of(context).textTheme.headline2,
-                            ),
-                          ],
                           onEdit: (value) {
                             {
                               Navigator.of(context)

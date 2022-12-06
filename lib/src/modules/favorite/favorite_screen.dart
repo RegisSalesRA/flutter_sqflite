@@ -22,6 +22,7 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
           appBar: AppBarWidget(
@@ -83,13 +84,17 @@ class _FavoriteMusicState extends State<FavoriteMusic> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          music.name!,
-                                          style: const TextStyle(
-                                              fontSize: 15,
-                                              overflow: TextOverflow.ellipsis,
-                                              fontWeight: FontWeight.bold,
-                                              color: Palette.primaryColorLight),
+                                        SizedBox(
+                                          width: size.width * 0.65,
+                                          child: Text(
+                                            music.name!,
+                                            style: const TextStyle(
+                                                fontSize: 15,
+                                                overflow: TextOverflow.ellipsis,
+                                                fontWeight: FontWeight.bold,
+                                                color:
+                                                    Palette.primaryColorLight),
+                                          ),
                                         ),
                                         const SizedBox(
                                           height: 5,

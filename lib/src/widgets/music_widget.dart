@@ -3,6 +3,7 @@ import 'package:like_button/like_button.dart';
 
 import '../../config/config.dart';
 import '../../data/database_service.dart';
+import '../../helpers/helpers.dart';
 import '../../model/model.dart';
 import '../modules/music/music_detail_screen.dart';
 
@@ -33,6 +34,7 @@ class _MusicWidgetState extends State<MusicWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SizedBox(
         height: widget.size,
         child: Column(
@@ -92,16 +94,20 @@ class _MusicWidgetState extends State<MusicWidget> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    Text(
-                                                      music.name!,
-                                                      style: const TextStyle(
-                                                          fontSize: 15,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Palette
-                                                              .primaryColorLight),
+                                                    SizedBox(
+                                                      width: size.width * 0.55,
+                                                      child: Text(
+                                                        music.name!,
+                                                        style: const TextStyle(
+                                                            fontSize: 15,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Palette
+                                                                .primaryColorLight),
+                                                      ),
                                                     ),
                                                     const SizedBox(
                                                       height: 5,
@@ -188,47 +194,5 @@ class _MusicWidgetState extends State<MusicWidget> {
             )
           ],
         ));
-  }
-}
-
-class AlbumHelper extends StatefulWidget {
-  final Music music;
-  const AlbumHelper({Key? key, required this.music}) : super(key: key);
-
-  @override
-  State<AlbumHelper> createState() => _AlbumHelperState();
-}
-
-class _AlbumHelperState extends State<AlbumHelper> {
-  final DatabaseService _databaseService = DatabaseService();
-
-  Album albumMusica = Album();
-
-  Future albumById() async {
-    var data = await _databaseService.album(widget.music.albumId);
-    if (widget.music.albumId! > 0 && data != null) {
-      setState(() {
-        albumMusica = data;
-      });
-    }
-    return null;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    albumById();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      albumMusica.name == null ? "No album" : albumMusica.name.toString(),
-      style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-          overflow: TextOverflow.ellipsis,
-          color: Colors.grey.shade400),
-    );
   }
 }

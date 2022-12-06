@@ -10,18 +10,16 @@ class CustomCardWidget extends StatefulWidget {
   final Function(Music)? onEdit;
   final Function(Music)? onDelete;
   final bool details;
-  final List<Widget>? children;
   final Function()? onTap;
-  const CustomCardWidget(
-      {Key? key,
-      required this.music,
-      required this.onDetails,
-      required this.onEdit,
-      required this.onDelete,
-      required this.details,
-      required this.onTap,
-      required this.children})
-      : super(key: key);
+  const CustomCardWidget({
+    Key? key,
+    required this.music,
+    required this.onDetails,
+    required this.onEdit,
+    required this.onDelete,
+    required this.details,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   State<CustomCardWidget> createState() => _CustomCardWidgetState();
@@ -50,6 +48,7 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
         margin: const EdgeInsets.symmetric(vertical: 5),
         padding: const EdgeInsets.symmetric(
@@ -75,27 +74,34 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    widget.music.name!,
-                    style: const TextStyle(
-                        fontSize: 15,
-                        overflow: TextOverflow.ellipsis,
-                        fontWeight: FontWeight.bold,
-                        color: Palette.primaryColorLight),
+                  SizedBox(
+                    width: size.width * 0.65,
+                    child: Text(
+                      widget.music.name!,
+                      style: const TextStyle(
+                          fontSize: 15,
+                          overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.bold,
+                          color: Palette.primaryColorLight),
+                    ),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    albumMusica.name == null
-                        ? "No album"
-                        : albumMusica.name.toString(),
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis,
-                        color: Colors.grey.shade400),
+                  SizedBox(
+                    width: size.width * 0.65,
+                    child: Text(
+                      albumMusica.name == null
+                          ? "No album"
+                          : albumMusica.name.toString(),
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                          color: Colors.grey.shade400),
+                    ),
                   )
                 ],
               )

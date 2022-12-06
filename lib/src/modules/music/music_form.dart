@@ -88,6 +88,7 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWidget(
@@ -175,21 +176,32 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                                   (Category value) {
                                     return DropdownMenuItem<Category>(
                                       value: value,
-                                      child: Text(value.name!),
+                                      child: SizedBox(
+                                          width: size.width * 0.70,
+                                          child: Text(
+                                            value.name!,
+                                            overflow: TextOverflow.ellipsis,
+                                          )),
                                     );
                                   },
                                 ).toList(),
                                 hint: categorySelected.text == ''
-                                    ? const Text(
-                                        'Select category',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Palette.primaryColorLight),
+                                    ? SizedBox(
+                                        width: size.width * 0.60,
+                                        child: const Text(
+                                          'Select category',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Palette.primaryColorLight),
+                                        ),
                                       )
-                                    : Text(
-                                        categorySelected.text,
-                                        style: const TextStyle(
-                                            color: Palette.primaryColorLight),
+                                    : SizedBox(
+                                        width: size.width * 0.60,
+                                        child: Text(
+                                          categorySelected.text,
+                                          style: const TextStyle(
+                                              color: Palette.primaryColorLight),
+                                        ),
                                       ),
                               );
                             } else {
@@ -227,22 +239,35 @@ class _MusicScreenFormState extends State<MusicScreenForm> {
                                 return DropdownMenuItem<Album>(
                                   alignment: AlignmentDirectional.centerStart,
                                   value: value,
-                                  child: Text(value.name!),
+                                  child: SizedBox(
+                                      width: size.width * 0.70,
+                                      child: Text(
+                                        value.name!,
+                                        overflow: TextOverflow.ellipsis,
+                                      )),
                                 );
                               },
                             ).toList(),
                             hint: albumSelected.text == ''
-                                ? const Text(
-                                    'Select album',
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Palette.primaryColorLight),
+                                ? SizedBox(
+                                    width: size.width * 0.60,
+                                    child: const Text(
+                                      'Select album',
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Palette.primaryColorLight),
+                                    ),
                                   )
-                                : Text(
-                                    albumSelected.text,
-                                    style: const TextStyle(
-                                        color: Palette.primaryColorLight),
+                                : SizedBox(
+                                    width: size.width * 0.60,
+                                    child: Text(
+                                      albumSelected.text,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          color: Palette.primaryColorLight),
+                                    ),
                                   ),
                           );
                         } else {
