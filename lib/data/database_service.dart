@@ -36,10 +36,7 @@ class DatabaseService {
     );
   }
 
-  // When the database is first created, create a table to store category
-  // and a table to store musics.
   Future<void> _onCreate(Database db, int version) async {
-    // Run the CREATE {music} TABLE statement on the database.
     await db.execute('''
       CREATE TABLE music (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -86,8 +83,9 @@ class DatabaseService {
 
   Future<List<Music>> musics() async {
     final db = await _databaseService.database;
-    final List<Map<String, dynamic>> maps = await db.query('music');
-    return List.generate(maps.length, (index) => Music.fromJson(maps[index]));
+    final List<Map<String, dynamic>> mapMusic = await db.query('music');
+    return List.generate(
+        mapMusic.length, (index) => Music.fromJson(mapMusic[index]));
   }
 
   Future<void> updateMusic(Music music) async {
@@ -109,19 +107,19 @@ class DatabaseService {
 
   Future<List<Music>> musicByCategoryId(int id) async {
     final db = await _databaseService.database;
-    List<Map<String, dynamic>> maps =
+    List<Map<String, dynamic>> mapMusic =
         await db.query('music', where: 'categoryId = ?', whereArgs: [id]);
-    return List.generate(maps.length, (index) => Music.fromJson(maps[index]));
+    return List.generate(
+        mapMusic.length, (index) => Music.fromJson(mapMusic[index]));
   }
 
   Future<List<Music>> musicFavorite(int value) async {
     final db = await _databaseService.database;
-    List<Map<String, dynamic>> maps =
+    List<Map<String, dynamic>> mapMusic =
         await db.query('music', where: 'isFavorite = ?', whereArgs: [value]);
-    return List.generate(maps.length, (index) => Music.fromJson(maps[index]));
+    return List.generate(
+        mapMusic.length, (index) => Music.fromJson(mapMusic[index]));
   }
-
-// '''''''''''''''''''''''''''' MUSIC SERVICE END ''''''''''''''''''''''''''''
 
 // '''''''''''''''''''''''''''' CATEGORY SERVICE ''''''''''''''''''''''''''''
 
@@ -146,10 +144,10 @@ class DatabaseService {
     // Get a reference to the database.
     final db = await _databaseService.database;
     // Query the table for all the Categorys.
-    final List<Map<String, dynamic>> maps = await db.query('category');
+    final List<Map<String, dynamic>> mapCategory = await db.query('category');
     // Convert the List<Map<String, dynamic> into a List<Category>.
     return List.generate(
-        maps.length, (index) => Category.fromJson(maps[index]));
+        mapCategory.length, (index) => Category.fromJson(mapCategory[index]));
   }
 
   // A method that updates a category data from the categorys table.
@@ -170,10 +168,10 @@ class DatabaseService {
 
   Future category(int? id) async {
     final db = await _databaseService.database;
-    final List<Map<String, dynamic>> maps =
+    final List<Map<String, dynamic>> mapCategory =
         await db.query('category', where: 'id = ?', whereArgs: [id]);
-    if (id! > 0 && maps.isNotEmpty) {
-      return Category.fromJson(maps[0]);
+    if (id! > 0 && mapCategory.isNotEmpty) {
+      return Category.fromJson(mapCategory[0]);
     } else {
       return null;
     }
@@ -194,8 +192,6 @@ class DatabaseService {
     );
   }
 
-// '''''''''''''''''''''''''''' CATEGORY SERVICE END ''''''''''''''''''''''''''''
-
 // '''''''''''''''''''''''''''' ALBUM SERVICE ''''''''''''''''''''''''''''
 
   Future<void> insertAlbum(Album album) async {
@@ -209,11 +205,11 @@ class DatabaseService {
 
   Future album(int? id) async {
     final db = await _databaseService.database;
-    final List<Map<String, dynamic>> maps =
+    final List<Map<String, dynamic>> mapAlbum =
         await db.query('album', where: 'id = ?', whereArgs: [id]);
 
-    if (id! > 0 && maps.isNotEmpty) {
-      return Album.fromJson(maps[0]);
+    if (id! > 0 && mapAlbum.isNotEmpty) {
+      return Album.fromJson(mapAlbum[0]);
     } else {
       return null;
     }
@@ -221,8 +217,9 @@ class DatabaseService {
 
   Future<List<Album>> albums() async {
     final db = await _databaseService.database;
-    final List<Map<String, dynamic>> maps = await db.query('album');
-    return List.generate(maps.length, (index) => Album.fromJson(maps[index]));
+    final List<Map<String, dynamic>> mapAlbum = await db.query('album');
+    return List.generate(
+        mapAlbum.length, (index) => Album.fromJson(mapAlbum[index]));
   }
 
   Future<void> updateAlbum(Album album) async {
@@ -236,5 +233,3 @@ class DatabaseService {
     await db.delete('album', where: 'id = ?', whereArgs: [id]);
   }
 }
-
-// '''''''''''''''''''''''''''' ALBUM SERVICE END ''''''''''''''''''''''''''''
