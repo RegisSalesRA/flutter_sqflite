@@ -4,7 +4,6 @@ import 'package:like_button/like_button.dart';
 import '../../config/config.dart';
 import '../../data/database_service.dart';
 import '../../helpers/helpers.dart';
-import '../../model/model.dart';
 import '../modules/music/music_detail_screen.dart';
 
 class MusicWidget extends StatefulWidget {
@@ -136,6 +135,7 @@ class _MusicWidgetState extends State<MusicWidget> {
                                                         )
                                                         .then((_) =>
                                                             setState(() {}));
+                                                    closeKeyboard(context);
                                                   },
                                                   child: Icon(
                                                     Icons.assignment,

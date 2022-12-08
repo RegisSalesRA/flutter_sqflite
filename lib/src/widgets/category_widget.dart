@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/config.dart';
+import '../../helpers/helpers.dart';
 import '../../model/model.dart';
 import '../modules/music/music_screen_category.dart';
 
@@ -64,6 +65,7 @@ class CategoryWidget extends StatelessWidget {
                                                 categoryId: category.id!,
                                               )),
                                     );
+                                    closeKeyboard(context);
                                   },
                                   child: Container(
                                     height: size.height * 0.17,

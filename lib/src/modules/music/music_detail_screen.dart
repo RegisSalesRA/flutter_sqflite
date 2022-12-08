@@ -102,18 +102,13 @@ class _DetailScreenState extends State<DetailScreen> {
               right: 0,
               left: 0,
               child: Container(
-                height: size.height * 0.50,
-                padding: const EdgeInsets.all(20),
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                  fit: BoxFit.contain,
+                  image: AssetImage(
                     'assets/images/detailPageImage.png',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
                   ),
-                ),
+                )),
               ),
             ),
             Positioned(
