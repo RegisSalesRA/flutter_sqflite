@@ -89,7 +89,7 @@ class _MusicScreenCategoryState extends State<MusicScreenCategory> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: size.width * 0.65,
+                                        width: size.width * 0.60,
                                         child: Text(
                                           music.name!,
                                           style: const TextStyle(

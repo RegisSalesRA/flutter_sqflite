@@ -104,7 +104,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
-                                          width: size.width * 0.65,
+                                          width: size.width * 0.60,
                                           child: Text(
                                             category.name!,
                                             style: const TextStyle(
