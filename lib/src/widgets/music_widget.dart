@@ -187,7 +187,10 @@ class _MusicWidgetState extends State<MusicWidget> {
                                   : Container();
                             },
                           )
-                        : const Center(child: Text("No registered music"));
+                        : Container(
+                            height: 100,
+                            child: Center(child: Text("No registered music")),
+                          );
                   },
                 ),
               ),
