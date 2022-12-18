@@ -18,7 +18,7 @@
 <h2>About App</h2>
 
 <p>
-The idea of creating an application in <b>Flutter</b> with sqflite came up to share knowledge while I learned how to integrate with flutter with the internal bank of the cell phone
+The idea of creating this application is to apply knowledge with persistent data with sqflite together with flutter, the application aims to create a song in which it will create a song that has a category and album where the person can also mark it as a favorite or not
 </p>
 
 <h2>Screenshots</h2>
