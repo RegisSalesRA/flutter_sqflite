@@ -21,8 +21,11 @@ class _AnimatedFadedTextState extends State<AnimatedFadedText>
     super.initState();
     animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
-    Timer(
-        const Duration(milliseconds: 200), () => animationController.forward());
+    Timer(const Duration(milliseconds: 200), () {
+      if (mounted) {
+        animationController.forward();
+      }
+    });
   }
 
   @override
