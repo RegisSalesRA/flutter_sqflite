@@ -7,7 +7,7 @@
 
    <p>
 
-   - [📖 Sobre App](#About-App)
+   - [📖 About App](#About-App)
    - [📱 Screenshots](#Screenshots)
    - [👨🏽‍💻 Development](#Development)
    - [📲 How to use](#How-to-use)
@@ -15,7 +15,7 @@
 
    </p>
 
-<h2>Sobre App</h2>
+<h2>About App</h2>
 
 <p>
 The idea of creating this application is to apply knowledge with persistent data with sqflite together with flutter, the application aims to create a song in which it will create a song that has a category and album where the person can also mark it as a favorite or not
