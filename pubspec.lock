@@ -352,6 +352,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.12"
+  textwrap:
+    dependency: "direct main"
+    description:
+      name: textwrap
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   typed_data:
     dependency: transitive
     description:

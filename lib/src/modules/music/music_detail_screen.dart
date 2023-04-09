@@ -3,6 +3,7 @@ import 'package:flutter_sqlite/src/widgets/widgets.dart';
 import '../../../config/config.dart';
 import '../../../data/database_service.dart';
 import '../../../model/model.dart';
+import 'package:textwrap/textwrap.dart';
 
 class DetailScreen extends StatefulWidget {
   final Music music;
@@ -42,9 +43,65 @@ class _DetailScreenState extends State<DetailScreen> {
     return null;
   }
 
+  var text = """Wasted years!
+One, two, three-
+From the coast of gold, across the seven seas
+Travelin' on, far and wide
+But now it seems I'm just a stranger to myself
+And all the things I sometimes do, it isn't me but someone else
+I close my eyes and I think of home
+Another city goes by in the night
+Ain't it funny how it is? You never miss it til' it's gone away
+And my heart is lying there, will be 'til my dying day, Adrian!
+So understand
+Don't waste your time always searching for those wasted years
+Face up, make your stand
+Realize you're living in the golden years
+Too much time on my hands, I got you on my mind
+Can't ease this pain so easily
+When you can't find the words to say, hard to make it through another day
+And it makes me wanna cry, throw my hands up to the sky
+So understand
+Don't waste your time always searching for those wasted years
+Face up, make your stand
+Realize you're living in the golden years, hey!
+So understand, Adrian!
+Don't waste your time always searching for those wasted years
+Face up, make your stand
+Realize you're living in the golden years
+So understand
+Don't waste your time always searching for those wasted years
+Face up, make your stand
+Realize you're living in the golden years, hey!""";
+  String wrappedText = '';
+
+  wrapText(String text, int maxCharsPerLine) {
+    int start = 0;
+    int end = maxCharsPerLine;
+    while (start < text.length) {
+      if (end >= text.length) {
+        end = text.length;
+      } else {
+        int lastSpace = text.substring(start, end).lastIndexOf(' ');
+        if (lastSpace != -1 && lastSpace != end - start) {
+          end = start + lastSpace + 1;
+        }
+      }
+      wrappedText +=
+          '${text.substring(start, end)}\n\n'; // adiciona espaço extra
+      start = end;
+      end += maxCharsPerLine;
+      wrappedText.split(' ');
+    }
+    setState(() {
+      wrappedText = wrappedText;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    wrapText(widget.music.lyric!, 100);
     categoryById();
     albumById();
   }
@@ -52,6 +109,14 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
+    final wrapper = TextWrapper(width: 80);
+
+    final paragrafosDivididos = wrapper.wrap(widget.music.lyric!);
+
+    final versos = [];
+
+    final paragrafos = versos.join('');
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -149,13 +214,12 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                               Expanded(
                                 child: SingleChildScrollView(
-                                  physics: const BouncingScrollPhysics(),
-                                  child: Text(
-                                    widget.music.lyric!,
-                                    style: const TextStyle(
-                                        color: Palette.primaryColorLight),
-                                  ),
-                                ),
+                                    physics: const BouncingScrollPhysics(),
+                                    child: Column(
+                                      children: [
+                                        Text(wrappedText.toString()),
+                                      ],
+                                    )),
                               ),
                               const SizedBox(
                                 height: 10,

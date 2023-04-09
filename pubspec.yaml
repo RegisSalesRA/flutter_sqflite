@@ -37,6 +37,7 @@ dependencies:
   sqflite: ^2.0.2+1
   path_provider: ^2.0.11
   like_button: ^2.0.5
+  textwrap: ^1.2.0
 
 dev_dependencies:
   flutter_test:
